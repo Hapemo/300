@@ -52,6 +52,7 @@ function Alive()
 end
 
 function Update()
+    -- STATE = 1
     cameraEntity = gameStateSys:GetEntity("Camera")
     bossEntity = gameStateSys:GetEntity("Level2Boss")
     gunEntity = gameStateSys:GetEntity("gun")

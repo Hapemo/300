@@ -21,6 +21,10 @@ local frame3Translate = Vec3.new(0,0,0)
 local frame4Translate = Vec3.new(0,0,0)
 local frame4Scale = Vec3.new(0,0,0)
 
+local VO_obj
+local VO_played = false
+local customized_delay = 1.0
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     frame1 = gameStateSys:GetEntity("Frame1")
@@ -33,6 +37,8 @@ function Alive()
     skipButton = gameStateSys:GetEntity("SkipButton")
     clickAudioEntity = gameStateSys:GetEntity("Click")
 
+    VO_obj = gameStateSys:GetEntity("VO_Shes_Here")
+
     hoverOver = false
 
     --generaltimer
@@ -44,6 +50,8 @@ end
 -- end 
 
 function Update()
+    -- customized_delay = customized_delay + FPSManager.GetDT()
+    -- print("CUSTOMIZED DELAY" , customized_delay)
 
     frame3Translate = frame3:GetTransform().mTranslate
     frame4Translate = frame4:GetTransform().mTranslate
@@ -84,8 +92,16 @@ function Update()
     elseif(frame4State) then
         Frame4()
         Zoom()
+        customized_delay = customized_delay + FPSManager.GetDT()
+        if customized_delay >= 1 then
+            if VO_played == false then
+                VO_obj:GetAudio():SetPlay(1.0)
+                VO_played = true
+            end
+        end
     elseif(frame5State) then
         Frame5()
+    
     elseif(frame6State) then
         Frame6()
     elseif(frame7State) then

@@ -1,5 +1,8 @@
 local this
 
+-- Disable everything (MECHANIC WISE) -> development mode. doing audio
+local debug_mode = false
+
 -- Phase 1 : Enemyspawn Phase
 local enemyType
 local enemySpawnDirection
@@ -117,6 +120,8 @@ local sphere_phase_audio
 
 local play_sphere_audio
 local play_laser_audio
+
+local homing_audio
 function Alive()
     print("ALIVE")
     this = Helper.GetScriptEntity(script_entity.id)
@@ -156,7 +161,10 @@ function Alive()
     roar_slam_audio = gameStateSys:GetEntity("RoarSlamAudio")
     boss_slam_audio = gameStateSys:GetEntity("BossSlamAudio")
     sphere_phase_audio = gameStateSys:GetEntity("SpherePhase")
+    homing_audio = gameStateSys:GetEntity("HomingEyeballAudio")
 
+
+    -- debug_mode = true
 
 end
 
@@ -171,7 +179,7 @@ function Update()
         laserPhaseAudio:SetStop()
     end
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
-    if _G.attacking == false and _G.FreezePlayerControl  == false then 
+    if _G.attacking == false and _G.FreezePlayerControl  == false and debug_mode == false then 
 
         -- [Recycle Attacks]
         -- Check if the current state checker has at least 4 "true" -> reset them 
@@ -222,12 +230,12 @@ function Update()
     -- Debug States
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-    -- state = 3 -- [OK]
+    state = 3 -- [OK]
     -- state = 4 --[OK]
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
-    if _G.level3intro == false then 
+    if _G.level3intro == false and debug_mode == false then 
         if state == 1 and _G.state_checker[1] == false then
 
             _G.attacking = true -- must include (to stop state choosing)
@@ -276,8 +284,10 @@ function Update()
                         roar_audio:GetAudio():SetPlay(1.0)
                         initial_roar = true
                     end
-                    SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
-                    currentEnemySpawnResetTimer = 0 -- Reset spawn time
+                    if (total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3 > 0 ) then 
+                        SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
+                        currentEnemySpawnResetTimer = 0 -- Reset spawn time
+                    end
                 end
 
                 summon_per_spawn_instance   = 0 -- Reset number of enemies per spawn instance (for a new RNG) -> put here coz might exceed total number    
@@ -419,11 +429,11 @@ function Update()
                 end
 
             else 
-                -- print("DONE SLAM")
-                -- _G.state_checker[2] = true
-                -- _G.attacking = false
-                -- groundSlamMax = 0
-                -- smashed = false 
+                print("DONE SLAM")
+                _G.state_checker[2] = true
+                _G.attacking = false
+                groundSlamMax = 0
+                smashed = false 
             end
 
         end
@@ -614,7 +624,7 @@ end
 function SpawnHomingSpheres()
     -- Let's start by randomnizing the starting spawn point of the projectile
     bulletSpeed = 5
-
+    homing_audio:GetAudio():SetPlay(0.5)
     -- Spawning Logic (Start)
     -- for i = 0 , number_of_bullets do 
     local attack_offset_range = 5  -- Defines a range to spread out from the central position to summon the bullets in different positions
@@ -690,7 +700,7 @@ function UpdateHomingProjectiles()
                 projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
                 if projectile.lock_on_time > 0 then 
                     -- print("CALCULATING DIRECTION TO GO.")
-                        
+  
                     -- Subtract Vector 
                     local directionToPlayer = Subtract(player_position, projectile.position)
                     

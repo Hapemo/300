@@ -1541,6 +1541,11 @@ void Audio::Inspect() {
 				mFilePath = file_path;
 				mFileName = audio_name;
 				mFullPath = file_path + "/" + audio_name;
+
+				// [3/13] - Start of the inclusion of <Multi-Audio> support
+		/*		mFilePaths.push_back(file_path);
+				mFileNames.push_back(audio_name);
+				mAudioActiveStates.push_back(true);*/
 			}
 
 			ImGui::EndDragDropTarget();
@@ -1562,6 +1567,30 @@ void Audio::Inspect() {
 	ImGui::Text("Audio File Selected: ");
 	ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
 
+	// Display each loaded audio file and its full path
+	//for (size_t i = 0; i < mFilePaths.size(); ++i) {
+	//	if (i < mFileNames.size() && i < mFilePaths.size() && i < mAudioActiveStates.size())  // At any time ideally they'll always have the same size.
+	//	{
+	//		ImGui::Text("Audio %d:", i + 1);
+	//		ImGui::Text("Name: %s", mFileNames[i].c_str());
+	//		ImGui::Text("Path: %s", mFilePaths[i].c_str());
+
+	//		if (i < mAudioActiveStates.size()) {
+	//			// Checkbox to toggle active state
+	//			bool activeState = static_cast<bool>(mAudioActiveStates[i]);
+	//			ImGui::Checkbox(("Active##" + std::to_string(i)).c_str(), &activeState);
+	//			mAudioActiveStates[i] = activeState;
+	//		}
+
+	//		if (!mIsEmpty && m3DAudio)
+	//		{
+	//			ImGui::Text("This is a 3D Audio");
+	//		}
+	//	}
+	//}
+
+	//ImGui::Text(Entity(Hierarchy::selectedId).GetComponent<Audio>().mFullPath.c_str());
+
 	// Debugging (to show which audio are playing) - on editor
 	if (mState == Audio::PLAYING)
 	{
@@ -1579,12 +1608,6 @@ void Audio::Inspect() {
 		//ImGui::Text("On the %s group", audio_type.c_str());
 	}
 		
-
-	if (!mIsEmpty && m3DAudio)
-	{
-		ImGui::Text("This is a 3D Audio");
-	}
-
 	if (mState == Audio::PAUSED)
 		ImGui::Text("Audio Paused :o");
 
@@ -1621,10 +1644,21 @@ void Audio::Inspect() {
 		ImGui::Checkbox("Play on Awake", &mPlayonAwake);
 		ImGui::Checkbox("Is Looping", &mIsLooping);
 		ImGui::Checkbox("Persist upon game state switch", &mGameStateRetain);
+		ImGui::Checkbox("Pan Audio", &mPanAudio);
 		//ImGui::SliderFloat("Volume", &mVolume, 0.0f, 1.0f, "volume = %.3f");
 		ImGui::DragFloat("Volume", (float*)&mVolume, 0.05f, 0.0f, 1.0f);
 		ImGui::DragFloat("Fade Speed", (float*)&mFadeSpeedModifier, 0.05f, 0.0f);
-
+		
+		// Added [3/13] - Pan Audio
+		if (mPanAudio)
+		{	
+			ImGui::Text("Audio Panning Attributes: ");
+			ImGui::DragFloat("Starting Panning Balance", (float*)&mPanBalance, 0.05f, -1.0f, 1.0f); // Set Initial Balance (0.0 for center, -1.0 for left , 1.0 for right)
+			ImGui::DragFloat("Panning Speed", (float*)&mPanSpeed, 0.01f, 0.0f, 1.0f);	// [3/13] irrelevant for now
+			ImGui::Text("Panning Guide : [-1.0] for left, [0.0] for center, [1.0] for right)");
+		}
+	
+	
 		if (m3DAudio)
 		{
 			ImGui::DragFloat("Min Distance", (float*)&mMinDistance);

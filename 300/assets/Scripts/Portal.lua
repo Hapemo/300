@@ -1,6 +1,6 @@
 -- local portalObject
 local portalLifeTime = 0
-local portalDeathTime = 5
+local portalDeathTime = 2.5
 
 local this
 

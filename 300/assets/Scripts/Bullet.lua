@@ -40,6 +40,12 @@ local machineGunDamage = 1 -- per bullet
 -- local bullethitcomp
 -- local bullethitAudioSource 
 
+-- [M5] Impact Sound 
+local enemyDamagedAudio
+local machineGunTimer = 0 
+local machineGunMax = 4
+local machineGunDamaged = false
+
 
 function Alive()
     
@@ -47,9 +53,14 @@ end
 
 function Update()
 
+    if machineGunDamaged == true then 
+        machineGunTimer = machineGunTimer + FPSManager:GetDT()
+    end
+
     gameStateSys = systemManager:mGameStateSystem()
     cameraEntity = gameStateSys:GetEntity("Camera")
     positions = cameraEntity:GetTransform().mTranslate
+    enemyDamagedAudio = gameStateSys:GetEntity("BulletImpactAudio")
 
 
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
@@ -82,6 +93,7 @@ function Dead()
 end
 
 function OnTriggerEnter(Entity)
+    machineGunTimer = 0
     generalComponent = Entity:GetGeneral()
 
     -- print("ddddddddddddddddddddddddd")
@@ -115,9 +127,22 @@ function OnTriggerEnter(Entity)
 
     entityobj = Helper.GetScriptEntity(script_entity.id)
 
+    print("GUN EQUIPPED: " , _G.gunEquipped)
 
     tagid = generalComponent.tagid
     if (tagid == 1) then
+        -- enemyDamagedAudio:GetAudio():SetPlay(0.2)
+
+        if _G.gunEquipped == 3 then 
+            machineGunDamaged = true
+            if machineGunTimer >= machineGunMax then 
+                enemyDamagedAudio:GetAudio():SetPlay(0.2)
+                machineGunTimer = 0
+            end
+        else
+            enemyDamagedAudio:GetAudio():SetPlay(0.2)
+        end
+
         for i = 3, 1, -1
         do
             spawned(i)

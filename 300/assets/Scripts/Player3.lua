@@ -170,6 +170,30 @@ local objectiveBarEmptySpawnPos = Vec3.new()
 local healthBarEmptySpawnPos = Vec3.new()
 -- local isuiinit = false
 local this
+
+-- [M5] - Footsteps
+local leftFootsteps = {}
+local footstep_left_1 
+local footstep_left_2
+local footstep_left_3
+local footstep_left_4
+
+local rightFootsteps = {}
+local footstep_right_1
+local footstep_right_2
+local footstep_right_3
+local footstep_right_4
+
+local currentFootstep = "Left"
+local footstepTimer   = 0
+local footstepDelay   = 0.5     -- Delay between each step
+local currentLeftIndex = 1      -- Used to keep track which track is being played (in the left footstep database)   -> lua starts from 1
+local currentRightIndex = 1     -- Used to keep track which track is being played (in the right footstep database)  -> lua starts from 1
+
+-- [M5] Player Damaged (Audio)
+local dmgAudioEnt
+local play_normal_damage_audio
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     gameStateSys = systemManager:mGameStateSystem();
@@ -249,6 +273,32 @@ function Alive()
     -- end
 
     playerHealthComponent = this:GetHealthbar()
+
+    -- Footsteps stuff
+    footstep_left_1 = gameStateSys:GetEntity("Footstep_Left_1")
+    footstep_left_2 = gameStateSys:GetEntity("Footstep_Left_2")
+    footstep_left_3 = gameStateSys:GetEntity("Footstep_Left_3")
+    footstep_left_4 = gameStateSys:GetEntity("Footstep_Left_4")
+    
+    table.insert(leftFootsteps , footstep_left_1)
+    table.insert(leftFootsteps , footstep_left_2)
+    table.insert(leftFootsteps , footstep_left_3)
+    table.insert(leftFootsteps , footstep_left_4)
+
+    footstep_right_1 = gameStateSys:GetEntity("Footstep_Right_1")
+    footstep_right_2 = gameStateSys:GetEntity("Footstep_Right_2")
+    footstep_right_3 = gameStateSys:GetEntity("Footstep_Right_3")
+    footstep_right_4 = gameStateSys:GetEntity("Footstep_Right_4")
+
+    table.insert(rightFootsteps , footstep_right_1)
+    table.insert(rightFootsteps , footstep_right_2)
+    table.insert(rightFootsteps , footstep_right_3)
+    table.insert(rightFootsteps , footstep_right_4)
+
+    print("LEFT FOOTSTEP DATABASE: " , #leftFootsteps)
+    print("RIGHT FOOTSTEP DATABASE: " , #rightFootsteps)
+
+    dmgAudioEnt = gameStateSys:GetEntity("DamageAudio")
 end
 
 function Update()
@@ -284,8 +334,15 @@ function Update()
 
     -- Player Health System End -- 
     if (isTakingDamage == true) then
-    playerHealthStartRegenCurrent = 0;
-    playerHealthCurrent = playerHealthCurrent - 6; -- take damagen
+        playerHealthStartRegenCurrent = 0;
+        playerHealthCurrent = playerHealthCurrent - 6; -- take damagen
+            
+        if play_normal_damage_audio == true then 
+             dmgAudioEnt:GetAudio():SetPlay()
+            play_normal_damage_audio = false
+        end
+
+        -- isTakingDamage = false
     
     -- -- Added 3/4/2024 (using healthbar component)
     -- playerHealthComponent.health =  playerHealthComponent.health - 6
@@ -518,7 +575,8 @@ function Update()
        
 
          
-
+         
+            UpdateFootstepDelayTimer()
 -- region (snapback)
             -- print("GUN RECOIL STATE: ", gunRecoilState)
             if (gunRecoilState == "IDLE") then
@@ -589,7 +647,7 @@ function Update()
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
+                playFootsteps()
 
                 gunRecoilState = "MOVING"
             end
@@ -603,7 +661,7 @@ function Update()
 
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
+                playFootsteps()
 
                 gunRecoilState = "MOVING"
             end
@@ -616,7 +674,7 @@ function Update()
                     gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
+                playFootsteps()
 
                 gunRecoilState = "MOVING"
     
@@ -634,7 +692,7 @@ function Update()
                     -- end
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
+                playFootsteps()
 
                 gunRecoilState = "MOVING"
 
@@ -901,6 +959,7 @@ function OnTriggerEnter(Entity)
 
     if (tagid == 1) then
         -- play attack anim
+        isTakingDamage = true
     end 
 
     if (tagid == 5) then
@@ -912,12 +971,66 @@ function OnTriggerEnter(Entity)
     end
 
     -- Player Health System Start --
-    if (generalComponent.name == "ILOVEYOU") then isTakingDamage = true; end
-    if (generalComponent.name == "Melissa") then isTakingDamage = true; end
-    if (generalComponent.name == "TrojanHorse") then isTakingDamage = true; end
-    if (generalComponent.name == "ZipBomb") then isTakingDamage = true; end
-    if (generalComponent.name == "TrojanSoldier") then isTakingDamage = true; end
+    if (generalComponent.name == "ILOVEYOU") then
+         isTakingDamage = true
+         play_normal_damage_audio = true
+     end
+    if (generalComponent.name == "Melissa") then
+         isTakingDamage = true
+        play_normal_damage_audio = true
+     end
+    if (generalComponent.name == "TrojanHorse") then 
+        isTakingDamage = true
+        play_normal_damage_audio = true
+    end
+    if (generalComponent.name == "ZipBomb") then 
+        isTakingDamage = true
+        play_normal_damage_audio = true
+     end
+    if (generalComponent.name == "TrojanSoldier") then 
+        isTakingDamage = true;
+        play_normal_damage_audio = true
+     end
+    if (generalComponent.name == "Laser1") then 
+        isTakingDamage = true; 
+        play_normal_damage_audio = true
+    end
+    if (generalComponent.name == "Laser2") then 
+        isTakingDamage = true;
+        play_normal_damage_audio = true
+     end
+    if (generalComponent.name == "Boss_Bullet") then 
+        isTakingDamage = true;
+        play_normal_damage_audio = true
+        print("BOSS BULLET HIT WOI")
+    end
+
     -- Player Health System End --
+
+
+    if (tagid == 4) then -- floor
+        print("ON THE FLOOR")
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
 end
 
@@ -939,6 +1052,7 @@ function OnTriggerExit(Entity)
     if (generalComponent.name == "ZipBomb") then isTakingDamage = false; end
     if (generalComponent.name == "TrojanSoldier") then isTakingDamage = false; end
     -- Player Health System End --
+
 end
 
 function OnContactEnter(Entity)
@@ -1214,4 +1328,38 @@ end
 function setYellowGunTexture(color_vec4)
     gunMeshRenderer:SetTexture(MaterialType.DIFFUSE, "Gun_Base_Color_Brown")
     gunMeshRenderer:SetColor(color_vec4)
+end
+
+
+-- [M5]
+function playFootsteps()
+    if footstepTimer >= footstepDelay then
+        if currentFootstep == "Left" then 
+
+            if currentLeftIndex > 4 then 
+                currentLeftIndex = 1
+            end
+            -- Play Left footstep sounds 
+            leftFootsteps[currentLeftIndex]:GetAudio():SetPlay(1.0)
+            print("PLAYING LEFT FOOTSTEP: " , currentLeftIndex)
+            currentLeftIndex = currentLeftIndex + 1
+            currentFootstep = "Right"
+        else
+            if currentRightIndex > 4 then 
+                currentRightIndex = 1
+            end
+            -- Play Right footstep 
+            rightFootsteps[currentRightIndex]:GetAudio():SetPlay(1.0)
+            print("PLAYING RIGHT FOOTSTEP: " , currentRightIndex)
+            currentRightIndex = currentRightIndex + 1
+            currentFootstep = "Left"
+        end
+            footstepTimer = 0                                           -- Reset Timer
+    end
+end
+
+
+
+function UpdateFootstepDelayTimer()
+    footstepTimer = footstepTimer + FPSManager.GetDT()
 end

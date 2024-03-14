@@ -9,13 +9,17 @@ local ent
 
 -- [5] Lazer Attack 
 local lazer_timer = 0 
-local lazer_duration = 5.0
+local lazer_duration = 100
 
 local laser_phase 
 local laserPhaseAudio 
 
 local laser_audio_played = false
 local gameStateSys
+
+-- [M5] Player Damaged (Audio)
+local dmgAudioEnt
+local dmgLazerAudioEnt
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
@@ -37,6 +41,9 @@ function Alive()
         axis.z = 0.0
         angle = 90.0
     end
+
+    dmgAudioEnt = gameStateSys:GetEntity("DamageAudio")
+    dmgLazerAudioEnt = gameStateSys:GetEntity("DamageLazerAudio")
 end
 
 function Update()
@@ -83,6 +90,9 @@ function OnTriggerEnter(Entity)
         if(Entity:HasHealthbar()) then 
             healthComponent = Entity:GetHealthbar()
             healthComponent.health = healthComponent.health - 6
+                        
+            -- dmgAudioEnt:GetAudio():SetPlay()
+            dmgLazerAudioEnt:GetAudio():SetPlay()
         end
     end
 end

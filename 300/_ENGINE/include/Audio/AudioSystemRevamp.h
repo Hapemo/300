@@ -67,6 +67,16 @@ public:
 
 	// Channel Management (used in every loop)
 	void		 ClearFinishedSounds();
+
+
+	// [3/13] Audio Panning
+	void		 UpdatePanning(Audio* audio_component = nullptr);				        // Update Loop - go into channel and update panning
+
+
+	// Scripting 
+	bool		 AudioDonePlaying(Audio* audio_component);
+
+
 	
 public:
 	// Channel Check (still playing or not)

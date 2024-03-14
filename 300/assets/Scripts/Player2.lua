@@ -170,6 +170,30 @@ local healthBarEmptySpawnPos = Vec3.new()
 local isuiinit = false
 local this
 
+-- [M5] - Footsteps
+local leftFootsteps = {}
+local footstep_left_1 
+local footstep_left_2
+local footstep_left_3
+local footstep_left_4
+
+local rightFootsteps = {}
+local footstep_right_1
+local footstep_right_2
+local footstep_right_3
+local footstep_right_4
+
+local currentFootstep = "Left"
+local footstepTimer   = 0
+local footstepDelay   = 0.5     -- Delay between each step
+local currentLeftIndex = 1      -- Used to keep track which track is being played (in the left footstep database)   -> lua starts from 1
+local currentRightIndex = 1     -- Used to keep track which track is being played (in the right footstep database)  -> lua starts from 1
+
+local walking_state = "NOT_WALKING"
+
+-- [M5] Player Damaged (Audio)
+local dmgAudioEnt
+
 _G.FreezePlayerControl = false
 
 function Alive()
@@ -247,6 +271,32 @@ function Alive()
     -- Shotgun Stuff -- 
 
 
+    -- Footsteps stuff
+    footstep_left_1 = gameStateSys:GetEntity("Footstep_Left_1")
+    footstep_left_2 = gameStateSys:GetEntity("Footstep_Left_2")
+    footstep_left_3 = gameStateSys:GetEntity("Footstep_Left_3")
+    footstep_left_4 = gameStateSys:GetEntity("Footstep_Left_4")
+    
+    table.insert(leftFootsteps , footstep_left_1)
+    table.insert(leftFootsteps , footstep_left_2)
+    table.insert(leftFootsteps , footstep_left_3)
+    table.insert(leftFootsteps , footstep_left_4)
+
+    footstep_right_1 = gameStateSys:GetEntity("Footstep_Right_1")
+    footstep_right_2 = gameStateSys:GetEntity("Footstep_Right_2")
+    footstep_right_3 = gameStateSys:GetEntity("Footstep_Right_3")
+    footstep_right_4 = gameStateSys:GetEntity("Footstep_Right_4")
+
+    table.insert(rightFootsteps , footstep_right_1)
+    table.insert(rightFootsteps , footstep_right_2)
+    table.insert(rightFootsteps , footstep_right_3)
+    table.insert(rightFootsteps , footstep_right_4)
+
+    print("LEFT FOOTSTEP DATABASE: " , #leftFootsteps)
+    print("RIGHT FOOTSTEP DATABASE: " , #rightFootsteps)
+
+    
+    dmgAudioEnt = gameStateSys:GetEntity("DamageAudio")
 
 end
 
@@ -284,6 +334,8 @@ function Update()
     if (isTakingDamage == true) then
     playerHealthStartRegenCurrent = 0;
     playerHealthCurrent = playerHealthCurrent - 6; -- take damage
+    
+    dmgAudioEnt:GetAudio():SetPlay()
     end
 
     if (isTakingDamage == false) then -- if not taking damage
@@ -496,7 +548,16 @@ function Update()
         end
    
 -- end of Toggle Weapons
-        
+        print("WALKING STATE: " , walking_state)
+                    
+        UpdateFootstepDelayTimer()           
+
+        if walking_state == "WALKING" then 
+            playFootsteps()
+            walking_state = "DONE"
+        else
+            stopFootsteps()
+        end
 
         if (inputMapSys:GetButtonDown("Dash")) then
             if (dashTime > 3.0) then
@@ -509,7 +570,7 @@ function Update()
        
 
          
-
+    
 -- region (snapback)
             -- print("GUN RECOIL STATE: ", gunRecoilState)
             if (gunRecoilState == "IDLE") then
@@ -579,9 +640,9 @@ function Update()
                 if(gunTranslate.y > gunThreshHold_min_y) then 
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
                 end
-
-                this:GetAudio():UpdateVolume(0.2)
-
+                if walking_state ~= "JUMPING" then 
+                    walking_state = "WALKING"
+                end
                 gunRecoilState = "MOVING"
             end
             if (inputMapSys:GetButton("down")) then
@@ -594,7 +655,9 @@ function Update()
 
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
+                if walking_state ~= "JUMPING" then 
+                     walking_state = "WALKING"
+                end
 
                 gunRecoilState = "MOVING"
             end
@@ -607,7 +670,9 @@ function Update()
                     gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
+                if walking_state ~= "JUMPING" then 
+                    walking_state = "WALKING"
+                end
 
                 gunRecoilState = "MOVING"
     
@@ -625,7 +690,9 @@ function Update()
                     -- end
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
+                if walking_state ~= "JUMPING" then 
+                    walking_state = "WALKING"
+                end
 
                 gunRecoilState = "MOVING"
 
@@ -634,8 +701,12 @@ function Update()
             if (inputMapSys:GetButtonDown("Jump") and math.abs(movement.y) < 3.05) then
                 movement.y = movement.y + 25.0;
                 gunRecoilState = "MOVING"
+                walking_state = "JUMPING"
                 gunJumped = true
                 jumpAudioComp:SetPlay(0.4)
+
+                -- stopFootsteps()
+                print("STOPPING FOOTSTEP")
             end
 
             if(gunJumped == true) then  -- this loop will drop the gun (dip)
@@ -649,10 +720,9 @@ function Update()
                     gunJumped = false
                 end
             end
-
-
-          
         end
+
+  
 
 -- region (Gun Colors)
     if(_G.gunEquipped == 0) then 
@@ -1205,4 +1275,54 @@ end
 function setYellowGunTexture(color_vec4)
     gunMeshRenderer:SetTexture(MaterialType.DIFFUSE, "Gun_Base_Color_Brown")
     gunMeshRenderer:SetColor(color_vec4)
+end
+
+-- [M5]
+function playFootsteps()
+    if footstepTimer >= footstepDelay then
+        if currentFootstep == "Left" then 
+
+            if currentLeftIndex > 4 then 
+                currentLeftIndex = 1
+            end
+            -- Play Left footstep sounds 
+            leftFootsteps[currentLeftIndex]:GetAudio():SetPlay(1.0)
+            print("PLAYING LEFT FOOTSTEP: " , currentLeftIndex)
+            currentLeftIndex = currentLeftIndex + 1
+            currentFootstep = "Right"
+        else
+            if currentRightIndex > 4 then 
+                currentRightIndex = 1
+            end
+            -- Play Right footstep 
+            rightFootsteps[currentRightIndex]:GetAudio():SetPlay(1.0)
+            print("PLAYING RIGHT FOOTSTEP: " , currentRightIndex)
+            currentRightIndex = currentRightIndex + 1
+            currentFootstep = "Left"
+        end
+            footstepTimer = 0                                           -- Reset Timer
+    end
+end
+
+function stopFootsteps()
+
+    local previousFootstep
+    if currentFootstep == "Left" then 
+        previousFootstep = "Right"
+    else 
+        previousFootstep = "Left"
+    end
+
+
+    if previousFootstep == "Left" then 
+        leftFootsteps[currentLeftIndex - 1]:GetAudio():SetStop()
+    else 
+        rightFootsteps[currentRightIndex - 1]:GetAudio():SetStop()
+    end
+end
+
+
+
+function UpdateFootstepDelayTimer()
+    footstepTimer = footstepTimer + FPSManager.GetDT()
 end

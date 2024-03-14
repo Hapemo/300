@@ -3,19 +3,22 @@ local bulletLifeTime = 0
 local bulletDeathTime = 15
 
 -- Phase 3 attack from Boss Level (Lv 3) 
-local bullet_damage = 4 -- Adjust Accordingly
+local bullet_damage = 6 -- Adjust Accordingly
 
 local this
 local general
 local spawn_bullet_name = "Boss_Bullet_Homing"
+local gameStateSys
 
-
-
+local dmgAudioEnt
 
 function Alive()
     bulletObject = Helper.GetScriptEntity(script_entity.id)
     this = Helper.GetScriptEntity(script_entity.id)
+    gameStateSys = systemManager:mGameStateSystem();
     general = this:GetGeneral()
+
+    dmgAudioEnt = gameStateSys:GetEntity("DamageAudio")
 end
 
 function Update()
@@ -67,9 +70,10 @@ function OnTriggerEnter(Entity)
 
         if(player_healthbar_component ~= nil) then 
             player_healthbar_component.health = player_healthbar_component.health - bullet_damage
-            print("TAKING DAMAGE FROM HOMING BULLET")
-            print("DAMAGE TAKEN: " , bullet_damage)
-            print("HP LEFT: ", player_healthbar_component.health)
+            -- print("TAKING DAMAGE FROM HOMING BULLET")
+            -- print("DAMAGE TAKEN: " , bullet_damage)
+            -- print("HP LEFT: ", player_healthbar_component.health)
+            dmgAudioEnt:GetAudio():SetPlay(0.5)
         end
 
         -- Update Database (Homing Bullets)

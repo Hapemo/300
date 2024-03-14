@@ -1,6 +1,82 @@
 [
     {
-        "entityid": 1048599,
+        "entityid": 1048768,
+        "general": {
+            "name": "ILOVEYOUEpicAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "ILY_Intro.wav",
+            "fullpath": "../assets\\Audio/ILY_Intro.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 2097189,
+        "general": {
+            "name": "TrojanHorseEpicAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Horse_Intro.wav",
+            "fullpath": "../assets\\Audio/Horse_Intro.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 2097190,
         "general": {
             "name": "EpicIntroTrojanHorse",
             "tagid": 1,
@@ -101,7 +177,8 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         },
         "prefab": {
             "prefab": "TrojanHorse"
@@ -140,7 +217,7 @@
         }
     },
     {
-        "entityid": 1048600,
+        "entityid": 2097191,
         "general": {
             "name": "THEpicIntroInfoUI",
             "tagid": 6,
@@ -181,7 +258,7 @@
         }
     },
     {
-        "entityid": 1048601,
+        "entityid": 2097192,
         "general": {
             "name": "ILYEpicTrigger",
             "tagid": 8,
@@ -245,7 +322,7 @@
         }
     },
     {
-        "entityid": 1048602,
+        "entityid": 2097193,
         "general": {
             "name": "EpicILY",
             "tagid": 1,
@@ -375,7 +452,7 @@
         }
     },
     {
-        "entityid": 1048603,
+        "entityid": 2097194,
         "general": {
             "name": "TrojanSoldierEpicTrigger",
             "tagid": 8,
@@ -436,10 +513,21 @@
                     "variables": []
                 }
             ]
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Soldier_Intro.wav",
+            "fullpath": "../assets\\Audio/Soldier_Intro.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 1048604,
+        "entityid": 2097195,
         "general": {
             "name": "TrojanHorseEpicTrigger",
             "tagid": 8,
@@ -503,7 +591,7 @@
         }
     },
     {
-        "entityid": 1048605,
+        "entityid": 2097196,
         "general": {
             "name": "EpicIntroManager",
             "tagid": 8,
@@ -538,7 +626,7 @@
         }
     },
     {
-        "entityid": 1048606,
+        "entityid": 2097197,
         "general": {
             "name": "TopBlackBorder",
             "tagid": 6,
@@ -579,7 +667,7 @@
         }
     },
     {
-        "entityid": 1048607,
+        "entityid": 2097198,
         "general": {
             "name": "BottomBlackBorder",
             "tagid": 6,
@@ -620,7 +708,7 @@
         }
     },
     {
-        "entityid": 1048608,
+        "entityid": 2097199,
         "general": {
             "name": "ILYEffectScreen",
             "tagid": 6,
@@ -672,7 +760,7 @@
         }
     },
     {
-        "entityid": 1048609,
+        "entityid": 2097200,
         "general": {
             "name": "EpicTrojanSoldier4",
             "tagid": 1,
@@ -801,7 +889,7 @@
         }
     },
     {
-        "entityid": 1048610,
+        "entityid": 2097201,
         "general": {
             "name": "EpicTrojanSoldier3",
             "tagid": 1,
@@ -927,7 +1015,7 @@
         }
     },
     {
-        "entityid": 1048611,
+        "entityid": 2097202,
         "general": {
             "name": "EpicTrojanSoldier2",
             "tagid": 1,
@@ -1056,7 +1144,7 @@
         }
     },
     {
-        "entityid": 1048612,
+        "entityid": 2097203,
         "general": {
             "name": "EpicTrojanSoldier1",
             "tagid": 1,
@@ -1185,7 +1273,7 @@
         }
     },
     {
-        "entityid": 1048613,
+        "entityid": 2097204,
         "general": {
             "name": "UIHider",
             "tagid": 6,
@@ -1226,7 +1314,7 @@
         }
     },
     {
-        "entityid": 1048614,
+        "entityid": 2097205,
         "general": {
             "name": "ILYEpicIntroInfoUI",
             "tagid": 6,
@@ -1267,7 +1355,7 @@
         }
     },
     {
-        "entityid": 1048615,
+        "entityid": 2097207,
         "general": {
             "name": "TSEpicIntroInfoUI",
             "tagid": 6,
@@ -1305,6 +1393,44 @@
             },
             "layer": 12,
             "worldtransform": false
+        }
+    },
+    {
+        "entityid": 2097208,
+        "general": {
+            "name": "SoldierEpicAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Soldier_Intro.wav",
+            "fullpath": "../assets\\Audio/Soldier_Intro.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
         }
     }
 ]

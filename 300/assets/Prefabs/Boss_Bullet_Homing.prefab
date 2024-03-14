@@ -1,5 +1,5 @@
 {
-    "entityid": 3145961,
+    "entityid": 1048716,
     "general": {
         "name": "Boss_Bullet_Homing",
         "tagid": 1,
@@ -11,17 +11,17 @@
         "scale": {
             "x": 2.0,
             "y": 2.0,
-            "z": 2.0
+            "z": 2.000000238418579
         },
         "rotate": {
-            "x": 0.004899937193840742,
-            "y": 0.02400626614689827,
-            "z": 3.091737985610962
+            "x": 2.0,
+            "y": -90.0,
+            "z": 180.0
         },
         "translate": {
-            "x": 5.420000076293945,
-            "y": 3.4800000190734863,
-            "z": 0.0
+            "x": 0.39464128017425537,
+            "y": 10.090697288513184,
+            "z": -37.3493537902832
         }
     },
     "rigidbody": {
@@ -43,7 +43,7 @@
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
         "frag": "../assets/shader_files/pointLight_frag.glsl",
-        "meshrefid": 3400,
+        "meshrefid": 2995509121,
         "instancecolor": {
             "x": 0.9622641801834106,
             "y": 0.9622641801834106,
@@ -65,7 +65,7 @@
             " ",
             " "
         ],
-        "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
+        "mesh": "../assets/compiled_geom/Homing.geom",
         "texturerefid": [
             1240881460,
             0,
@@ -75,6 +75,7 @@
             0
         ]
     },
+    "animator": {},
     "boxcollider": {
         "scaleoffset": {
             "x": 0.8799999952316284,

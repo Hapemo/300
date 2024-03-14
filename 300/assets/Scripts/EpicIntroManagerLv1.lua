@@ -159,17 +159,13 @@ local MPlatform
 
 --#region EpicIntroUI
 local epicIntroUI
-local ShowInfoCounter
+local ShowInfoSlowdown = 0.25
+local ShowInfoSlowdownCounter
 local ShowInfoMinTime = 4
 local showRightEpicUIPos = 0.44
-local showRightEpicUImidPos = 0.49
 local hideRightEpicUIPos = 1.53
 local showLeftEpicUIPos = -0.44
-local showLeftEpicUImidPos = -0.49
 local hideLeftEpicUIPos = -1.53
-local showFastSpeed = 4.65
-local showSlowSpeed = 0.01
-local moveFast
 --#endregion
 
 --#region black border variables
@@ -184,6 +180,24 @@ local topBorderLowerLimit
 local bottomBorderUpperLimit
 local bottomBorderLowerLimit
 --#endregion
+
+-- [M5] Epic Intro (Soundtrack)
+local epicTSAudio
+local epicTSPlayed = false
+
+local BGM
+
+local epicTrojanHorseAudio 
+local epicTrojanHorsePlayed = false
+
+local epicZipBombAudio
+local epicZipBombPlayed = false
+
+local epicMelissaAudio
+local epicMelissaPlayed = false
+
+local epicILOVEYOUaudio
+local epicILOVEYOUPlayed = false
 
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
@@ -211,6 +225,27 @@ function Alive()
     InitILYEpicIntro()
     InitZBEpicIntro()
     InitMEpicIntro()
+
+    -- [M5] Epic Intro (Soundtrack)
+    epicTSAudio = gameStateSys:GetEntityByScene("SoldierEpicAudio", "EpicIntroLv1")
+    BGM   = gameStateSys:GetEntity("BGM")
+    epicTrojanHorseAudio = gameStateSys:GetEntityByScene("TrojanHorseEpicAudio" , "EpicIntroLv1")
+    epicILOVEYOUaudio = gameStateSys:GetEntityByScene("ILOVEYOUEpicAudio", "EpicIntroLv1")
+    epicZipBombAudio = gameStateSys:GetEntityByScene("ZipBombEpicAudio" , "EpicIntroLv2")
+    epicMelissaAudio = gameStateSys:GetEntityByScene("MelissaEpicAudio"  , "EpicIntroLv2")
+
+    if BGM == nil then 
+        print("BGM FAILED")
+    else
+        print("BGM SUCCESS")
+
+    end
+
+    if epicTSAudio == nil then 
+        print("TS AUDIO FAILED")
+    else
+        print("TS AUDIO PASSED")
+    end
 end
 
 function Update()
@@ -322,6 +357,7 @@ end
 
 function RunTrojanHorseEpicIntro()
     if _G.TrojanHorseEpicIntroState == 1 then -- MoveToStartPos
+        BGM:GetAudio():UpdateVolume(0.2)   -- [M5] soften the bgm (temporarily for into)
         -- print("_G.TrojanHorseEpicIntroState == 1")
         if not MoveTo(player, trojanHorsePlatform:GetTransform().mTranslate, 100) then
             -- print("finish moving")
@@ -370,10 +406,17 @@ function RunTrojanHorseEpicIntro()
         
     elseif _G.TrojanHorseEpicIntroState == 5 then -- ShowInfo
         -- print("state 5")
-        print(ShowInfoCounter)
-        ShowInfoCounter = ShowInfoCounter + FPSManager.GetDT()
-        if moveFast then moveFast = MoveEpicIntroUI(epicIntroUI, true, true, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, false, true, true) and ShowInfoCounter > ShowInfoMinTime then _G.TrojanHorseEpicIntroState = 6 end
+        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+        local minTimeReached = false
+        if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
+        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
+            MoveEpicIntroUI(epicIntroUI, 4.45, true, true)
+            BGM:GetAudio():SetPause()
+            if epicTrojanHorsePlayed == false then 
+                epicTrojanHorseAudio:GetAudio():SetPlay(1.0)
+                epicTrojanHorsePlayed = true
+            end
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) and minTimeReached then _G.TrojanHorseEpicIntroState = 6 end
 
         -- print("_G.TrojanHorseEpicIntroState == 5")
 
@@ -384,7 +427,7 @@ function RunTrojanHorseEpicIntro()
         -- When time's up, quickly retreat the info with same diagonality
     elseif _G.TrojanHorseEpicIntroState == 6 then -- HideInfo
         -- print("state 6")
-        if not MoveEpicIntroUI(epicIntroUI, true, true, false) then _G.TrojanHorseEpicIntroState = 7 end
+        if not MoveEpicIntroUI(epicIntroUI, 4, true, false) then _G.TrojanHorseEpicIntroState = 7 end
         -- Retracts the TrojanHorseInfo UI quickly
     elseif _G.TrojanHorseEpicIntroState == 7 then -- FloorZoomOut
         -- print("state 7")
@@ -397,6 +440,7 @@ function RunTrojanHorseEpicIntro()
             retractBlackBorder = true
             epicTrojanHorse:GetAnimator():UnpauseAnimation()
             ShowUI()
+            BGM:GetAudio():SetResume()
             _G.completedEpicTH = true
         end
 
@@ -417,7 +461,7 @@ function InitTSEpicIntro()
     -- THFlyViewPosition1 = Vec3.new(134.6, -11.2, 0)
     -- THFlyViewPosition2 = Vec3.new(108, 1, 0)
     -- THdashStopTimerCount = 0
-    -- ShowInfoCounter = 0
+    -- ShowInfoSlowdownCounter = 0
     -- THLedgeStopLooking = false
     -- THFlyViewPosition1Finish = true
     -- THFlyViewPosition2Finish = true
@@ -455,6 +499,7 @@ function RunTSEpicIntro()
     end
 
     if _G.TSEpicIntroState == 1 then -- Move to start pos
+        BGM:GetAudio():UpdateVolume(0.2)   -- [M5] soften the bgm (temporarily for into)
         if not MoveTo(player, TSPlatform:GetTransform().mTranslate, 100) then
             -- print("finish moving")
             -- Finished moving
@@ -507,13 +552,19 @@ function RunTSEpicIntro()
         end 
         LookTowardsInterpolation(player, Helper.Vec3Minus(TSView1, Vec3.new(179,0,0)), 5.25)
     elseif _G.TSEpicIntroState == 11 then -- ShowInfo 
-        ShowInfoCounter = ShowInfoCounter + FPSManager.GetDT()
-        print(ShowInfoCounter)
-        if moveFast then moveFast = MoveEpicIntroUI(epicIntroUI, true, false, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, false, false, true) and ShowInfoCounter > ShowInfoMinTime then _G.TSEpicIntroState = 12 end
-
+        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+        local minTimeReached = false
+        if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
+        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
+            MoveEpicIntroUI(epicIntroUI, 4.4, false, true)
+            if epicTSPlayed == false then 
+                BGM:GetAudio():SetPause()
+                epicTSAudio:GetAudio():SetPlay(1.0) -- [3/14] M5 added
+                epicTSPlayed = true
+            end
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and minTimeReached then _G.TSEpicIntroState = 12 end
     elseif _G.TSEpicIntroState == 12 then -- Hideinfo
-            if not MoveEpicIntroUI(epicIntroUI, true, false, false) then _G.TSEpicIntroState = 13 end
+            if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.TSEpicIntroState = 13 end
     elseif _G.TSEpicIntroState == 13 then -- Zoom Out
         if (not ZoomCamTo(player, defaultZoom, 150)) then
             _G.TSEpicIntroState = 0
@@ -521,6 +572,9 @@ function RunTSEpicIntro()
             retractBlackBorder = true
             ShowUI()
             AddScriptToTS()
+            BGM:GetAudio():UpdateVolume(0.4) -- [M5] Revert back to original volume
+            BGM:GetAudio():SetResume()
+            print("TROJAN SOLDIER AUDIO")
             _G.completedEpicTS = true
         end
     end
@@ -571,6 +625,7 @@ function RunILYEpicIntro()
 
     if _G.ILYEpicIntroState == 1 then -- Move to start pos and dwactivate ILY
         if not MoveTo(player, ILYPlatform:GetTransform().mTranslate, 100) then
+            BGM:GetAudio():UpdateVolume(0.2)
             _G.ILYEpicIntroState = 100 -- To keep ILY waiting
             systemManager.ecs:SetDeleteEntity(ILYPlatform)
             epicILY:GetScripts():AddScript(epicILY, "..\\assets\\Scripts\\EpicIntroILY.lua")
@@ -594,12 +649,20 @@ function RunILYEpicIntro()
     elseif _G.ILYEpicIntroState == 4 then -- Zoom into ILY
         if not ZoomCamTo(player, ILYZoomValue, 100) then _G.ILYEpicIntroState = 5 end
     elseif _G.ILYEpicIntroState == 5 then -- Show Info
-        ShowInfoCounter = ShowInfoCounter + FPSManager.GetDT()
-        print(ShowInfoCounter)
-        if moveFast then moveFast = MoveEpicIntroUI(epicIntroUI, true, false, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, false, false, true) and ShowInfoCounter > ShowInfoMinTime then _G.ILYEpicIntroState = 6 end
+        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+        local minTimeReached = false
+        if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
+        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
+            MoveEpicIntroUI(epicIntroUI, 4.3, false, true)
+            BGM:GetAudio():SetPause()
+            if epicILOVEYOUPlayed == false then 
+                epicILOVEYOUaudio:GetAudio():SetPlay(1.0)
+                
+                epicILOVEYOUPlayed = true
+            end
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and minTimeReached then _G.ILYEpicIntroState = 6 end
     elseif _G.ILYEpicIntroState == 6 then -- Hide Info
-        if not MoveEpicIntroUI(epicIntroUI, true, false, false) then _G.ILYEpicIntroState = 7 end
+        if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.ILYEpicIntroState = 7 end
     elseif _G.ILYEpicIntroState == 7 then -- Zoom out and resume game
         if (not ZoomCamTo(player, defaultZoom, 100)) then
             _G.ILYEpicIntroState = 0
@@ -607,6 +670,7 @@ function RunILYEpicIntro()
             retractBlackBorder = true
             epicILY:GetAnimator():UnpauseAnimation()
             ShowUI()
+            BGM:GetAudio():SetResume()
             _G.completedEpicILY = true
         end
     end
@@ -646,6 +710,7 @@ function RunZBEpicIntro()
     --print(_G.ZBEpicIntroState)
 
     if _G.ZBEpicIntroState == 1 then -- Move to start pos
+        BGM:GetAudio():UpdateVolume(0.2)
         if not MoveTo(player, ZBPlatform:GetTransform().mTranslate, 150) then
             _G.ZBEpicIntroState = 2 -- To keep ZB waiting
             systemManager.ecs:SetDeleteEntity(ZBPlatform)
@@ -672,27 +737,34 @@ function RunZBEpicIntro()
             _G.ZBEpicIntroState = 6 
         end
     elseif _G.ZBEpicIntroState == 6 then -- ShowInfo
-        ShowInfoCounter = ShowInfoCounter + FPSManager.GetDT()
+        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
 
-        if ZBRunOnce and (ShowInfoCounter < 0.25) then
+        if ZBRunOnce and (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
             ZBRunOnce = false
             gameStateSys:GetEntity("ZipBombFuseAudio"):GetAudio():SetPlay()
             epicZB:GetAnimator():PauseAnimation()
             -- epicZB:GetAudio():SetStop()
         end
 
-        print(ShowInfoCounter)
-        if moveFast then moveFast = MoveEpicIntroUI(epicIntroUI, true, true, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, false, true, true) and ShowInfoCounter > ShowInfoMinTime then _G.ZBEpicIntroState = 7 end
+        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then 
+            MoveEpicIntroUI(epicIntroUI, 4.25, true, true)
+            if epicZipBombPlayed == false then 
+                BGM:GetAudio():SetPause()
+                epicZipBombAudio:GetAudio():SetPlay(1.0)
+                epicZipBombPlayed = true
+            end
 
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) and
+               ShowInfoSlowdownCounter > ShowInfoMinTime then _G.ZBEpicIntroState = 7 end
     elseif _G.ZBEpicIntroState == 7 then -- HideInfo
-        if not MoveEpicIntroUI(epicIntroUI, true, true, false) then 
+        if not MoveEpicIntroUI(epicIntroUI, 4, true, false) then 
             _G.ZBEpicIntroState = 0
             _G.FreezePlayerControl = false
             retractBlackBorder = true
             epicZB:GetAnimator():UnpauseAnimation()
             epicZB:GetAudio():SetPlay()
             ShowUI()
+            BGM:GetAudio():SetResume()
             _G.completedEpicZB = true
         end
     end
@@ -731,6 +803,7 @@ function RunMEpicIntro()
     --print(_G.MEpicIntroState)
 
     if _G.MEpicIntroState == 1 then -- Move to start pos
+        BGM:GetAudio():UpdateVolume(0.2)
         if not MoveTo(player, MPos1, 100) then
             _G.MEpicIntroState = 2 -- To keep M waiting
         end
@@ -758,12 +831,19 @@ function RunMEpicIntro()
             _G.MEpicIntroState = 5 
         end
     elseif _G.MEpicIntroState == 5 then -- ShowInfo
-        ShowInfoCounter = ShowInfoCounter + FPSManager.GetDT()
-        print(ShowInfoCounter)
-        if moveFast then moveFast = MoveEpicIntroUI(epicIntroUI, true, false, true)
-        elseif not MoveEpicIntroUI(epicIntroUI, false, false, true) and ShowInfoCounter > ShowInfoMinTime then _G.MEpicIntroState = 6 end
+        ShowInfoSlowdownCounter = ShowInfoSlowdownCounter + FPSManager.GetDT()
+
+        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then 
+            MoveEpicIntroUI(epicIntroUI, 4.65, false, true)
+            BGM:GetAudio():SetPause()
+            if epicMelissaPlayed == false then 
+                epicMelissaAudio:GetAudio():SetPlay(1.0)
+                epicMelissaPlayed = true
+            end
+        elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and
+               ShowInfoSlowdownCounter > ShowInfoMinTime then _G.MEpicIntroState = 6 end
     elseif _G.MEpicIntroState == 6 then -- HideInfo
-        if not MoveEpicIntroUI(epicIntroUI, true, false, false) then _G.MEpicIntroState = 7 end
+        if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.MEpicIntroState = 7 end
     elseif _G.MEpicIntroState == 7 then -- zoom out and resume game
         if (not ZoomCamTo(player, defaultZoom, 100)) then
             _G.MEpicIntroState = 0
@@ -771,6 +851,7 @@ function RunMEpicIntro()
             retractBlackBorder = true
             epicM:GetAnimator():UnpauseAnimation()
             ShowUI()
+            BGM:GetAudio():SetResume()
             _G.completedEpicM = true
         end
     end
@@ -790,8 +871,7 @@ end
 function GeneralSetup()
     insertBlackBorder = true
     _G.FreezePlayerControl = true
-    ShowInfoCounter = 0
-    moveFast = true
+    ShowInfoSlowdownCounter = 0
     HideUI()
 end
 
@@ -989,22 +1069,18 @@ function ShowUI()
 end
 
 -- Take in targeted UI position
-function MoveEpicIntroUI(entity, fastSpeed, isRight, isShow)
+function MoveEpicIntroUI(entity, speed, isRight, isShow)
 
     local x = entity:GetTransform().mTranslate.x
-    local delta = 0
-    if fastSpeed then delta = showFastSpeed*FPSManager.GetDT() else delta = showSlowSpeed*FPSManager.GetDT() end
-
+    local delta = speed*FPSManager.GetDT()
     -- print(delta)
     local keepRunning = true
     -- print(x)
     if isRight then
         if isShow then
             x = x - delta
-            local showPos = 0
-            if fastSpeed then showPos = showRightEpicUImidPos else showPos = showRightEpicUIPos end
-            if x < showPos then 
-                x = showPos
+            if x < showRightEpicUIPos then 
+                x = showRightEpicUIPos
                 keepRunning = false
             end
         else
@@ -1017,10 +1093,8 @@ function MoveEpicIntroUI(entity, fastSpeed, isRight, isShow)
     else
         if isShow then
             x = x + delta
-            local showPos = 0
-            if fastSpeed then showPos = showLeftEpicUImidPos else showPos = showLeftEpicUIPos end
-            if x > showPos then 
-                x = showPos
+            if x > showLeftEpicUIPos then 
+                x = showLeftEpicUIPos
                 keepRunning = false
             end
         else

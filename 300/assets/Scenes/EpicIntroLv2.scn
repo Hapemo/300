@@ -1,6 +1,44 @@
 [
     {
-        "entityid": 1048769,
+        "entityid": 11534627,
+        "general": {
+            "name": "ZipBombEpicAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Zipbomb_Intro.wav",
+            "fullpath": "../assets\\Audio/Zipbomb_Intro.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 12582937,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 8,
@@ -36,14 +74,15 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         },
         "prefab": {
             "prefab": "ZipBombFuseAudio"
         }
     },
     {
-        "entityid": 1048770,
+        "entityid": 12582940,
         "general": {
             "name": "MEpicIntroInfoUI",
             "tagid": 6,
@@ -84,7 +123,7 @@
         }
     },
     {
-        "entityid": 1048771,
+        "entityid": 12582944,
         "general": {
             "name": "EpicMelissa",
             "tagid": 1,
@@ -182,7 +221,8 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         },
         "prefab": {
             "prefab": "Melissa"
@@ -221,7 +261,7 @@
         }
     },
     {
-        "entityid": 1048772,
+        "entityid": 12582945,
         "general": {
             "name": "EpicIntroManagerlv2",
             "tagid": 8,
@@ -256,7 +296,7 @@
         }
     },
     {
-        "entityid": 1048773,
+        "entityid": 12582946,
         "general": {
             "name": "ZBEpicIntroInfoUI",
             "tagid": 6,
@@ -297,7 +337,7 @@
         }
     },
     {
-        "entityid": 1048774,
+        "entityid": 12582948,
         "general": {
             "name": "EpicZipBomb",
             "tagid": 1,
@@ -398,7 +438,8 @@
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
-            "retainaudio": false
+            "retainaudio": false,
+            "panaudio": false
         },
         "aisetting": {
             "movementtype": 2,
@@ -469,7 +510,7 @@
         }
     },
     {
-        "entityid": 1048775,
+        "entityid": 12582949,
         "general": {
             "name": "ZipBombEpicTrigger",
             "tagid": 8,
@@ -533,7 +574,7 @@
         }
     },
     {
-        "entityid": 1048776,
+        "entityid": 12582953,
         "general": {
             "name": "MelissaEpicTrigger",
             "tagid": 8,
@@ -597,7 +638,7 @@
         }
     },
     {
-        "entityid": 1048777,
+        "entityid": 12582963,
         "general": {
             "name": "TopBlackBorder",
             "tagid": 6,
@@ -638,7 +679,7 @@
         }
     },
     {
-        "entityid": 1048778,
+        "entityid": 12582964,
         "general": {
             "name": "BottomBlackBorder",
             "tagid": 6,
@@ -679,7 +720,7 @@
         }
     },
     {
-        "entityid": 1048779,
+        "entityid": 12582967,
         "general": {
             "name": "ILYEffectScreen",
             "tagid": 6,
@@ -731,7 +772,7 @@
         }
     },
     {
-        "entityid": 1048780,
+        "entityid": 12582968,
         "general": {
             "name": "UIHider",
             "tagid": 6,
@@ -769,6 +810,44 @@
             },
             "layer": 10,
             "worldtransform": false
+        }
+    },
+    {
+        "entityid": 12582971,
+        "general": {
+            "name": "MelissaEpicAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Melissa_Intro.wav",
+            "fullpath": "../assets\\Audio/Melissa_Intro.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
         }
     }
 ]

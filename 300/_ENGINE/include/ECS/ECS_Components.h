@@ -573,6 +573,7 @@ struct Audio : public Serializable
 	glm::vec3      mPosition = { 0.0,0.0,0.0 };
 	glm::vec3	   mVelocity = { 0.0,0.0,0.0 };
 
+
 	// Do not serialize 
 	// ------------------------------------------
 	STATE          mState = STATE::STARTUP;		        // Initial State - Startup 
@@ -665,6 +666,28 @@ struct Audio : public Serializable
 	// Fade Volume Stuff
 	float fade_timer = 0.0f;							 // How long the fade has elapsed
 	float fade_duration = 5.0f;							 // How long to fade...
+
+
+	// [M5 - 13/3] Panning Feature - Left-Right Audio 
+	//  - Ideally for audio that is attached to the player. 
+	// [TODO] 1. Container to support multiple audio files? (Left - Right)
+	//		 
+	bool		   mPanAudio = false;
+	float		   mPanBalance = 0.0f;
+	float		   mPanSpeed = 0.0f;	// irrelevant for now
+
+	// Contains the [file paths] + [file names] 8 different footsteps noises (only for use cases like this)
+	// - 
+
+	//// [M5 - 13/3] Multi-Audio support
+	//// (?) - but each audio file should have an internal state right
+	//// Serialize these
+	//std::vector<std::string> mFilePaths;
+	//std::vector<std::string> mFileNames;
+	//std::vector<bool>		 mAudioActiveStates;    // Keeps track of whether each audio file is active or not
+
+	//// Do not serialize
+	//std::vector<uid>		 mChannelIDs;		    // Keeps track of each audio file and which ID they're playing on.
 
 	Audio() : mFilePath(""), mFileName(""), mAudioType(AUDIO_SFX), mIsEmpty(true)
 	{

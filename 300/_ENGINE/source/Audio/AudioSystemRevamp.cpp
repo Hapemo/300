@@ -123,10 +123,7 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		Transform& transform = audio.GetComponent<Transform>(); // need to update "mPreviousPosition" for 
 		General& general = audio.GetComponent<General>();
 
-		if (general.name == "DialogueObjectiveIntro1" && audio_component.mNextActionState == Audio::SET_TO_PLAY)
-		{
-			std::string temp = "";
-		}
+
 		// Set 3D Flag
 		if (audio_component.mFileName.find("3D") != std::string::npos)
 		{
@@ -155,10 +152,7 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		// On Awake Play (Check once only)
 		if (audio_component.mState == Audio::STARTUP)
 		{	
-			if (audio_component.mFileName == "Player_BasicGun")
-			{
-				std::cout << "PLAYER BASIC GUN" << std::endl;
-			}
+		
 			if (audio_component.mPlayonAwake)
 			{
 				audio_component.mNextActionState = Audio::SET_TO_PLAY;
@@ -197,11 +191,17 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 
 		UpdateVolume(audio_component.mChannelID, audio_component.mAudioType, audio_component.mVolume * global_modifier);
 
+		// Check for panning updates
+		if (audio_component.mPanAudio)
+		{
+			UpdatePanning(&audio_component);
+		}
+
 		switch (audio_component.mNextActionState)
 		{
 			case Audio::SET_TO_PLAY:
 
-			/*	if (audio_component.mFileName == "Player_BasicGun.wav")
+			/*	if (audio_component.mFileName == "Player_Movement_Walk.wav")
 				{
 					int i = 0;
 				}*/
@@ -219,8 +219,8 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 
 					if (audio.GetComponent<Audio>().mFileName == "VO_Tutorial_ObjectiveIntro.wav") {
 						std::string name = audio.GetComponent<General>().name;
-					}
 
+					}
 
 					PINFO("AUDIO EXISTS");
 					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName.c_str(), audio_component.mVolume);
@@ -1054,6 +1054,32 @@ void AudioSystem::ClearFinishedSounds()
 			}
 		}
 	}
+}
+
+void AudioSystem::UpdatePanning(Audio* audio_component)
+{
+	std::vector<std::pair<uid, FMOD::Channel*>> sfx_or_bgm = mChannels[audio_component->mAudioType];
+
+	for (auto& channel_pair : sfx_or_bgm)
+	{
+		if (channel_pair.first == audio_component->mChannelID)
+		{
+			FMOD::Sound* current_sound;
+			channel_pair.second->getCurrentSound(&current_sound);
+
+			if (current_sound)  // not empty..
+			{
+				channel_pair.second->setPan(audio_component->mPanBalance); 
+			}
+		}
+	}
+
+	//switch (audio_component->mAudioType)
+	//{
+	//	case AUDIOTYPE::AUDIO_BGM:
+
+	//	case AUDIOTYPE::AUDIO_SFX:
+	//}
 }
 
 bool AudioSystem::IsChannelPlaying(uid id, AUDIOTYPE type)

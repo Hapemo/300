@@ -183,6 +183,26 @@ local maxFilterRadius = 0.05
 local dmgAudioEnt 
 local dmgAudioComp
 
+-- [M5] - Footsteps
+local leftFootsteps = {}
+local footstep_left_1 
+local footstep_left_2
+local footstep_left_3
+local footstep_left_4
+
+local rightFootsteps = {}
+local footstep_right_1
+local footstep_right_2
+local footstep_right_3
+local footstep_right_4
+
+local currentFootstep = "Left"
+local footstepTimer   = 0
+local footstepDelay   = 0.5     -- Delay between each step
+local currentLeftIndex = 1      -- Used to keep track which track is being played (in the left footstep database)   -> lua starts from 1
+local currentRightIndex = 1     -- Used to keep track which track is being played (in the right footstep database)  -> lua starts from 1
+
+
 _G.FreezePlayerControl = false
 
 function Alive()
@@ -269,6 +289,30 @@ function Alive()
 
     -- Shotgun Stuff -- ==--==
    
+
+    -- Footsteps stuff
+    footstep_left_1 = gameStateSys:GetEntity("Footstep_Left_1")
+    footstep_left_2 = gameStateSys:GetEntity("Footstep_Left_2")
+    footstep_left_3 = gameStateSys:GetEntity("Footstep_Left_3")
+    footstep_left_4 = gameStateSys:GetEntity("Footstep_Left_4")
+    
+    table.insert(leftFootsteps , footstep_left_1)
+    table.insert(leftFootsteps , footstep_left_2)
+    table.insert(leftFootsteps , footstep_left_3)
+    table.insert(leftFootsteps , footstep_left_4)
+
+    footstep_right_1 = gameStateSys:GetEntity("Footstep_Right_1")
+    footstep_right_2 = gameStateSys:GetEntity("Footstep_Right_2")
+    footstep_right_3 = gameStateSys:GetEntity("Footstep_Right_3")
+    footstep_right_4 = gameStateSys:GetEntity("Footstep_Right_4")
+
+    table.insert(rightFootsteps , footstep_right_1)
+    table.insert(rightFootsteps , footstep_right_2)
+    table.insert(rightFootsteps , footstep_right_3)
+    table.insert(rightFootsteps , footstep_right_4)
+
+    print("LEFT FOOTSTEP DATABASE: " , #leftFootsteps)
+    print("RIGHT FOOTSTEP DATABASE: " , #rightFootsteps)
 
 end
 
@@ -543,7 +587,7 @@ function Update()
        
 
          
-
+        UpdateFootstepDelayTimer()
 -- region (snapback)
             -- print("GUN RECOIL STATE: ", gunRecoilState)
             if (gunRecoilState == "IDLE") then
@@ -601,7 +645,7 @@ function Update()
             end
 
             -- walkingAudioComp:UpdateVolume(0.0)
-            this:GetAudio():UpdateVolume(0.0)
+            -- this:GetAudio():UpdateVolume(0.0)
 
             if (inputMapSys:GetButton("up")) then
                 movement.x = movement.x + (viewVec.x * mul);
@@ -612,7 +656,8 @@ function Update()
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
+                playFootsteps()
+                -- this:GetAudio():UpdateVolume(0.2)
 
                 gunRecoilState = "MOVING"
             end
@@ -626,7 +671,7 @@ function Update()
                     gunTranslate.y = gunTranslate.y + gunDisplaceSpeed
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
+                playFootsteps()
 
                 gunRecoilState = "MOVING"
             end
@@ -640,7 +685,7 @@ function Update()
                     gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
+                playFootsteps()
 
                 gunRecoilState = "MOVING"
     
@@ -655,8 +700,7 @@ function Update()
                     gunTranslate.x = gunTranslate.x - gunDisplaceSpeed
                 end
 
-                this:GetAudio():UpdateVolume(0.2)
-
+                playFootsteps()
                 gunRecoilState = "MOVING"
 
             end
@@ -951,7 +995,9 @@ function OnTriggerEnter(Entity)
     end
 
     if (generalComponent.name == "ILOVEYOU" or generalComponent.name == "Melissa" or generalComponent.name == "TrojanHorse"
-    or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" or generalComponent.name == "BigTrojanSoldier")then
+    or generalComponent.name == "ZipBomb" or generalComponent.name == "TrojanSoldier" or generalComponent.name == "BigTrojanSoldier" 
+    or generalComponent.name == "EpicTrojanSoldier1" or generalComponent.name == "EpicTrojanSoldier2" or generalComponent.name == "EpicTrojanSoldier3" or generalComponent.name == "EpicTrojanSoldier4" -- temp to test audio
+    )then
 
         dmgAudioComp:SetPlay(1.0)
         -- print("DAMAGE CD: " , DamageCD)
@@ -1272,4 +1318,38 @@ end
 function setYellowGunTexture(color_vec4)
     gunMeshRenderer:SetTexture(MaterialType.DIFFUSE, "Gun_Base_Color_Brown")
     gunMeshRenderer:SetColor(color_vec4)
+end
+
+-- [M5]
+
+function playFootsteps()
+    if footstepTimer >= footstepDelay then
+        if currentFootstep == "Left" then 
+
+            if currentLeftIndex > 4 then 
+                currentLeftIndex = 1
+            end
+            -- Play Left footstep sounds 
+            leftFootsteps[currentLeftIndex]:GetAudio():SetPlay(1.0)
+            print("PLAYING LEFT FOOTSTEP: " , currentLeftIndex)
+            currentLeftIndex = currentLeftIndex + 1
+            currentFootstep = "Right"
+        else
+            if currentRightIndex > 4 then 
+                currentRightIndex = 1
+            end
+            -- Play Right footstep 
+            rightFootsteps[currentRightIndex]:GetAudio():SetPlay(1.0)
+            print("PLAYING RIGHT FOOTSTEP: " , currentRightIndex)
+            currentRightIndex = currentRightIndex + 1
+            currentFootstep = "Left"
+        end
+            footstepTimer = 0                                           -- Reset Timer
+    end
+end
+
+
+
+function UpdateFootstepDelayTimer()
+    footstepTimer = footstepTimer + FPSManager.GetDT()
 end
