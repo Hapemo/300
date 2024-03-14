@@ -9,7 +9,7 @@ local ent
 
 -- [5] Lazer Attack 
 local lazer_timer = 0 
-local lazer_duration = 5.0
+local lazer_duration = 100
 
 local laser_phase 
 local laserPhaseAudio 
