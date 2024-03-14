@@ -98,7 +98,7 @@ function Update()
 
     if (gammaDecrease:GetButton().mActivated) then
         clickSFX:SetPlay(1.0)
-        if (graphicssys:Getm_Gamma() > 0) then
+        if (graphicssys:Getm_Gamma() > 1) then
             local roundedNewVol = tonumber(string.format("%.1f", graphicssys:Getm_Gamma() - 0.1))
             gammaFull:GetUIrenderer():SetSlider(roundedNewVol / 4.0);
             graphicssys:Setm_Gamma(roundedNewVol);
