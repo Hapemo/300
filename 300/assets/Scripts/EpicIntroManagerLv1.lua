@@ -187,6 +187,9 @@ local epicTSPlayed = false
 
 local BGM
 
+local epicTrojanHorseAudio 
+local epicTrojanHorsePlayed = false
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then print("Entity nil in script!") end
@@ -217,6 +220,7 @@ function Alive()
     -- [M5] Epic Intro (Soundtrack)
     epicTSAudio = gameStateSys:GetEntityByScene("SoldierEpicAudio", "EpicIntroLv1")
     BGM   = gameStateSys:GetEntity("BGM")
+    epicTrojanHorseAudio = gameStateSys:GetEntityByScene("TrojanHorseEpicAudio" , "EpicIntroLv1")
 
     if BGM == nil then 
         print("BGM FAILED")
@@ -341,6 +345,7 @@ end
 
 function RunTrojanHorseEpicIntro()
     if _G.TrojanHorseEpicIntroState == 1 then -- MoveToStartPos
+        BGM:GetAudio():UpdateVolume(0.2)   -- [M5] soften the bgm (temporarily for into)
         -- print("_G.TrojanHorseEpicIntroState == 1")
         if not MoveTo(player, trojanHorsePlatform:GetTransform().mTranslate, 100) then
             -- print("finish moving")
@@ -394,6 +399,11 @@ function RunTrojanHorseEpicIntro()
         if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
         if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
             MoveEpicIntroUI(epicIntroUI, 4.45, true, true)
+            BGM:GetAudio():SetPause()
+            if epicTrojanHorsePlayed == false then 
+                epicTrojanHorseAudio:GetAudio():SetPlay(1.0)
+                epicTrojanHorsePlayed = true
+            end
         elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) and minTimeReached then _G.TrojanHorseEpicIntroState = 6 end
 
         -- print("_G.TrojanHorseEpicIntroState == 5")
@@ -418,6 +428,7 @@ function RunTrojanHorseEpicIntro()
             retractBlackBorder = true
             epicTrojanHorse:GetAnimator():UnpauseAnimation()
             ShowUI()
+            BGM:GetAudio():SetResume()
             _G.completedEpicTH = true
         end
 
