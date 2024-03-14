@@ -189,6 +189,8 @@ local footstepDelay   = 0.5     -- Delay between each step
 local currentLeftIndex = 1      -- Used to keep track which track is being played (in the left footstep database)   -> lua starts from 1
 local currentRightIndex = 1     -- Used to keep track which track is being played (in the right footstep database)  -> lua starts from 1
 
+local walking_state = "NOT_WALKING"
+
 _G.FreezePlayerControl = false
 
 function Alive()
@@ -539,7 +541,16 @@ function Update()
         end
    
 -- end of Toggle Weapons
-        
+        print("WALKING STATE: " , walking_state)
+                    
+        UpdateFootstepDelayTimer()           
+
+        if walking_state == "WALKING" then 
+            playFootsteps()
+            walking_state = "DONE"
+        else
+            stopFootsteps()
+        end
 
         if (inputMapSys:GetButtonDown("Dash")) then
             if (dashTime > 3.0) then
@@ -552,8 +563,7 @@ function Update()
        
 
          
-         
-            UpdateFootstepDelayTimer()              
+    
 -- region (snapback)
             -- print("GUN RECOIL STATE: ", gunRecoilState)
             if (gunRecoilState == "IDLE") then
@@ -623,9 +633,9 @@ function Update()
                 if(gunTranslate.y > gunThreshHold_min_y) then 
                     gunTranslate.y = gunTranslate.y - gunDisplaceSpeed
                 end
-
-                playFootsteps()
-
+                if walking_state ~= "JUMPING" then 
+                    walking_state = "WALKING"
+                end
                 gunRecoilState = "MOVING"
             end
             if (inputMapSys:GetButton("down")) then
@@ -638,7 +648,9 @@ function Update()
 
                 end
 
-                playFootsteps()
+                if walking_state ~= "JUMPING" then 
+                     walking_state = "WALKING"
+                end
 
                 gunRecoilState = "MOVING"
             end
@@ -651,8 +663,10 @@ function Update()
                     gunTranslate.x = gunTranslate.x + gunDisplaceSpeed
                 end
 
-                playFootsteps()
-                
+                if walking_state ~= "JUMPING" then 
+                    walking_state = "WALKING"
+                end
+
                 gunRecoilState = "MOVING"
     
             end
@@ -669,7 +683,9 @@ function Update()
                     -- end
                 end
 
-                playFootsteps()
+                if walking_state ~= "JUMPING" then 
+                    walking_state = "WALKING"
+                end
 
                 gunRecoilState = "MOVING"
 
@@ -678,8 +694,12 @@ function Update()
             if (inputMapSys:GetButtonDown("Jump") and math.abs(movement.y) < 3.05) then
                 movement.y = movement.y + 25.0;
                 gunRecoilState = "MOVING"
+                walking_state = "JUMPING"
                 gunJumped = true
                 jumpAudioComp:SetPlay(0.4)
+
+                -- stopFootsteps()
+                print("STOPPING FOOTSTEP")
             end
 
             if(gunJumped == true) then  -- this loop will drop the gun (dip)
@@ -693,10 +713,9 @@ function Update()
                     gunJumped = false
                 end
             end
-
-
-          
         end
+
+  
 
 -- region (Gun Colors)
     if(_G.gunEquipped == 0) then 
@@ -1275,6 +1294,23 @@ function playFootsteps()
             currentFootstep = "Left"
         end
             footstepTimer = 0                                           -- Reset Timer
+    end
+end
+
+function stopFootsteps()
+
+    local previousFootstep
+    if currentFootstep == "Left" then 
+        previousFootstep = "Right"
+    else 
+        previousFootstep = "Left"
+    end
+
+
+    if previousFootstep == "Left" then 
+        leftFootsteps[currentLeftIndex - 1]:GetAudio():SetStop()
+    else 
+        rightFootsteps[currentRightIndex - 1]:GetAudio():SetStop()
     end
 end
 
