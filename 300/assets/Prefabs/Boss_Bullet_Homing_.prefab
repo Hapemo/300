@@ -1,7 +1,7 @@
 {
-    "entityid": 1048606,
+    "entityid": 1048600,
     "general": {
-        "name": "Boss_Bullet_Homing",
+        "name": "Boss_Bullet_Homing_",
         "tagid": 1,
         "subtag": 0,
         "isActive": true,
@@ -15,19 +15,19 @@
         },
         "rotate": {
             "x": 0.0,
-            "y": 90.0,
+            "y": 0.0,
             "z": 0.0
         },
         "translate": {
-            "x": 11.322985649108887,
-            "y": 17.562259674072266,
-            "z": 14.885177612304688
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
         }
     },
     "rigidbody": {
         "density": 10.0,
         "material": 1,
-        "motion": 1,
+        "motion": 0,
         "velocity": {
             "x": 0.0,
             "y": 0.0,
@@ -38,7 +38,7 @@
             "y": false,
             "z": false
         },
-        "gravity": false
+        "gravity": true
     },
     "meshrenderer": {
         "vert": "../assets/shader_files/pointLight_vert.glsl",
@@ -76,19 +76,6 @@
         ]
     },
     "animator": {},
-    "boxcollider": {
-        "scaleoffset": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0
-        },
-        "translateoffset": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-        },
-        "istrigger": true
-    },
     "scripts": {
         "scriptscontainer": [
             {
@@ -98,30 +85,6 @@
         ]
     },
     "prefab": {
-        "prefab": "Boss_Bullet_Homing"
-    },
-    "healthbar": {
-        "healthcolor": {
-            "x": 0.0,
-            "y": 1.0,
-            "z": 0.0,
-            "w": 1.0
-        },
-        "backcolor": {
-            "x": 1.0,
-            "y": 0.0,
-            "z": 0.0,
-            "w": 1.0
-        },
-        "position": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
-        },
-        "maxhealth": 50.0,
-        "width": 0.0,
-        "height": 0.0,
-        "frametexture": 0,
-        "healthtexture": 0
+        "prefab": "Boss_Bullet_Homing_"
     }
 }
