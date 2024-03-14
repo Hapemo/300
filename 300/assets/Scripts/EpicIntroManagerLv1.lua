@@ -190,6 +190,9 @@ local BGM
 local epicTrojanHorseAudio 
 local epicTrojanHorsePlayed = false
 
+local epicZipBombAudio
+local epicZipBombPlayed = false
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then print("Entity nil in script!") end
@@ -221,6 +224,7 @@ function Alive()
     epicTSAudio = gameStateSys:GetEntityByScene("SoldierEpicAudio", "EpicIntroLv1")
     BGM   = gameStateSys:GetEntity("BGM")
     epicTrojanHorseAudio = gameStateSys:GetEntityByScene("TrojanHorseEpicAudio" , "EpicIntroLv1")
+    epicZipBombAudio = gameStateSys:GetEntityByScene("ZipBombEpicAudio" , "EpicIntroLv2")
 
     if BGM == nil then 
         print("BGM FAILED")
@@ -690,6 +694,7 @@ function RunZBEpicIntro()
     --print(_G.ZBEpicIntroState)
 
     if _G.ZBEpicIntroState == 1 then -- Move to start pos
+        BGM:GetAudio():UpdateVolume(0.2)
         if not MoveTo(player, ZBPlatform:GetTransform().mTranslate, 150) then
             _G.ZBEpicIntroState = 2 -- To keep ZB waiting
             systemManager.ecs:SetDeleteEntity(ZBPlatform)
@@ -725,7 +730,14 @@ function RunZBEpicIntro()
             -- epicZB:GetAudio():SetStop()
         end
 
-        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then MoveEpicIntroUI(epicIntroUI, 4.25, true, true)
+        if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then 
+            MoveEpicIntroUI(epicIntroUI, 4.25, true, true)
+            if epicZipBombPlayed == false then 
+                BGM:GetAudio():SetPause()
+                epicZipBombAudio:GetAudio():SetPlay(1.0)
+                epicZipBombPlayed = true
+            end
+
         elseif not MoveEpicIntroUI(epicIntroUI, 0.01, true, true) and
                ShowInfoSlowdownCounter > ShowInfoMinTime then _G.ZBEpicIntroState = 7 end
     elseif _G.ZBEpicIntroState == 7 then -- HideInfo
@@ -736,6 +748,7 @@ function RunZBEpicIntro()
             epicZB:GetAnimator():UnpauseAnimation()
             epicZB:GetAudio():SetPlay()
             ShowUI()
+            BGM:GetAudio():SetResume()
             _G.completedEpicZB = true
         end
     end
