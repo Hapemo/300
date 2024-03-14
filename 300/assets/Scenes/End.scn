@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048705,
+        "entityid": 10485785,
         "general": {
             "name": "Cutscene_BGM",
             "tagid": 8,
@@ -38,7 +38,7 @@
         }
     },
     {
-        "entityid": 2097282,
+        "entityid": 11534362,
         "general": {
             "name": "SkipButtonE",
             "tagid": 0,
@@ -108,7 +108,7 @@
         }
     },
     {
-        "entityid": 2097283,
+        "entityid": 11534365,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -152,7 +152,7 @@
         }
     },
     {
-        "entityid": 2097284,
+        "entityid": 11534366,
         "general": {
             "name": "EndSceneController",
             "tagid": 8,
@@ -187,7 +187,7 @@
         }
     },
     {
-        "entityid": 2097285,
+        "entityid": 11534368,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -224,7 +224,7 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1223,
+                "x": 1308,
                 "y": 583
             },
             "near": 0.10000000149011612,
@@ -232,7 +232,7 @@
         }
     },
     {
-        "entityid": 2097286,
+        "entityid": 13631521,
         "general": {
             "name": "Frame1E",
             "tagid": 6,
@@ -266,14 +266,14 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": -0.004999801050871611
             },
             "layer": 6,
             "worldtransform": false
         }
     },
     {
-        "entityid": 2097287,
+        "entityid": 13631522,
         "general": {
             "name": "Frame2E",
             "tagid": 6,
@@ -307,14 +307,14 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 5,
             "worldtransform": false
         }
     },
     {
-        "entityid": 2097288,
+        "entityid": 13631524,
         "general": {
             "name": "Frame3E",
             "tagid": 6,
@@ -355,7 +355,7 @@
         }
     },
     {
-        "entityid": 2097289,
+        "entityid": 13631525,
         "general": {
             "name": "Frame4E",
             "tagid": 6,
@@ -396,7 +396,7 @@
         }
     },
     {
-        "entityid": 2097290,
+        "entityid": 15728675,
         "general": {
             "name": "Frame5E",
             "tagid": 6,
@@ -437,7 +437,7 @@
         }
     },
     {
-        "entityid": 2097291,
+        "entityid": 22020114,
         "general": {
             "name": "Frame6E",
             "tagid": 6,
@@ -475,6 +475,44 @@
             },
             "layer": 1,
             "worldtransform": false
+        }
+    },
+    {
+        "entityid": 22020118,
+        "general": {
+            "name": "VO_Good_Job_Soldier",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "VO_EndingCutscene.wav",
+            "fullpath": "../assets\\Audio/VO_EndingCutscene.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
         }
     }
 ]

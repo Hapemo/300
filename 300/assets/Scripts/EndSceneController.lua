@@ -19,6 +19,9 @@ local frame3Translate = Vec3.new(0,0,0)
 local frame4Translate = Vec3.new(0,0,0)
 local frame4Scale = Vec3.new(0,0,0)
 
+local VO_good_job
+local VO_good_job_done = false
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     frame1 = gameStateSys:GetEntity("Frame1E")
@@ -32,6 +35,8 @@ function Alive()
     clickAudioEntity = gameStateSys:GetEntity("Click")
 
     hoverOver = false
+
+    VO_good_job = gameStateSys:GetEntity("VO_Good_Job_Soldier")
 
     --generaltimer
     timer = 0
@@ -72,6 +77,10 @@ function Update()
     -- WHAT IS DONE IN EACH FRAME
     if(frame1State) then
         Frame1()
+        if VO_good_job_done == false then 
+            VO_good_job:GetAudio():SetPlay(1.0)
+            VO_good_job_done = true
+        end
     elseif(frame2State) then
         Frame2()
     elseif(frame3State) then
@@ -82,6 +91,7 @@ function Update()
         Frame5()
     elseif(frame6State) then
         Frame6()
+  
     end
 
     if (skipButton:GetButton().mIsHover) then
