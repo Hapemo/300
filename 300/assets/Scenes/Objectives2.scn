@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 1048820,
+        "entityid": 112,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -47,7 +47,7 @@
         }
     },
     {
-        "entityid": 1048821,
+        "entityid": 113,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,
@@ -94,7 +94,7 @@
         }
     },
     {
-        "entityid": 1048822,
+        "entityid": 114,
         "general": {
             "name": "Objectives3",
             "tagid": 0,
@@ -151,7 +151,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "castShadow": true,
+            "castShadow": false,
             "materialinstance": [
                 "../assets/Compressed/Objective_Base_BaseColour.ctexture",
                 "../assets/Compressed/Objective_Base_Normal.ctexture",
@@ -204,7 +204,7 @@
         }
     },
     {
-        "entityid": 1048823,
+        "entityid": 115,
         "general": {
             "name": "Objectives1",
             "tagid": 0,
@@ -261,7 +261,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "castShadow": true,
+            "castShadow": false,
             "materialinstance": [
                 "../assets/Compressed/Objective_Base_BaseColour.ctexture",
                 "../assets/Compressed/Objective_Base_Metallic.ctexture",
@@ -314,7 +314,7 @@
         }
     },
     {
-        "entityid": 1048824,
+        "entityid": 116,
         "general": {
             "name": "Controller",
             "tagid": 0,
@@ -349,7 +349,7 @@
         }
     },
     {
-        "entityid": 1048825,
+        "entityid": 117,
         "general": {
             "name": "PreObjectivesController",
             "tagid": 0,
@@ -384,7 +384,7 @@
         }
     },
     {
-        "entityid": 1048826,
+        "entityid": 118,
         "general": {
             "name": "Objectives2",
             "tagid": 0,
@@ -441,7 +441,7 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "castShadow": true,
+            "castShadow": false,
             "materialinstance": [
                 "../assets/Compressed/Objective_Base_BaseColour.ctexture",
                 "../assets/Compressed/Objective_Base_Normal.ctexture",
@@ -494,7 +494,7 @@
         }
     },
     {
-        "entityid": 1048827,
+        "entityid": 119,
         "general": {
             "name": "Objective Bar 1",
             "tagid": 6,

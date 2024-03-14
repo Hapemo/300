@@ -1,5 +1,5 @@
 {
-    "entityid": 12582945,
+    "entityid": 1048583,
     "general": {
         "name": "TriggerIndicator",
         "tagid": 0,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 1.069937825202942,
+            "x": 1.0699377059936523,
             "y": 1.0,
-            "z": 5.9700000286102295
+            "z": 5.970000267028809
         },
         "rotate": {
             "x": -90.0,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 0.0,
-            "y": 0.0,
-            "z": 0.0
+            "x": 2.8923799991607666,
+            "y": 34.48500061035156,
+            "z": 24.138837814331055
         }
     },
     "meshrenderer": {
@@ -69,5 +69,40 @@
     },
     "prefab": {
         "prefab": "TriggerIndicator"
+    },
+    "particleemitter": {
+        "startcolor": {
+            "x": 1.0,
+            "y": 0.8207547068595886,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "endcolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 0.0
+        },
+        "startsize": 0.10000000149011612,
+        "endsize": 5.800000190734863,
+        "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 2.4000000953674316
+        },
+        "offset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "gravity": 1.0,
+        "rotation": 90.0,
+        "lifetime": 1.0,
+        "loop": true,
+        "loopInterval": 0.0,
+        "speed": 1.0,
+        "count": 10,
+        "emit": false,
+        "particletexture": 2451628838
     }
 }
