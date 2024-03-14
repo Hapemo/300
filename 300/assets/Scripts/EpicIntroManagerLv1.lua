@@ -196,6 +196,9 @@ local epicZipBombPlayed = false
 local epicMelissaAudio
 local epicMelissaPlayed = false
 
+local epicILOVEYOUaudio
+local epicILOVEYOUPlayed = false
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then print("Entity nil in script!") end
@@ -227,6 +230,7 @@ function Alive()
     epicTSAudio = gameStateSys:GetEntityByScene("SoldierEpicAudio", "EpicIntroLv1")
     BGM   = gameStateSys:GetEntity("BGM")
     epicTrojanHorseAudio = gameStateSys:GetEntityByScene("TrojanHorseEpicAudio" , "EpicIntroLv1")
+    epicILOVEYOUaudio = gameStateSys:GetEntityByScene("ILOVEYOUEpicAudio", "EpicIntroLv1")
     epicZipBombAudio = gameStateSys:GetEntityByScene("ZipBombEpicAudio" , "EpicIntroLv2")
     epicMelissaAudio = gameStateSys:GetEntityByScene("MelissaEpicAudio"  , "EpicIntroLv2")
 
@@ -621,6 +625,7 @@ function RunILYEpicIntro()
 
     if _G.ILYEpicIntroState == 1 then -- Move to start pos and dwactivate ILY
         if not MoveTo(player, ILYPlatform:GetTransform().mTranslate, 100) then
+            BGM:GetAudio():UpdateVolume(0.2)
             _G.ILYEpicIntroState = 100 -- To keep ILY waiting
             systemManager.ecs:SetDeleteEntity(ILYPlatform)
             epicILY:GetScripts():AddScript(epicILY, "..\\assets\\Scripts\\EpicIntroILY.lua")
@@ -649,6 +654,12 @@ function RunILYEpicIntro()
         if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
         if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
             MoveEpicIntroUI(epicIntroUI, 4.3, false, true)
+            BGM:GetAudio():SetPause()
+            if epicILOVEYOUPlayed == false then 
+                epicILOVEYOUaudio:GetAudio():SetPlay(1.0)
+                
+                epicILOVEYOUPlayed = true
+            end
         elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and minTimeReached then _G.ILYEpicIntroState = 6 end
     elseif _G.ILYEpicIntroState == 6 then -- Hide Info
         if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.ILYEpicIntroState = 7 end
@@ -659,6 +670,7 @@ function RunILYEpicIntro()
             retractBlackBorder = true
             epicILY:GetAnimator():UnpauseAnimation()
             ShowUI()
+            BGM:GetAudio():SetResume()
             _G.completedEpicILY = true
         end
     end
