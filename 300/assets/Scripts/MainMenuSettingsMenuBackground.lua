@@ -38,10 +38,8 @@ function Update()
     settingsBgmFull:GetUIrenderer():SetSlider(audioSys:GetBGMVolume())
     settingSfxFull:GetUIrenderer():SetSlider(audioSys:GetSFXVolume())
     --gamma range from 1.f to 3.f
-    gammaValue = graphicssys:Getm_Gamma() / 4.0;
+    gammaValue = (graphicssys:Getm_Gamma() - 1.0) / 3.0;
     gammaFull:GetUIrenderer():SetSlider(gammaValue)
-    --print(gammaValue)
-    --print(graphicssys:Getm_Gamma())
 
     if (bgmIncrease:GetButton().mActivated) then
         clickSFX:SetPlay(1.0)
@@ -91,7 +89,7 @@ function Update()
         clickSFX:SetPlay(1.0)
         if (graphicssys:Getm_Gamma() < 4) then
             local roundedNewVol = tonumber(string.format("%.1f", graphicssys:Getm_Gamma() + 0.1))
-            gammaFull:GetUIrenderer():SetSlider(roundedNewVol / 4.0);
+            gammaFull:GetUIrenderer():SetSlider((roundedNewVol - 1.0) / 3.0);
             graphicssys:Setm_Gamma(roundedNewVol);
         end
     end
@@ -100,7 +98,7 @@ function Update()
         clickSFX:SetPlay(1.0)
         if (graphicssys:Getm_Gamma() > 1) then
             local roundedNewVol = tonumber(string.format("%.1f", graphicssys:Getm_Gamma() - 0.1))
-            gammaFull:GetUIrenderer():SetSlider(roundedNewVol / 4.0);
+            gammaFull:GetUIrenderer():SetSlider((roundedNewVol - 1.0) / 3.0);
             graphicssys:Setm_Gamma(roundedNewVol);
         end
     end
