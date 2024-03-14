@@ -1,292 +1,6 @@
 [
     {
-        "entityid": 2097339,
-        "general": {
-            "name": "TriggerIndicator",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.069937825202942,
-                "y": 1.0,
-                "z": 5.970000267028809
-            },
-            "rotate": {
-                "x": -90.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 2.8923799991607666,
-                "y": 0.4850006103515625,
-                "z": 24.138837814331055
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
-            "instancecolor": {
-                "x": 0.0,
-                "y": 0.6886792182922363,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
-            "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "TriggerIndicator"
-        }
-    },
-    {
-        "entityid": 2097340,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -151.35720825195313,
-                "y": 70.0,
-                "z": 33.575775146484375
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.0
-        }
-    },
-    {
-        "entityid": 2097342,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 136.28150939941406,
-                "y": 70.0,
-                "z": 27.39856719970703
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.0
-        }
-    },
-    {
-        "entityid": 2097343,
-        "general": {
-            "name": "Camera",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.100000023841858,
-                "y": 1.4000067710876465,
-                "z": 1.0999999046325684
-            },
-            "rotate": {
-                "x": 90.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -6.21737813949585,
-                "y": -3.8021459579467773,
-                "z": -15.523016929626465
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 0.0,
-                "y": -0.000027179718017578125,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": true
-        },
-        "spherecollider": {
-            "scaleoffset": 0.8100000023841858,
-            "translateoffset": {
-                "x": 0.0,
-                "y": -0.5,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "capsulecollider": {
-            "translateoffset": {
-                "x": 0.0,
-                "y": -0.5,
-                "z": 0.0
-            },
-            "radius": 0.4000000059604645,
-            "halfheight": 0.4000000059604645,
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Player.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "children": {
-            "numchildren": 10,
-            "firstchild": 4194331
-        },
-        "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": false
-        },
-        "camera": {
-            "positon": {
-                "x": -6.21737813949585,
-                "y": -3.8021459579467773,
-                "z": -15.523016929626465
-            },
-            "target": {
-                "x": -6.21737813949585,
-                "y": -3.8021459579467773,
-                "z": -14.523016929626465
-            },
-            "size": {
-                "x": 1223,
-                "y": 583
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "maxhealth": 200.0,
-            "width": 0.0,
-            "height": 0.0,
-            "frametexture": 0,
-            "healthtexture": 0
-        }
-    },
-    {
-        "entityid": 2097344,
+        "entityid": 1048858,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -307,7 +21,7 @@
             },
             "translate": {
                 "x": -2.1892669200897217,
-                "y": 27.5,
+                "y": 39.0,
                 "z": 7.9289021492004395
             }
         },
@@ -359,7 +73,392 @@
         }
     },
     {
-        "entityid": 2097345,
+        "entityid": 1048859,
+        "general": {
+            "name": "DamageAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 1048877,
+            "nextsibling": 1048896,
+            "parent": 1048911
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Take_Damage.wav",
+            "fullpath": "../assets\\Audio/Player_Take_Damage.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048860,
+        "general": {
+            "name": "Dash",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Movement_Dash.wav",
+            "fullpath": "../assets\\Audio/Player_Movement_Dash.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.30000001192092896,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048861,
+        "general": {
+            "name": "BasicGun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_BasicGun.wav",
+            "fullpath": "../assets\\Audio/Player_BasicGun.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048862,
+        "general": {
+            "name": "Level2_Stairs",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 8.75,
+                "y": 4.429999828338623,
+                "z": 5.650000095367432
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -11.484000205993652,
+                "y": -4.843999862670898,
+                "z": 42.13502502441406
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3918981442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Level2_Stairs_BaseColor.ctexture",
+                "../assets/Compressed/Level2_Stairs_Normal.ctexture",
+                "../assets/Compressed/Level2_Stairs_Roughness.ctexture",
+                "../assets/Compressed/Level2_Stairs_Metallic.ctexture",
+                "../assets/Compressed/Level2_Stairs_Emissive.ctexture",
+                "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Stairs.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Level2_SeparatedStair.geom",
+            "texturerefid": [
+                2480130408,
+                1876222333,
+                1403517130,
+                492908823,
+                3179331785,
+                2661393407
+            ]
+        },
+        "prefab": {
+            "prefab": "Level2_Stairs"
+        }
+    },
+    {
+        "entityid": 1048863,
+        "general": {
+            "name": "TriggerIndicator",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.069937825202942,
+                "y": 1.0,
+                "z": 5.970000267028809
+            },
+            "rotate": {
+                "x": -90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -2.1892669200897217,
+                "y": 5.0,
+                "z": 7.9289021492004395
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.6886792182922363,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TriggerIndicator"
+        }
+    },
+    {
+        "entityid": 1048864,
+        "general": {
+            "name": "Level2Floor",
+            "tagid": 3,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 100.0,
+                "y": 19.999868392944336,
+                "z": 100.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -4.135124206542969,
+                "y": 8.25,
+                "z": -12.078514099121094
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 458293556,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Level2_Floor_BaseColor.ctexture",
+                "../assets/Compressed/Level2_Floor_Normal.ctexture",
+                "../assets/Compressed/Level2_Floor_Roughness.ctexture",
+                "../assets/Compressed/Level2_Floor_Metallic.ctexture",
+                "../assets/Compressed/Level2_Floor_Emissive.ctexture",
+                "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Floor.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Level2_Floor.geom",
+            "texturerefid": [
+                874281738,
+                2646457951,
+                2155422460,
+                2221906625,
+                3589366211,
+                3812891349
+            ]
+        },
+        "meshcollider": {
+            "ismeshcollider": true
+        }
+    },
+    {
+        "entityid": 1048865,
+        "general": {
+            "name": "Objective Bar 1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.14000000059604645,
+                "y": -0.07999999821186066,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.5799999833106995,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2307664127,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Objective Bar 1"
+        }
+    },
+    {
+        "entityid": 1048866,
         "general": {
             "name": "Level2StairCollider",
             "tagid": 4,
@@ -369,19 +468,19 @@
         },
         "transform": {
             "scale": {
-                "x": 2.4200000762939453,
-                "y": 3.618999481201172,
-                "z": 9.550000190734863
+                "x": 3.299999713897705,
+                "y": 3.069000005722046,
+                "z": 10.699999809265137
             },
             "rotate": {
-                "x": 29.360000610351563,
-                "y": 90.0,
-                "z": 0.03999999910593033
+                "x": 25.520000457763672,
+                "y": 180.0,
+                "z": 0.5099999904632568
             },
             "translate": {
-                "x": 16.40320587158203,
-                "y": -4.216000080108643,
-                "z": -2.356254816055298
+                "x": -7.651040554046631,
+                "y": -4.138999938964844,
+                "z": 38.49461364746094
             }
         },
         "rigidbody": {
@@ -421,38 +520,38 @@
         }
     },
     {
-        "entityid": 2097346,
+        "entityid": 1048867,
         "general": {
-            "name": "TriggerIndicator",
-            "tagid": 0,
+            "name": "Level2_Wall",
+            "tagid": 4,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1.069937825202942,
-                "y": 1.0,
-                "z": 5.970000267028809
+                "x": 100.0,
+                "y": 30.000003814697266,
+                "z": 100.0
             },
             "rotate": {
-                "x": -90.0,
+                "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 2.8923799991607666,
-                "y": 45.98500061035156,
-                "z": 24.138837814331055
+                "x": -4.155160427093506,
+                "y": 2.4170000553131104,
+                "z": -12.581838607788086
             }
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
+            "meshrefid": 2878534150,
             "instancecolor": {
-                "x": 0.0,
-                "y": 0.6886792182922363,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
@@ -464,39 +563,28 @@
             },
             "castShadow": true,
             "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
+                "../assets/Compressed/Level2_Wall_BaseColor.ctexture",
+                "../assets/Compressed/Level2_Wall_Normal.ctexture",
+                "../assets/Compressed/Level2_Wall_Roughness.ctexture",
+                "../assets/Compressed/Level2_Wall_Metallic.ctexture",
+                "../assets/Compressed/Level2_Wall_Emissive.ctexture",
+                "../assets/Compressed/Environment_Walls1_AO.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "mesh": "../assets/compiled_geom/Level2_Wall.geom",
             "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
-                0
+                1469896978,
+                2062532519,
+                3009456964,
+                555308841,
+                2432211643,
+                3914208681
             ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "TriggerIndicator"
         }
     },
     {
-        "entityid": 2097347,
+        "entityid": 1048868,
         "general": {
-            "name": "TriggerIndicator",
+            "name": "BGM",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -504,70 +592,80 @@
         },
         "transform": {
             "scale": {
-                "x": 1.069937825202942,
+                "x": 1.0,
                 "y": 1.0,
-                "z": 5.970000267028809
+                "z": 1.0
             },
             "rotate": {
-                "x": -90.0,
+                "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 2.8923799991607666,
-                "y": 34.48500061035156,
-                "z": 24.138837814331055
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             }
         },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
-            "instancecolor": {
-                "x": 0.0,
-                "y": 0.6886792182922363,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
-            "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "TriggerIndicator"
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Troubleshooter_M4.wav",
+            "fullpath": "../assets\\Audio/Troubleshooter_M4.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 2097348,
+        "entityid": 1048869,
+        "general": {
+            "name": "Footstep_Right_3",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 1048899,
+            "nextsibling": 1048877,
+            "parent": 1048911
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Right_3.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_3.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 1048870,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -588,9 +686,15 @@
             },
             "translate": {
                 "x": 0.0,
-                "y": 70.0,
-                "z": 176.52587890625
+                "y": -26.0,
+                "z": 175.98370361328125
             }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Light"
         },
         "pointlight": {
             "lightcolor": {
@@ -604,7 +708,7 @@
         }
     },
     {
-        "entityid": 2097350,
+        "entityid": 1048871,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -625,7 +729,7 @@
             },
             "translate": {
                 "x": -2.1892669200897217,
-                "y": 50.5,
+                "y": 16.5,
                 "z": 7.9289021492004395
             }
         },
@@ -677,9 +781,82 @@
         }
     },
     {
-        "entityid": 2097351,
+        "entityid": 1048872,
         "general": {
-            "name": "MachineGun",
+            "name": "TriggerIndicator",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.069937825202942,
+                "y": 1.0,
+                "z": 5.970000267028809
+            },
+            "rotate": {
+                "x": -90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -2.1892669200897217,
+                "y": 60.5,
+                "z": 7.9289021492004395
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.6886792182922363,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TriggerIndicator"
+        }
+    },
+    {
+        "entityid": 1048873,
+        "general": {
+            "name": "ShotGun",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -704,8 +881,8 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Player_MachineGun.wav",
-            "fullpath": "../assets\\Audio/Player_MachineGun.wav",
+            "filename": "Player_Shotgun.wav",
+            "fullpath": "../assets\\Audio/Player_Shotgun.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -715,9 +892,9 @@
         }
     },
     {
-        "entityid": 2097352,
+        "entityid": 1048874,
         "general": {
-            "name": "Skill_Activate",
+            "name": "Level2_Building1",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -725,47 +902,9 @@
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Skill_Start.wav",
-            "fullpath": "../assets\\Audio/Player_Skill_Start.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 2097354,
-        "general": {
-            "name": "Level2_Buildings2",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 37.04999923706055,
+                "x": 50.70000076293945,
                 "y": 15.0,
-                "z": 43.20000076293945
+                "z": 43.79999923706055
             },
             "rotate": {
                 "x": 0.0,
@@ -773,9 +912,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 2.3630740642547607,
-                "y": 3.4079999923706055,
-                "z": -4.9629902839660645
+                "x": 2.493077516555786,
+                "y": 3.303999900817871,
+                "z": 14.559650421142578
             }
         },
         "rigidbody": {
@@ -788,7 +927,7 @@
                 "z": 0.0
             },
             "rotationconstraints": {
-                "x": false,
+                "x": true,
                 "y": false,
                 "z": false
             },
@@ -797,7 +936,7 @@
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2428448303,
+            "meshrefid": 122536050,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -812,21 +951,21 @@
             },
             "castShadow": true,
             "materialinstance": [
-                "../assets/Compressed/Level2_Buildings2_BaseColor.ctexture",
-                "../assets/Compressed/Level2_Buildings2_Normal.ctexture",
-                "../assets/Compressed/Level2_Buildings2_Roughness.ctexture",
-                "../assets/Compressed/Level2_Buildings2_Metallic.ctexture",
-                "../assets/Compressed/Level2_Building2_Emissive.ctexture",
-                "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Buildings2.ctexture"
+                "../assets/Compressed/Level2_Building1_BaseColor.ctexture",
+                "../assets/Compressed/Level2_Building1_Normal.ctexture",
+                "../assets/Compressed/Level2_Building1_Metallic.ctexture",
+                "../assets/Compressed/Level2_Building1_Roughness.ctexture",
+                "../assets/Compressed/Level2_Building1_Emissive.ctexture",
+                "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Building1.ctexture"
             ],
-            "mesh": "../assets/compiled_geom/Level2_Buildings2.geom",
+            "mesh": "../assets/compiled_geom/Level2_Buildings1.geom",
             "texturerefid": [
-                234846113,
-                1712057098,
-                585804175,
-                4031441272,
-                1423730659,
-                3313756446
+                3879253529,
+                2640385922,
+                1336154704,
+                4284941287,
+                3930360902,
+                3916280042
             ]
         },
         "meshcollider": {
@@ -834,7 +973,1316 @@
         }
     },
     {
-        "entityid": 2097356,
+        "entityid": 1048875,
+        "general": {
+            "name": "RevolverGun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Revolver.wav",
+            "fullpath": "../assets\\Audio/Player_Revolver.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048876,
+        "general": {
+            "name": "Objective Bar 1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.14000000059604645,
+                "y": -0.07999999821186066,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.5799999833106995,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2307664127,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Objective Bar 1"
+        }
+    },
+    {
+        "entityid": 1048877,
+        "general": {
+            "name": "Footstep_Right_2",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 1048869,
+            "nextsibling": 1048859,
+            "parent": 1048911
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Right_2.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_2.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 1048878,
+        "general": {
+            "name": "Objective Bar 1",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.14000000059604645,
+                "y": -0.07999999821186066,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.5799999833106995,
+                "y": 0.699999988079071,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 2307664127,
+            "degree": 0.0,
+            "slider": 0.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 1,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Objective Bar 1"
+        }
+    },
+    {
+        "entityid": 1048879,
+        "general": {
+            "name": "Skybox",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 500.0,
+                "y": 500.0,
+                "z": 500.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -4.828000068664551,
+                "z": -47.40319061279297
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2510,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.20000000298023224,
+                "y": 0.20999999344348907,
+                "z": 0.1599999964237213,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
+                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
+                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Skybox.geom",
+            "texturerefid": [
+                437536649,
+                3522280818,
+                1686346496,
+                1590588887,
+                5760,
+                1467793003
+            ]
+        }
+    },
+    {
+        "entityid": 1048880,
+        "general": {
+            "name": "Footstep_Left_2",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 1048898,
+            "nextsibling": 1048885,
+            "parent": 1048911
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Left_2.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Left_2.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 1048881,
+        "general": {
+            "name": "Footstep_Left_4",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 1048893,
+            "nextsibling": 1048898,
+            "parent": 1048911
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Left_4.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Left_4.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 1048882,
+        "general": {
+            "name": "Level2_Stairs",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 8.670000076293945,
+                "y": 4.599999904632568,
+                "z": 4.03000020980835
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 13.003335952758789,
+                "y": -4.828000068664551,
+                "z": -5.139810562133789
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3918981442,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Level2_Stairs_BaseColor.ctexture",
+                "../assets/Compressed/Level2_Stairs_Normal.ctexture",
+                "../assets/Compressed/Level2_Stairs_Roughness.ctexture",
+                "../assets/Compressed/Level2_Stairs_Metallic.ctexture",
+                "../assets/Compressed/Level2_Stairs_Emissive.ctexture",
+                "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Stairs.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Level2_SeparatedStair.geom",
+            "texturerefid": [
+                2480130408,
+                1876222333,
+                1403517130,
+                492908823,
+                3179331785,
+                2661393407
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Level2_Stairs"
+        }
+    },
+    {
+        "entityid": 1048883,
+        "general": {
+            "name": "Bullet Shoot",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Attack_Shoot.wav",
+            "fullpath": "../assets\\Audio/Player_Attack_Shoot.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.30000001192092896,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048884,
+        "general": {
+            "name": "Jump",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Jump.wav",
+            "fullpath": "../assets\\Audio/Player_Jump.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048885,
+        "general": {
+            "name": "Footstep_Right_1",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 1048880,
+            "nextsibling": 1048899,
+            "parent": 1048911
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Right_1.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_1.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 1048886,
+        "general": {
+            "name": "pauseMenu",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": -1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 1000.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/MainMenu.ctexture",
+            "textureref": 3691930878,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/testPauseState.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "button": {
+            "interactable": true,
+            "hover": false,
+            "click": false,
+            "activated": false,
+            "renderflag": true
+        }
+    },
+    {
+        "entityid": 1048887,
+        "general": {
+            "name": "TriggerIndicator",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.069937825202942,
+                "y": 1.0,
+                "z": 5.970000267028809
+            },
+            "rotate": {
+                "x": -90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 2.8923799991607666,
+                "y": 11.985000610351563,
+                "z": 24.138837814331055
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.6886792182922363,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TriggerIndicator"
+        }
+    },
+    {
+        "entityid": 1048888,
+        "general": {
+            "name": "Light",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": -26.0,
+                "z": -118.47150421142578
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Light"
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 1.0
+        }
+    },
+    {
+        "entityid": 1048889,
+        "general": {
+            "name": "TriggerIndicator",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.069937825202942,
+                "y": 1.0,
+                "z": 5.970000267028809
+            },
+            "rotate": {
+                "x": -90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 2.8923799991607666,
+                "y": 22.985000610351563,
+                "z": 24.138837814331055
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.6886792182922363,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TriggerIndicator"
+        }
+    },
+    {
+        "entityid": 1048890,
+        "general": {
+            "name": "ShadowCaster",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -5.352370262145996,
+                "y": 9.834144592285156,
+                "z": 49.13349151611328
+            }
+        },
+        "directionallight": {
+            "direction": {
+                "x": 0.009999999776482582,
+                "y": -1.0,
+                "z": -0.9900000095367432
+            },
+            "size": {
+                "x": 97.0,
+                "y": 143.0
+            },
+            "nearfar": {
+                "x": 20.299999237060547,
+                "y": 86.30000305175781
+            }
+        }
+    },
+    {
+        "entityid": 1048891,
+        "general": {
+            "name": "TriggerIndicator",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.069937825202942,
+                "y": 1.0,
+                "z": 5.970000267028809
+            },
+            "rotate": {
+                "x": -90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -2.1892669200897217,
+                "y": -6.5,
+                "z": 7.9289021492004395
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.6886792182922363,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TriggerIndicator"
+        }
+    },
+    {
+        "entityid": 1048892,
+        "general": {
+            "name": "Skill_Ending",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Skill_End.wav",
+            "fullpath": "../assets\\Audio/Player_Skill_End.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048893,
+        "general": {
+            "name": "Footstep_Left_1",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 1048896,
+            "nextsibling": 1048881,
+            "parent": 1048911
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Left_1.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Left_1.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": -0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 1048894,
+        "general": {
+            "name": "Player_Movement",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Movement_Walk.wav",
+            "fullpath": "../assets\\Audio/Player_Movement_Walk.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048895,
+        "general": {
+            "name": "Light",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 70.0,
+                "z": -110.59866333007813
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Light"
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 1.0
+        }
+    },
+    {
+        "entityid": 1048896,
+        "general": {
+            "name": "gun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 0.25
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": -75.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.5,
+                "y": -0.6499999761581421,
+                "z": -0.796999990940094
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2168,
+            "instancecolor": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 0.25,
+                "y": 0.25,
+                "z": 0.25,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Gun_Base_Color.ctexture",
+                "../assets/Compressed/Gun_Normal.ctexture",
+                "../assets/Compressed/Gun_Metallic.ctexture",
+                "../assets/Compressed/Gun_Roughness.ctexture",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Gun.geom",
+            "texturerefid": [
+                561120090,
+                236381020,
+                3720350570,
+                2134634497,
+                0,
+                0
+            ]
+        },
+        "parent": {
+            "prevsibling": 1048859,
+            "nextsibling": 1048893,
+            "parent": 1048911
+        }
+    },
+    {
+        "entityid": 1048897,
+        "general": {
+            "name": "Light",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 73.8438491821289,
+                "y": 260.78851318359375,
+                "z": 168.78781127929688
+            }
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 1.0
+        }
+    },
+    {
+        "entityid": 1048898,
+        "general": {
+            "name": "Footstep_Left_3",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 1048881,
+            "nextsibling": 1048880,
+            "parent": 1048911
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Left_3.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Left_3.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 1048899,
+        "general": {
+            "name": "Footstep_Right_4",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 1048885,
+            "nextsibling": 1048869,
+            "parent": 1048911
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Right_4.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_4.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": 0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 1048900,
+        "general": {
+            "name": "TriggerIndicator",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.069937825202942,
+                "y": 1.0,
+                "z": 5.970000267028809
+            },
+            "rotate": {
+                "x": -90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 2.8923799991607666,
+                "y": 55.98500061035156,
+                "z": 24.138837814331055
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.6886792182922363,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TriggerIndicator"
+        }
+    },
+    {
+        "entityid": 1048901,
         "general": {
             "name": "Pistol Bullet",
             "tagid": 9,
@@ -995,7 +2443,164 @@
         }
     },
     {
-        "entityid": 2097357,
+        "entityid": 1048902,
+        "general": {
+            "name": "Level2_Buildings2",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 37.04999923706055,
+                "y": 15.0,
+                "z": 43.20000076293945
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 2.3630740642547607,
+                "y": 3.4079999923706055,
+                "z": -4.9629902839660645
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2428448303,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Level2_Buildings2_BaseColor.ctexture",
+                "../assets/Compressed/Level2_Buildings2_Normal.ctexture",
+                "../assets/Compressed/Level2_Buildings2_Roughness.ctexture",
+                "../assets/Compressed/Level2_Buildings2_Metallic.ctexture",
+                "../assets/Compressed/Level2_Building2_Emissive.ctexture",
+                "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Buildings2.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Level2_Buildings2.geom",
+            "texturerefid": [
+                234846113,
+                1712057098,
+                585804175,
+                4031441272,
+                1423730659,
+                3313756446
+            ]
+        },
+        "meshcollider": {
+            "ismeshcollider": true
+        }
+    },
+    {
+        "entityid": 1048903,
+        "general": {
+            "name": "Skill_Activate",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Skill_Start.wav",
+            "fullpath": "../assets\\Audio/Player_Skill_Start.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048904,
+        "general": {
+            "name": "MachineGun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_MachineGun.wav",
+            "fullpath": "../assets\\Audio/Player_MachineGun.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.6000000238418579,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048905,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1015,9 +2620,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 2.8923799991607666,
-                "y": 55.98500061035156,
-                "z": 24.138837814331055
+                "x": -2.1892669200897217,
+                "y": 50.5,
+                "z": 7.9289021492004395
             }
         },
         "meshrenderer": {
@@ -1068,201 +2673,7 @@
         }
     },
     {
-        "entityid": 2097358,
-        "general": {
-            "name": "Footstep_Right_4",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 4194343,
-            "nextsibling": 4194359,
-            "parent": 2097343
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Right_4.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Right_4.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": true,
-            "panbalance": 0.5,
-            "panspeed": 0.0
-        }
-    },
-    {
-        "entityid": 4194329,
-        "general": {
-            "name": "Footstep_Left_3",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 4194347,
-            "nextsibling": 4194348,
-            "parent": 2097343
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Left_3.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Left_3.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": true,
-            "panbalance": 0.5,
-            "panspeed": 0.0
-        }
-    },
-    {
-        "entityid": 4194330,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 73.8438491821289,
-                "y": 260.78851318359375,
-                "z": 168.78781127929688
-            }
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.0
-        }
-    },
-    {
-        "entityid": 4194331,
-        "general": {
-            "name": "gun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 0.25
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": -75.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5,
-                "y": -0.6499999761581421,
-                "z": -0.3569994270801544
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2168,
-            "instancecolor": {
-                "x": 0.5,
-                "y": 0.5,
-                "z": 0.5,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.25,
-                "y": 0.25,
-                "z": 0.25,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Gun_Base_Color.ctexture",
-                "../assets/Compressed/Gun_Normal.ctexture",
-                "../assets/Compressed/Gun_Metallic.ctexture",
-                "../assets/Compressed/Gun_Roughness.ctexture",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Gun.geom",
-            "texturerefid": [
-                561120090,
-                236381020,
-                3720350570,
-                2134634497,
-                0,
-                0
-            ]
-        },
-        "parent": {
-            "prevsibling": 5243044,
-            "nextsibling": 4194335,
-            "parent": 2097343
-        }
-    },
-    {
-        "entityid": 4194332,
+        "entityid": 1048906,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -1284,14 +2695,8 @@
             "translate": {
                 "x": 0.0,
                 "y": 70.0,
-                "z": -110.59866333007813
+                "z": 176.52587890625
             }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
         },
         "pointlight": {
             "lightcolor": {
@@ -1305,243 +2710,7 @@
         }
     },
     {
-        "entityid": 4194334,
-        "general": {
-            "name": "Player_Movement",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Movement_Walk.wav",
-            "fullpath": "../assets\\Audio/Player_Movement_Walk.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 4194335,
-        "general": {
-            "name": "Footstep_Left_1",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 4194331,
-            "nextsibling": 4194347,
-            "parent": 2097343
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Left_1.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Left_1.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": true,
-            "panbalance": -0.5,
-            "panspeed": 0.0
-        }
-    },
-    {
-        "entityid": 4194336,
-        "general": {
-            "name": "Skill_Ending",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Skill_End.wav",
-            "fullpath": "../assets\\Audio/Player_Skill_End.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 4194337,
-        "general": {
-            "name": "TriggerIndicator",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.069937825202942,
-                "y": 1.0,
-                "z": 5.970000267028809
-            },
-            "rotate": {
-                "x": -90.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -2.1892669200897217,
-                "y": -6.5,
-                "z": 7.9289021492004395
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
-            "instancecolor": {
-                "x": 0.0,
-                "y": 0.6886792182922363,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
-            "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "TriggerIndicator"
-        }
-    },
-    {
-        "entityid": 4194338,
-        "general": {
-            "name": "ShadowCaster",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -5.352370262145996,
-                "y": 9.834144592285156,
-                "z": 49.13349151611328
-            }
-        },
-        "directionallight": {
-            "direction": {
-                "x": 0.009999999776482582,
-                "y": -1.0,
-                "z": -0.9900000095367432
-            },
-            "size": {
-                "x": 97.0,
-                "y": 143.0
-            },
-            "nearfar": {
-                "x": 20.299999237060547,
-                "y": 86.30000305175781
-            }
-        }
-    },
-    {
-        "entityid": 4194339,
+        "entityid": 1048907,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1562,7 +2731,7 @@
             },
             "translate": {
                 "x": 2.8923799991607666,
-                "y": 22.985000610351563,
+                "y": 34.48500061035156,
                 "z": 24.138837814331055
             }
         },
@@ -1614,50 +2783,7 @@
         }
     },
     {
-        "entityid": 4194340,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -26.0,
-                "z": -118.47150421142578
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.0
-        }
-    },
-    {
-        "entityid": 4194341,
+        "entityid": 1048908,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1678,7 +2804,7 @@
             },
             "translate": {
                 "x": 2.8923799991607666,
-                "y": 11.985000610351563,
+                "y": 45.98500061035156,
                 "z": 24.138837814331055
             }
         },
@@ -1730,1034 +2856,7 @@
         }
     },
     {
-        "entityid": 4194342,
-        "general": {
-            "name": "pauseMenu",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": -1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 1000.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/MainMenu.ctexture",
-            "textureref": 3691930878,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/testPauseState.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "button": {
-            "interactable": true,
-            "hover": false,
-            "click": false,
-            "activated": false,
-            "renderflag": true
-        }
-    },
-    {
-        "entityid": 4194343,
-        "general": {
-            "name": "Footstep_Right_1",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 4194348,
-            "nextsibling": 2097358,
-            "parent": 2097343
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Right_1.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Right_1.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": true,
-            "panbalance": 0.5,
-            "panspeed": 0.0
-        }
-    },
-    {
-        "entityid": 4194344,
-        "general": {
-            "name": "Jump",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Jump.wav",
-            "fullpath": "../assets\\Audio/Player_Jump.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 4194345,
-        "general": {
-            "name": "Bullet Shoot",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Attack_Shoot.wav",
-            "fullpath": "../assets\\Audio/Player_Attack_Shoot.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.30000001192092896,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 4194346,
-        "general": {
-            "name": "Level2_Stairs",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 8.670000076293945,
-                "y": 4.599999904632568,
-                "z": 4.03000020980835
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 13.003335952758789,
-                "y": -4.828000068664551,
-                "z": -5.139810562133789
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3918981442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Level2_Stairs_BaseColor.ctexture",
-                "../assets/Compressed/Level2_Stairs_Normal.ctexture",
-                "../assets/Compressed/Level2_Stairs_Roughness.ctexture",
-                "../assets/Compressed/Level2_Stairs_Metallic.ctexture",
-                "../assets/Compressed/Level2_Stairs_Emissive.ctexture",
-                "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Stairs.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Level2_SeparatedStair.geom",
-            "texturerefid": [
-                2480130408,
-                1876222333,
-                1403517130,
-                492908823,
-                3179331785,
-                2661393407
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Level2_Stairs"
-        }
-    },
-    {
-        "entityid": 4194347,
-        "general": {
-            "name": "Footstep_Left_4",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 4194335,
-            "nextsibling": 4194329,
-            "parent": 2097343
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Left_4.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Left_4.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": true,
-            "panbalance": 0.5,
-            "panspeed": 0.0
-        }
-    },
-    {
-        "entityid": 4194348,
-        "general": {
-            "name": "Footstep_Left_2",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 4194329,
-            "nextsibling": 4194343,
-            "parent": 2097343
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Left_2.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Left_2.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": true,
-            "panbalance": 0.5,
-            "panspeed": 0.0
-        }
-    },
-    {
-        "entityid": 4194349,
-        "general": {
-            "name": "Skybox",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 500.0,
-                "y": 500.0,
-                "z": 500.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -4.828000068664551,
-                "z": -47.40319061279297
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2510,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.20000000298023224,
-                "y": 0.20999999344348907,
-                "z": 0.1599999964237213,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
-                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
-                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Skybox.geom",
-            "texturerefid": [
-                437536649,
-                3522280818,
-                1686346496,
-                1590588887,
-                5760,
-                1467793003
-            ]
-        }
-    },
-    {
-        "entityid": 4194350,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 4194351,
-        "general": {
-            "name": "Footstep_Right_2",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 4194359,
-            "nextsibling": 5243044,
-            "parent": 2097343
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Right_2.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Right_2.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": true,
-            "panbalance": 0.5,
-            "panspeed": 0.0
-        }
-    },
-    {
-        "entityid": 4194352,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 4194353,
-        "general": {
-            "name": "RevolverGun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Revolver.wav",
-            "fullpath": "../assets\\Audio/Player_Revolver.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 4194354,
-        "general": {
-            "name": "Level2_Building1",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 50.70000076293945,
-                "y": 15.0,
-                "z": 43.79999923706055
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 2.493077516555786,
-                "y": 3.303999900817871,
-                "z": 14.559650421142578
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 122536050,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Level2_Building1_BaseColor.ctexture",
-                "../assets/Compressed/Level2_Building1_Normal.ctexture",
-                "../assets/Compressed/Level2_Building1_Metallic.ctexture",
-                "../assets/Compressed/Level2_Building1_Roughness.ctexture",
-                "../assets/Compressed/Level2_Building1_Emissive.ctexture",
-                "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Building1.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Level2_Buildings1.geom",
-            "texturerefid": [
-                3879253529,
-                2640385922,
-                1336154704,
-                4284941287,
-                3930360902,
-                3916280042
-            ]
-        },
-        "meshcollider": {
-            "ismeshcollider": true
-        }
-    },
-    {
-        "entityid": 4194355,
-        "general": {
-            "name": "ShotGun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Shotgun.wav",
-            "fullpath": "../assets\\Audio/Player_Shotgun.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.6000000238418579,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 4194356,
-        "general": {
-            "name": "TriggerIndicator",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.069937825202942,
-                "y": 1.0,
-                "z": 5.970000267028809
-            },
-            "rotate": {
-                "x": -90.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -2.1892669200897217,
-                "y": 60.5,
-                "z": 7.9289021492004395
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
-            "instancecolor": {
-                "x": 0.0,
-                "y": 0.6886792182922363,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
-            "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "TriggerIndicator"
-        }
-    },
-    {
-        "entityid": 4194357,
-        "general": {
-            "name": "TriggerIndicator",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.069937825202942,
-                "y": 1.0,
-                "z": 5.970000267028809
-            },
-            "rotate": {
-                "x": -90.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -2.1892669200897217,
-                "y": 16.5,
-                "z": 7.9289021492004395
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
-            "instancecolor": {
-                "x": 0.0,
-                "y": 0.6886792182922363,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
-            "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "TriggerIndicator"
-        }
-    },
-    {
-        "entityid": 4194358,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -26.0,
-                "z": 175.98370361328125
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 1.0
-        }
-    },
-    {
-        "entityid": 4194359,
-        "general": {
-            "name": "Footstep_Right_3",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 2097358,
-            "nextsibling": 4194351,
-            "parent": 2097343
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Right_3.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Right_3.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": true,
-            "panbalance": 0.5,
-            "panspeed": 0.0
-        }
-    },
-    {
-        "entityid": 4194360,
-        "general": {
-            "name": "BGM",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Troubleshooter_M4.wav",
-            "fullpath": "../assets\\Audio/Troubleshooter_M4.wav",
-            "playonawake": true,
-            "islooping": true,
-            "audiotype": 1,
-            "volume": 0.4000000059604645,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 4194361,
-        "general": {
-            "name": "Level2_Wall",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 100.0,
-                "y": 30.000003814697266,
-                "z": 100.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -4.155160427093506,
-                "y": 2.4170000553131104,
-                "z": -12.581838607788086
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2878534150,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Level2_Wall_BaseColor.ctexture",
-                "../assets/Compressed/Level2_Wall_Normal.ctexture",
-                "../assets/Compressed/Level2_Wall_Roughness.ctexture",
-                "../assets/Compressed/Level2_Wall_Metallic.ctexture",
-                "../assets/Compressed/Level2_Wall_Emissive.ctexture",
-                "../assets/Compressed/Environment_Walls1_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Level2_Wall.geom",
-            "texturerefid": [
-                1469896978,
-                2062532519,
-                3009456964,
-                555308841,
-                2432211643,
-                3914208681
-            ]
-        }
-    },
-    {
-        "entityid": 4194362,
+        "entityid": 1048909,
         "general": {
             "name": "Level2StairCollider",
             "tagid": 4,
@@ -2767,19 +2866,19 @@
         },
         "transform": {
             "scale": {
-                "x": 3.299999713897705,
-                "y": 3.069000005722046,
-                "z": 10.699999809265137
+                "x": 2.4200000762939453,
+                "y": 3.618999481201172,
+                "z": 9.550000190734863
             },
             "rotate": {
-                "x": 25.520000457763672,
-                "y": 180.0,
-                "z": 0.5099999904632568
+                "x": 29.360000610351563,
+                "y": 90.0,
+                "z": 0.03999999910593033
             },
             "translate": {
-                "x": -7.651040554046631,
-                "y": -4.138999938964844,
-                "z": 38.49461364746094
+                "x": 16.40320587158203,
+                "y": -4.216000080108643,
+                "z": -2.356254816055298
             }
         },
         "rigidbody": {
@@ -2819,135 +2918,7 @@
         }
     },
     {
-        "entityid": 4194363,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 4194364,
-        "general": {
-            "name": "Level2Floor",
-            "tagid": 3,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 100.0,
-                "y": 19.999868392944336,
-                "z": 100.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -4.135124206542969,
-                "y": 8.25,
-                "z": -12.078514099121094
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 458293556,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Level2_Floor_BaseColor.ctexture",
-                "../assets/Compressed/Level2_Floor_Normal.ctexture",
-                "../assets/Compressed/Level2_Floor_Roughness.ctexture",
-                "../assets/Compressed/Level2_Floor_Metallic.ctexture",
-                "../assets/Compressed/Level2_Floor_Emissive.ctexture",
-                "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Floor.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Level2_Floor.geom",
-            "texturerefid": [
-                874281738,
-                2646457951,
-                2155422460,
-                2221906625,
-                3589366211,
-                3812891349
-            ]
-        },
-        "meshcollider": {
-            "ismeshcollider": true
-        }
-    },
-    {
-        "entityid": 4194365,
+        "entityid": 1048910,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -2968,7 +2939,7 @@
             },
             "translate": {
                 "x": -2.1892669200897217,
-                "y": 5.0,
+                "y": 27.5,
                 "z": 7.9289021492004395
             }
         },
@@ -3020,9 +2991,9 @@
         }
     },
     {
-        "entityid": 4194366,
+        "entityid": 1048911,
         "general": {
-            "name": "Level2_Stairs",
+            "name": "Camera",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -3030,64 +3001,169 @@
         },
         "transform": {
             "scale": {
-                "x": 8.75,
-                "y": 4.429999828338623,
-                "z": 5.650000095367432
+                "x": 1.100000023841858,
+                "y": 1.4000067710876465,
+                "z": 1.0999999046325684
             },
             "rotate": {
-                "x": 0.0,
-                "y": 90.0,
+                "x": 90.0,
+                "y": 0.0,
                 "z": 0.0
             },
             "translate": {
-                "x": -11.484000205993652,
-                "y": -4.843999862670898,
-                "z": 42.13502502441406
+                "x": -6.21737813949585,
+                "y": -3.8021459579467773,
+                "z": -15.523016929626465
             }
         },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3918981442,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": -0.000027179718017578125,
+                "z": 0.0
             },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
             },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Level2_Stairs_BaseColor.ctexture",
-                "../assets/Compressed/Level2_Stairs_Normal.ctexture",
-                "../assets/Compressed/Level2_Stairs_Roughness.ctexture",
-                "../assets/Compressed/Level2_Stairs_Metallic.ctexture",
-                "../assets/Compressed/Level2_Stairs_Emissive.ctexture",
-                "../assets/Compressed/Level2_Ambient Occlusion Map from Mesh Stairs.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Level2_SeparatedStair.geom",
-            "texturerefid": [
-                2480130408,
-                1876222333,
-                1403517130,
-                492908823,
-                3179331785,
-                2661393407
+            "gravity": true
+        },
+        "spherecollider": {
+            "scaleoffset": 0.8100000023841858,
+            "translateoffset": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "capsulecollider": {
+            "translateoffset": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 0.0
+            },
+            "radius": 0.4000000059604645,
+            "halfheight": 0.4000000059604645,
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Player.lua",
+                    "variables": []
+                }
             ]
         },
+        "children": {
+            "numchildren": 10,
+            "firstchild": 1048896
+        },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "camera": {
+            "positon": {
+                "x": -6.21737813949585,
+                "y": -3.8021459579467773,
+                "z": -15.523016929626465
+            },
+            "target": {
+                "x": -6.21737813949585,
+                "y": -3.8021459579467773,
+                "z": -14.523016929626465
+            },
+            "size": {
+                "x": 1223,
+                "y": 583
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "maxhealth": 200.0,
+            "width": 0.0,
+            "height": 0.0,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 1048912,
+        "general": {
+            "name": "Light",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 136.28150939941406,
+                "y": 70.0,
+                "z": 27.39856719970703
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
         "prefab": {
-            "prefab": "Level2_Stairs"
+            "prefab": "Light"
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 1.0
         }
     },
     {
-        "entityid": 4194367,
+        "entityid": 1048913,
         "general": {
-            "name": "BasicGun",
+            "name": "Light",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -3105,106 +3181,30 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": -151.35720825195313,
+                "y": 70.0,
+                "z": 33.575775146484375
             }
         },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_BasicGun.wav",
-            "fullpath": "../assets\\Audio/Player_BasicGun.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 4194381,
-        "general": {
-            "name": "Dash",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
+        "scripts": {
+            "scriptscontainer": []
         },
-        "transform": {
-            "scale": {
+        "prefab": {
+            "prefab": "Light"
+        },
+        "pointlight": {
+            "lightcolor": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0
             },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Movement_Dash.wav",
-            "fullpath": "../assets\\Audio/Player_Movement_Dash.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.30000001192092896,
-            "retainaudio": false,
-            "panaudio": false
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 1.0
         }
     },
     {
-        "entityid": 5243044,
-        "general": {
-            "name": "DamageAudio",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 4194351,
-            "nextsibling": 4194331,
-            "parent": 2097343
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Take_Damage.wav",
-            "fullpath": "../assets\\Audio/Player_Take_Damage.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 30408853,
+        "entityid": 1048914,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -3224,9 +3224,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -2.1892669200897217,
-                "y": 39.0,
-                "z": 7.9289021492004395
+                "x": 2.8923799991607666,
+                "y": 0.4850006103515625,
+                "z": 24.138837814331055
             }
         },
         "meshrenderer": {
