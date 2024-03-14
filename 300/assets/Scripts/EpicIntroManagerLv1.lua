@@ -181,6 +181,12 @@ local bottomBorderUpperLimit
 local bottomBorderLowerLimit
 --#endregion
 
+-- [M5] Epic Intro (Soundtrack)
+local epicTSAudio
+local epicTSPlayed = false
+
+local BGM
+
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then print("Entity nil in script!") end
@@ -207,6 +213,23 @@ function Alive()
     InitILYEpicIntro()
     InitZBEpicIntro()
     InitMEpicIntro()
+
+    -- [M5] Epic Intro (Soundtrack)
+    epicTSAudio = gameStateSys:GetEntityByScene("SoldierEpicAudio", "EpicIntroLv1")
+    BGM   = gameStateSys:GetEntity("BGM")
+
+    if BGM == nil then 
+        print("BGM FAILED")
+    else
+        print("BGM SUCCESS")
+
+    end
+
+    if epicTSAudio == nil then 
+        print("TS AUDIO FAILED")
+    else
+        print("TS AUDIO PASSED")
+    end
 end
 
 function Update()
@@ -453,6 +476,7 @@ function RunTSEpicIntro()
     end
 
     if _G.TSEpicIntroState == 1 then -- Move to start pos
+        BGM:GetAudio():UpdateVolume(0.2)   -- [M5] soften the bgm (temporarily for into)
         if not MoveTo(player, TSPlatform:GetTransform().mTranslate, 100) then
             -- print("finish moving")
             -- Finished moving
@@ -510,6 +534,11 @@ function RunTSEpicIntro()
         if ShowInfoSlowdownCounter > ShowInfoMinTime then minTimeReached = true end
         if (ShowInfoSlowdownCounter < ShowInfoSlowdown) then
             MoveEpicIntroUI(epicIntroUI, 4.4, false, true)
+            if epicTSPlayed == false then 
+                BGM:GetAudio():SetPause()
+                epicTSAudio:GetAudio():SetPlay(1.0) -- [3/14] M5 added
+                epicTSPlayed = true
+            end
         elseif not MoveEpicIntroUI(epicIntroUI, 0.01, false, true) and minTimeReached then _G.TSEpicIntroState = 12 end
     elseif _G.TSEpicIntroState == 12 then -- Hideinfo
             if not MoveEpicIntroUI(epicIntroUI, 4, false, false) then _G.TSEpicIntroState = 13 end
@@ -520,6 +549,9 @@ function RunTSEpicIntro()
             retractBlackBorder = true
             ShowUI()
             AddScriptToTS()
+            BGM:GetAudio():UpdateVolume(0.4) -- [M5] Revert back to original volume
+            BGM:GetAudio():SetResume()
+            print("TROJAN SOLDIER AUDIO")
             _G.completedEpicTS = true
         end
     end

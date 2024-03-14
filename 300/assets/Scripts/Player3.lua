@@ -563,7 +563,7 @@ function Update()
 
          
          
-UpdateFootstepDelayTimer()
+            UpdateFootstepDelayTimer()
 -- region (snapback)
             -- print("GUN RECOIL STATE: ", gunRecoilState)
             if (gunRecoilState == "IDLE") then
@@ -964,6 +964,31 @@ function OnTriggerEnter(Entity)
     if (generalComponent.name == "TrojanSoldier") then isTakingDamage = true; end
     -- Player Health System End --
 
+
+    if (tagid == 4) then -- floor
+        print("ON THE FLOOR")
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
 end
 
 function OnTriggerExit(Entity)
@@ -984,6 +1009,7 @@ function OnTriggerExit(Entity)
     if (generalComponent.name == "ZipBomb") then isTakingDamage = false; end
     if (generalComponent.name == "TrojanSoldier") then isTakingDamage = false; end
     -- Player Health System End --
+
 end
 
 function OnContactEnter(Entity)

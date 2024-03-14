@@ -123,12 +123,7 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 		Transform& transform = audio.GetComponent<Transform>(); // need to update "mPreviousPosition" for 
 		General& general = audio.GetComponent<General>();
 
-		if (general.name == "Jump")
-		{
-			int i = 0;
-			int j = 0;
-		}
-	
+
 		// Set 3D Flag
 		if (audio_component.mFileName.find("3D") != std::string::npos)
 		{
