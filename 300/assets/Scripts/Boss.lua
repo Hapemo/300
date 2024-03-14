@@ -230,8 +230,8 @@ function Update()
     -- Debug States
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-    state = 3 -- [OK]
-    -- state = 4 --[OK]
+    -- state = 3 -- [OK]
+    state = 4 --[OK]
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
@@ -638,7 +638,7 @@ function SpawnHomingSpheres()
                                         spawn_point_translate.z + random_offset_z)
 
     -- homing_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
-    entity_ref = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
+    entity_ref = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing" ,bullet_spawn_position)
 
     local homing_bullet = 
     {   

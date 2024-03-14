@@ -1,17 +1,17 @@
 [
     {
-        "entityid": 10485888,
+        "entityid": 2097158,
         "general": {
-            "name": "HealthBar_Boss",
-            "tagid": 6,
+            "name": "Boss3Controller",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1.6799999475479126,
-                "y": -0.5299999713897705,
+                "x": 1.0,
+                "y": 1.0,
                 "z": 1.0
             },
             "rotate": {
@@ -20,14 +20,49 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -0.009999999776482582,
-                "y": 0.8199999928474426,
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level3BossSceneController.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 2097159,
+        "general": {
+            "name": "HealthBarEmpty_Boss",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.4900000095367432,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.800000011920929,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 113111451,
+            "textureref": 729730335,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -36,125 +71,116 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 2,
+            "layer": 0,
             "worldtransform": false
         },
         "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/BossHP.lua",
-                    "variables": []
-                }
-            ]
+            "scriptscontainer": []
         },
         "prefab": {
-            "prefab": "HealthBar_Boss"
+            "prefab": "HealthBarEmpty_Boss"
         }
     },
     {
-        "entityid": 10485889,
+        "entityid": 2097162,
         "general": {
-            "name": "Laser2",
-            "tagid": 1,
+            "name": "BossUITitle",
+            "tagid": 6,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 170.0,
-                "y": 0.4999871850013733,
-                "z": 2.5
+                "x": 0.6129999756813049,
+                "y": -0.20000000298023224,
+                "z": 1.0
             },
             "rotate": {
                 "x": 0.0,
-                "y": -52.76592254638672,
+                "y": 0.0,
                 "z": 0.0
             },
             "translate": {
                 "x": 0.0,
-                "y": -1.190000057220459,
-                "z": 8.5
+                "y": 0.0,
+                "z": 0.0
             }
         },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": false
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2285,
-            "instancecolor": {
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Temp_Boss_Name.ctexture",
+            "textureref": 304268164,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/UI-Red.ctexture",
-                "../assets/Compressed/Wood Material 15_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/cube.geom",
-            "texturerefid": [
-                3399015132,
-                2287741774,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
+            "layer": 0,
+            "worldtransform": false
         },
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/BossLaserBeamPhase.lua",
+                    "scriptFile": "../assets/Scripts/BossTitleUI.lua",
                     "variables": []
                 }
             ]
-        },
-        "prefab": {
-            "prefab": "Laser1"
         }
     },
     {
-        "entityid": 10485890,
+        "entityid": 2097163,
+        "general": {
+            "name": "BossUITitle",
+            "tagid": 6,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.6129999756813049,
+                "y": -0.20000000298023224,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "../assets/Compressed/Temp_Boss_Name.ctexture",
+            "textureref": 304268164,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.0
+            },
+            "layer": 0,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/BossTitleUI.lua",
+                    "variables": []
+                }
+            ]
+        }
+    },
+    {
+        "entityid": 2097164,
         "general": {
             "name": "Laser1",
             "tagid": 1,
@@ -214,7 +240,7 @@
             "castShadow": true,
             "materialinstance": [
                 "../assets/Compressed/UI-Red.ctexture",
-                "../assets/Compressed/Wood Material 15_Normal.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
                 " ",
                 " ",
                 " ",
@@ -223,7 +249,7 @@
             "mesh": "../assets/compiled_geom/cube.geom",
             "texturerefid": [
                 3399015132,
-                2287741774,
+                1949753341,
                 0,
                 0,
                 0,
@@ -256,58 +282,111 @@
         }
     },
     {
-        "entityid": 10485891,
+        "entityid": 2097165,
         "general": {
-            "name": "BossUITitle",
-            "tagid": 6,
+            "name": "Laser2",
+            "tagid": 1,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 0.6129999756813049,
-                "y": -0.20000000298023224,
-                "z": 1.0
+                "x": 170.0,
+                "y": 0.4999871850013733,
+                "z": 2.5
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -52.76592254638672,
                 "z": 0.0
             },
             "translate": {
                 "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "y": -1.190000057220459,
+                "z": 8.5
             }
         },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Temp_Boss_Name.ctexture",
-            "textureref": 304268164,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2285,
+            "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
-            "layer": 0,
-            "worldtransform": false
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/UI-Red.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/cube.geom",
+            "texturerefid": [
+                3399015132,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
         },
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/BossTitleUI.lua",
+                    "scriptFile": "../assets/Scripts/BossLaserBeamPhase.lua",
                     "variables": []
                 }
             ]
+        },
+        "prefab": {
+            "prefab": "Laser1"
         }
     },
     {
-        "entityid": 10485892,
+        "entityid": 2097168,
         "general": {
-            "name": "BossUITitle",
+            "name": "HealthBar_Boss",
             "tagid": 6,
             "subtag": 0,
             "isActive": true,
@@ -315,8 +394,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.6129999756813049,
-                "y": -0.20000000298023224,
+                "x": 1.6799999475479126,
+                "y": -0.5299999713897705,
                 "z": 1.0
             },
             "rotate": {
@@ -325,63 +404,14 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "../assets/Compressed/Temp_Boss_Name.ctexture",
-            "textureref": 304268164,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/BossTitleUI.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 10485893,
-        "general": {
-            "name": "HealthBarEmpty_Boss",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.4900000095367432,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.800000011920929,
+                "x": -0.009999999776482582,
+                "y": 0.8199999928474426,
                 "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 729730335,
+            "textureref": 113111451,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -390,49 +420,19 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 0,
+            "layer": 2,
             "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "HealthBarEmpty_Boss"
-        }
-    },
-    {
-        "entityid": 12582944,
-        "general": {
-            "name": "Boss3Controller",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
         },
         "scripts": {
             "scriptscontainer": [
                 {
-                    "scriptFile": "../assets/Scripts/Level3BossSceneController.lua",
+                    "scriptFile": "../assets/Scripts/BossHP.lua",
                     "variables": []
                 }
             ]
+        },
+        "prefab": {
+            "prefab": "HealthBar_Boss"
         }
     }
 ]
