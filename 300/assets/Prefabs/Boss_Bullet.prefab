@@ -1,5 +1,5 @@
 {
-    "entityid": 2097306,
+    "entityid": 12583022,
     "general": {
         "name": "Boss_Bullet",
         "tagid": 1,
@@ -9,9 +9,9 @@
     },
     "transform": {
         "scale": {
-            "x": 3.0,
+            "x": 2.9999969005584717,
             "y": 3.0,
-            "z": 3.0
+            "z": 2.999999761581421
         },
         "rotate": {
             "x": -92.29513549804688,
@@ -19,9 +19,9 @@
             "z": 109.64163970947266
         },
         "translate": {
-            "x": -34.06801986694336,
-            "y": 0.0,
-            "z": 12.419782638549805
+            "x": 1.763671636581421,
+            "y": 13.723433494567871,
+            "z": -15.898741722106934
         }
     },
     "rigidbody": {
@@ -58,7 +58,7 @@
         },
         "castShadow": true,
         "materialinstance": [
-            "../assets/Compressed/cube_diffuse.ctexture",
+            "../assets/Compressed/Bright_Purple.ctexture",
             " ",
             " ",
             " ",
@@ -67,7 +67,7 @@
         ],
         "mesh": "../assets/compiled_geom/Particle_Sphere.geom",
         "texturerefid": [
-            1061543176,
+            1712078881,
             0,
             0,
             0,

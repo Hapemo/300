@@ -230,9 +230,9 @@ function Update()
     -- Debug States
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-    -- state = 3 -- [OK]
+    state = 3 -- [OK]
     -- state = 4 --[OK]
-    state = 5 -- [OK]
+    -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
     if _G.level3intro == false and debug_mode == false then 
