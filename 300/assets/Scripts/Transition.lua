@@ -10,6 +10,8 @@ local changeStateTimer
 local startStateTimer
 local timeToNextState
 
+local isPlaying
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     graphicsSys = systemManager:mGraphicsSystem()
@@ -27,10 +29,18 @@ function Alive()
 
     graphicsSys.FilterRadius = maxFilterRadius
     graphicsSys.mAmbientBloomExposure = maxExposure
+
+    isPlaying = false
 end
 
 function Update()
     if startStateTimer < timeToNextState and startedTransition == false then
+        if isPlaying == false then
+            isPlaying = true
+            this = Helper.GetScriptEntity(script_entity.id)
+            audio = this:GetAudio()
+            audio:SetPlay(0.5)
+        end
         startStateTimer = startStateTimer + FPSManager.GetDT()
         graphicsSys.FilterRadius = (1.0 - (startStateTimer / timeToNextState)) * (maxFilterRadius - minFilterRadius) + minFilterRadius
         graphicsSys.mAmbientBloomExposure = (1.0 - (startStateTimer / timeToNextState)) * (maxExposure - minExposure) + minExposure
@@ -42,6 +52,12 @@ function Update()
         end
     end
     if startedTransition == true then
+        if isPlaying == false then
+            isPlaying = true
+            this = Helper.GetScriptEntity(script_entity.id)
+            audio = this:GetAudio()
+            audio:SetPlay(0.5)
+        end
         changeStateTimer = changeStateTimer + FPSManager.GetDT() 
         graphicsSys.FilterRadius = (changeStateTimer / timeToNextState) * (maxFilterRadius - minFilterRadius) + minFilterRadius
         graphicsSys.mAmbientBloomExposure = (changeStateTimer / timeToNextState) * (maxExposure - minExposure) + minExposure
@@ -98,6 +114,7 @@ end
 function StartTransition()
     if startedTransition == true then return end
     startedTransition = true
+    isPlaying = false
 end
 
 function SetNextGameState(str)
