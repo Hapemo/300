@@ -29,6 +29,7 @@ start up of window and game system, also runs their update functions.
 
 #include <Windows.h>
 #include <WinUser.h>
+#include <Graphics/GraphicsSystem.h>
 
 // Static variables
 GFX::DebugRenderer* Application::mRenderer;
@@ -69,7 +70,7 @@ void Application::SystemInit()
     FPSManager::Init();
     Input::Init(false);
 
-
+    systemManager->mGraphicsSystem->SetFullscreen(true);
 
 
 

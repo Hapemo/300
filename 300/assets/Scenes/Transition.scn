@@ -32,6 +32,17 @@
                     "variables": []
                 }
             ]
-        }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Level_Transition.wav",
+            "fullpath": "../assets\\Audio/Level_Transition.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+	}
     }
 ]
