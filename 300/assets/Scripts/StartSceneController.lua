@@ -191,7 +191,6 @@ function Frame7()
     if (timer >= 30 and timer < 35) then
         if (timer > 33) then
             if(frame7:GetUIrenderer().mColor.w > 0) then
-                print("came")
                 frame7:GetUIrenderer().mColor.w = frame7:GetUIrenderer().mColor.w - 0.3 * FPSManager.GetDT()
             end
         end
