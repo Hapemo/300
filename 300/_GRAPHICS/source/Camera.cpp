@@ -191,6 +191,9 @@ void GFX::Camera::Update(bool freeMoving)
 		SetTarget(position() + glm::normalize(direction));
 	}
 
+	if (std::isnan(mAspectRatio) )
+		mAspectRatio = 0;
+
 	mProjection = glm::perspective(glm::radians(mFovDegree), mAspectRatio, mNear, mFar);
 	mView = glm::lookAt(glm::vec3(mPosition), glm::vec3(mTarget), glm::vec3(0.0f, 1.0f, 0.0f));
 	mViewProjection = mProjection * mView;
