@@ -20,7 +20,7 @@ local Attacked = false -- This run once every attack
 
 local inLineOfSight
 
-local deathTimer = 2
+local deathTimer = 1.05
 local deathTimerCount
 
 local state
@@ -35,7 +35,8 @@ function Alive()
     aiSys = systemManager:mAISystem();
     phySys = systemManager:mPhysicsSystem();
     gameStateSys = systemManager:mGameStateSystem();
-
+    this:GetMeshRenderer():SetMesh("ILY_Idle", this) -- Change back to idle animation 
+    
     bobbleAngle = 0
     bobbleFrequency = 1
     bobbleIntensity = 0.5
@@ -192,7 +193,7 @@ end
 
 function IDLEinit()
     state = "IDLE"
-    this:GetMeshRenderer():SetMesh("ILY", this) -- Change back to idle animation 
+    this:GetMeshRenderer():SetMesh("ILY_Idle", this) -- Change back to idle animation 
 end
 
 function Shoot()
@@ -216,5 +217,6 @@ function StartDeath()
     -- Start death sound
     state = "DEATH"
     phySys:SetVelocity(this, Vec3.new())
+    this:GetMeshRenderer():SetMesh("ILY_Death", this) -- Change to death animation 
     gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
 end
