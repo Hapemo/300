@@ -22,7 +22,9 @@ local frame4Translate = Vec3.new(0,0,0)
 local frame4Scale = Vec3.new(0,0,0)
 
 local VO_obj
+local VO_obj2
 local VO_played = false
+local VO_played2 = false
 local customized_delay = 1.0
 
 function Alive()
@@ -37,7 +39,8 @@ function Alive()
     skipButton = gameStateSys:GetEntity("SkipButton")
     clickAudioEntity = gameStateSys:GetEntity("Click")
 
-    VO_obj = gameStateSys:GetEntity("VO_Shes_Here")
+    VO_obj = gameStateSys:GetEntity("VO_ItCantBe")
+    VO_obj2 = gameStateSys:GetEntity("VO_ShesHere")
 
     hoverOver = false
 
@@ -101,7 +104,10 @@ function Update()
         end
     elseif(frame5State) then
         Frame5()
-    
+        if VO_played2 == false then
+            VO_obj2:GetAudio():SetPlay(1.0)
+            VO_played2 = true
+        end
     elseif(frame6State) then
         Frame6()
     elseif(frame7State) then
@@ -184,8 +190,9 @@ end
 function Frame7()
     if (timer >= 30 and timer < 35) then
         if (timer > 33) then
-            if(frame7:GetTransform().mTranslate.x <= 2) then
-                frame7:GetTransform().mTranslate.x = frame7:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
+            if(frame7:GetUIrenderer().mColor.w > 0) then
+                print("came")
+                frame7:GetUIrenderer().mColor.w = frame7:GetUIrenderer().mColor.w - 0.3 * FPSManager.GetDT()
             end
         end
     end

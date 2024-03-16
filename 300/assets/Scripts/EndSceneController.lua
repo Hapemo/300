@@ -5,6 +5,7 @@ local frame3
 local frame4
 local frame5
 local frame6
+local endCredits
 local timer
 
 --states bools
@@ -14,6 +15,7 @@ local frame3State = false
 local frame4State = false
 local frame5State = false
 local frame6State = false
+local creditsState = false
 
 local frame3Translate = Vec3.new(0,0,0)
 local frame4Translate = Vec3.new(0,0,0)
@@ -30,6 +32,7 @@ function Alive()
     frame4 = gameStateSys:GetEntity("Frame4E")
     frame5 = gameStateSys:GetEntity("Frame5E")
     frame6 = gameStateSys:GetEntity("Frame6E")
+    endCredits = gameStateSys:GetEntity("EndCredits")
 
     skipButton = gameStateSys:GetEntity("SkipButtonE")
     clickAudioEntity = gameStateSys:GetEntity("Click")
@@ -47,13 +50,13 @@ end
 -- end 
 
 function Update()
-
     frame3Translate = frame3:GetTransform().mTranslate
     frame4Translate = frame4:GetTransform().mTranslate
     frame4Scale = frame4:GetTransform().mScale
     frame6Scale = frame6:GetTransform().mScale
-
+    
     timer = timer + 1 * FPSManager.GetDT()
+    --print(timer)
     -- TIMER CONTROLLER --
     if (timer >= 3 and timer < 8) then
         frame2State = true
@@ -61,16 +64,19 @@ function Update()
     elseif (timer >= 8 and timer < 13) then
         frame3State = true
         frame2State = false
-    elseif (timer >= 13 and timer < 18) then
+    elseif (timer >= 13 and timer < 16) then
         frame4State = true
         frame3State = false
-    elseif (timer >= 18 and timer < 23) then
+    elseif (timer >= 16 and timer < 21) then
         frame5State = true
         frame4State = false
-    elseif (timer >= 23 and timer < 28) then
+    elseif (timer >= 21 and timer < 26) then
         frame6State = true
         frame5State = false
-    elseif (timer >= 28) then
+    elseif (timer >= 26 and timer < 67) then
+        creditsState = true
+        frame6State = false
+    elseif (timer >= 67) then
         gameStateSys:ChangeGameState("WinMenu")
     end
 
@@ -91,7 +97,8 @@ function Update()
         Frame5()
     elseif(frame6State) then
         Frame6()
-  
+    elseif(creditsState) then
+        Credits()
     end
 
     if (skipButton:GetButton().mIsHover) then
@@ -137,7 +144,7 @@ function Frame3()
 end
 
 function Frame4()
-    if (timer >= 13 and timer < 18) then
+    if (timer >= 13 and timer < 16) then
         if(frame4:GetTransform().mTranslate.x <= 2) then
             frame4:GetTransform().mTranslate.x = frame4:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
         end
@@ -145,24 +152,44 @@ function Frame4()
 end
 
 function Frame5()
-    if (timer >= 18 and timer < 23) then
-        if(frame5:GetTransform().mTranslate.x <= 2) then
-            frame5:GetTransform().mTranslate.x = frame5:GetTransform().mTranslate.x + 1 * FPSManager.GetDT()
-        end
-    end
-end
-
-function Frame6()
-    if (timer >= 23 and timer < 28) then
-        if (timer >= 23.5) then
-            if (frame6Scale.x < 2.5 and frame6Scale.y > -2.5) then
-                frame6Scale.x = frame6Scale.x + 0.2 * FPSManager.GetDT()
-                frame6Scale.y = frame6Scale.y - 0.2 * FPSManager.GetDT()
+    if (timer >= 16 and timer < 21) then
+        if (timer >= 18) then
+            if(frame5:GetUIrenderer().mColor.w > 0) then
+                frame5:GetUIrenderer().mColor.w = frame5:GetUIrenderer().mColor.w - 0.2 * FPSManager.GetDT()
             end
         end
     end
 end
 
+function Frame6()
+    if (timer >= 21 and timer < 26) then
+        if (timer >= 21.5 and timer < 24) then
+            if (frame6Scale.x < 2.5 and frame6Scale.y > -2.5) then
+                frame6Scale.x = frame6Scale.x + 0.25 * FPSManager.GetDT()
+                frame6Scale.y = frame6Scale.y - 0.25 * FPSManager.GetDT()
+            end
+        end
+        if (timer >= 23) then
+            if(frame6:GetUIrenderer().mColor.w > 0) then
+                frame6:GetUIrenderer().mColor.w = frame6:GetUIrenderer().mColor.w - 0.2 * FPSManager.GetDT()
+            end
+        end
+    end
+end
+
+function Credits()
+    if (timer >= 26 and timer < 67) then
+        if (timer >= 26 and timer < 65) then
+            if(endCredits:GetTransform().mTranslate.y < 5.5) then
+                endCredits:GetTransform().mTranslate.y = endCredits:GetTransform().mTranslate.y + 0.15 * FPSManager.GetDT()
+            end
+        else
+            if(endCredits:GetUIrenderer().mColor.w > 0) then
+                endCredits:GetUIrenderer().mColor.w = endCredits:GetUIrenderer().mColor.w - 0.2 * FPSManager.GetDT()
+            end
+        end
+    end
+end
 
 function Dead()
 
@@ -183,6 +210,3 @@ end
 function OnContactExit(Entity)
 
 end
-
-
-
