@@ -27,6 +27,7 @@ function Alive()
     phySys = systemManager:mPhysicsSystem();
     gameStateSys = systemManager:mGameStateSystem();
 
+    this:GetMeshRenderer():SetMesh("ZipBomb_Idle", this) -- Start exploding animation 
     bobbleAngle = 0
     bobbleFrequency = 2
     bobbleIntensity = 0.5

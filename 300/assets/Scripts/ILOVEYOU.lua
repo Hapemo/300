@@ -20,7 +20,7 @@ local Attacked = false -- This run once every attack
 
 local inLineOfSight
 
-local deathTimer = 0.5
+local deathTimer = 2
 local deathTimerCount
 
 local state

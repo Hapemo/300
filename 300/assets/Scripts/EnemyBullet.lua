@@ -36,6 +36,7 @@ function Update()
     lifeTime = lifeTime - FPSManager.GetDT()
     if lifeTime < 0 then 
         systemManager.ecs:SetDeleteEntity(this)
+        print("despawn from timer")
     end
     --print(this)
     --print(startingVec)
@@ -47,7 +48,9 @@ end
 
 function OnTriggerEnter(Entity)
     local tagid = Entity:GetGeneral().tagid
-    if (tagid == 0 and tagid == 3 and tagid == 4 and tagid == 5) then --Things the bullet can hit - "PLAYER", "FLOOR", "WALL", "TELEPORTER"
+
+    if (tagid == 0 or tagid == 3 or tagid == 4 or tagid == 5) then --Things the bullet can hit - "PLAYER", "FLOOR", "WALL", "TELEPORTER"
+        print(tagid)
         BulletHit()
         if (tagid == 0) then 
             -- Decrease player health here, when player got hit bullet

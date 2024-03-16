@@ -20,7 +20,7 @@ local Attacked = false -- This run once every attack
 
 local inLineOfSight
 
-local deathTimer = 0.1
+local deathTimer = 2
 local deathTimerCount
 
 local state
@@ -56,7 +56,7 @@ function Update()
         _G.ILYEpicIntroState = 2
     end
 
-    if inLineOfSight and not (state == "ATTACK") then
+    if inLineOfSight and not (state == "ATTACK") and not (state == "DEATH") then
         -- if (state == "ATTACK")
         --print(state)
         --print("Attack init")
