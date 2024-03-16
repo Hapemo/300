@@ -43,6 +43,8 @@ function Alive()
     phySys = systemManager:mPhysicsSystem();
     gameStateSys = systemManager:mGameStateSystem();
 
+    this:GetMeshRenderer():SetMesh("Melissa_Moving", this)
+    
     spawnMelissa = true
     target = this:GetAISetting():GetTarget()
 
@@ -165,7 +167,7 @@ function TRAVELInit()
     state = "TRAVEL"
 
     --print("Start melissa travel")
-    this:GetMeshRenderer():SetMesh("Melissa_Idle", this) -- Change back to idle animation 
+    this:GetMeshRenderer():SetMesh("Melissa_Moving", this) -- Change back to moving animation 
 
 end
 

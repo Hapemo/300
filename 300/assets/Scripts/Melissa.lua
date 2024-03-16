@@ -43,6 +43,7 @@ function Alive()
 
     -- Initialise the state's variables
     state = "TRAVEL"
+    this:GetMeshRenderer():SetMesh("Melissa_Moving", this)
 
     local num = math.random()
     spawnMelissa = num > 0.5
@@ -172,7 +173,7 @@ function TRAVELInit()
     state = "TRAVEL"
 
     --print("Start melissa travel")
-    this:GetMeshRenderer():SetMesh("Melissa_Idle", this) -- Change back to idle animation 
+    this:GetMeshRenderer():SetMesh("Melissa_Moving", this) -- Change back to moving animation 
 
 end
 
