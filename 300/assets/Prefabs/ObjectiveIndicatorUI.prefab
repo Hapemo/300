@@ -1,0 +1,52 @@
+{
+    "entityid": 2097410,
+    "general": {
+        "name": "ObjectiveIndicatorUI",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.5680394172668457,
+            "y": -0.423909991979599,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 0.5,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 0,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 0.0
+        },
+        "layer": 0,
+        "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/ObjectiveIndicatorUI_Script=.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "ObjectiveIndicatorUI"
+    }
+}

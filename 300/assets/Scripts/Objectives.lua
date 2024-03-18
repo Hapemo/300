@@ -299,7 +299,7 @@ function Update()
             then
                 controllerL2Script:RunFunction("ChangeState")
                 -- uirend:SetTexture("Resume_Default")
-                -- uirend.mColor.w = 1.0
+                uirend.mColor.w = 0.0
                 -- _G.objectiveTimer = 0.0
             end
         end

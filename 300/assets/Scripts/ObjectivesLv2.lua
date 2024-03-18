@@ -32,6 +32,10 @@ local mobtype = 0;
 local isInit
 local isObjectiveEnabled = false
 
+local objectiveindicator_triggeronce = false
+_G.objectiveTimer = 0.0
+local objectiveMaxTimer = 7.0
+
 
 function Alive()
     isInit = false
@@ -197,63 +201,108 @@ function Update()
         moveTime = 0
     end
 
-    if (isInZone == true) then
+    ent = gameStateSys:GetEntityByScene("ObjectiveIndicatorUI" , "UI")
+    uirend = ent:GetUIrenderer()
 
-        if (progress < objectivesComplete) then
+    -- print("objectiveTimer", _G.objectiveTimer)
+    if(_G.objectiveTimer > objectiveMaxTimer) then
+        uirend.mColor.w = 0.0
+    else
+        _G.objectiveTimer = _G.objectiveTimer + FPSManager.GetDT()
+    end
 
+
+    if (isInZone == true) 
+    then
+        objectiveindicator_triggeronce = true
+        if (progress < objectivesComplete) 
+        then
             --objectivebar:GetTransform().mTranslate.y = 0.7; -- Show the objective progress
             -- OBJECTIVE PROGRESS
-            if (progress < objectivesComplete) then
+            if (progress < objectivesComplete) 
+            then
                 progress = progress + 1
-               -- print("Current progress =", progress/objectivesComplete)
+
+                -- objectiveindicatorui to be "Installing..."
+                uirend:SetTexture("NextButton_Default")
+                uirend.mColor.w = 1.0
+                _G.objectiveTimer = 0.0
+               print("Current progress =", progress/objectivesComplete)
             end
         end
 
     end
 
-    if (isInZone == false) then
+    if (isInZone == false) 
+    then
     -- OBJECTIVE Progress (decreases if player is outside objective)
         --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
-
-        if (progress < objectivesComplete) then
-
-            if (progress > 0) then
+        if (progress < objectivesComplete) 
+        then
+            if (progress > 0) 
+            then
                 progress = progress - 1
                -- print("Current progress =", progress)
-            end
 
+                -- objectiveindicatorui to be "go back to objective point"
+                if(objectiveindicator_triggeronce == true)
+                then
+                    uirend:SetTexture("BackButton")
+                    uirend.mColor.w = 1.0
+                    _G.objectiveTimer = 0.0
+                end
+            end
         end
     end
 
-    if (progress == objectivesComplete) then
+
+    if (progress == objectivesComplete) 
+    then
         --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
         entityobj = Helper.GetScriptEntity(script_entity.id)
 
-        if entityobj:GetGeneral().name == "Objectives1" then
+        if entityobj:GetGeneral().name == "Objectives1" 
+        then
             controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
             controllerL2Scripts = controllerL2:GetScripts()
             controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
 
-            if controllerL2Script ~= nil then
+            if controllerL2Script ~= nil 
+            then
                 controllerL2Script:RunFunction("FinishObjective1")
+                uirend:SetTexture("Replay_Default")
+                uirend.mColor.w = 1.0
+                _G.objectiveTimer = 0.0
             end
         end
-        if entityobj:GetGeneral().name == "Objectives2" then
+
+        if entityobj:GetGeneral().name == "Objectives2" 
+        then
             controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
             controllerL2Scripts = controllerL2:GetScripts()
             controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel2.lua")
 
-            if controllerL2Script ~= nil then
+            if controllerL2Script ~= nil 
+            then
                 controllerL2Script:RunFunction("FinishObjective2")
+                uirend:SetTexture("Restart_Default")
+                uirend.mColor.w = 1.0
+                _G.objectiveTimer = 0.0
             end
         end
-        if entityobj:GetGeneral().name == "Objectives3" then
+
+        if entityobj:GetGeneral().name == "Objectives3" 
+        then
             controllerL2 = gameStateSys:GetEntity("Level2ControllerBoss")
             controllerL2Scripts = controllerL2:GetScripts()
             controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/Level2BossSceneController.lua")
 
-            if controllerL2Script ~= nil then
+            if controllerL2Script ~= nil 
+            then
                 controllerL2Script:RunFunction("StartBoss")
+                -- uirend:SetTexture("Resume_Default")
+                uirend.mColor.w = 0.0
+                -- _G.objectiveTimer = 0.0
             end
         end
 
