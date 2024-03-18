@@ -119,12 +119,15 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 
 
 void Animator::DeserializeSelf(rapidjson::Value& reader)
-{}
+{
+	Deserialize(reader, "paused", mAnimator.mIsPaused);
+}
 
 void Animator::SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const
 {
 	writer.Key("animator");
 	writer.StartObject();
+	Serialize(writer, "paused", mAnimator.mIsPaused);
 	writer.EndObject();
 }
 
