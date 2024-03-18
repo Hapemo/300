@@ -42,13 +42,8 @@ function Update()
         -- use the counter to raise the objective platforms
         -- updated 9-3-2024 new objectives positions
         if testScript ~= nil then
-            ent = gameStateSys:GetEntityByScene("ObjectiveIndicatorUI" , "UI")
-            uirend = ent:GetUIrenderer()
-
             if objCount == 3 then
                 -- spawn get to objective
-                uirend:SetTexture("BackButton")
-                uirend.mColor.w = 1.0
                 o1offset.x = objective1:GetTransform().mTranslate.x
                 o1offset.y = -6.555
                 o1offset.z = objective1:GetTransform().mTranslate.z
@@ -56,8 +51,6 @@ function Update()
             end
             
             if objCount == 2 then
-                uirend:SetTexture("BackButton")
-                uirend.mColor.w = 1.0
                 o2offset.x = objective2:GetTransform().mTranslate.x
                 o2offset.y = -11
                 o2offset.z = objective2:GetTransform().mTranslate.z
@@ -65,8 +58,6 @@ function Update()
             end
 
             if objCount == 1 then
-                uirend:SetTexture("BackButton")
-                uirend.mColor.w = 1.0
                 o3offset.x = objective3:GetTransform().mTranslate.x
                 o3offset.y = -6.555
                 o3offset.z = objective3:GetTransform().mTranslate.z
