@@ -209,13 +209,6 @@ function Update()
     ent = gameStateSys:GetEntityByScene("ObjectiveIndicatorUI" , "UI")
     uirend = ent:GetUIrenderer()
 
-    -- print("objectiveTimer", _G.objectiveTimer)
-    -- if(_G.objectiveTimer > objectiveMaxTimer) then
-    --     uirend.mColor.w = 0.0
-    -- else
-    --     _G.objectiveTimer = _G.objectiveTimer + FPSManager.GetDT()
-    -- end
-
 
     if (isInZone == true) 
     then
@@ -232,7 +225,7 @@ function Update()
                 uirend:SetTexture("Installing_Text")
                 uirend.mColor.w = 1.0
                 _G.objectiveTimer = 0.0
-               print("Current progress =", progress/objectivesComplete)
+                _G.ObjectiveIndicatorUI_Texture = "Installing"
             end
         end
 
@@ -253,6 +246,7 @@ function Update()
                 if(objectiveindicator_triggeronce == true)
                 then
                     uirend:SetTexture("Return_To_Installation_Point_Text")
+                    _G.ObjectiveIndicatorUI_Texture = "default"
                     uirend.mColor.w = 1.0
                     _G.objectiveTimer = 0.0
                 end
@@ -279,6 +273,7 @@ function Update()
                 uirend:SetTexture("1_3_Installed_Text")
                 uirend.mColor.w = 1.0
                 _G.objectiveTimer = 0.0
+                _G.ObjectiveIndicatorUI_Texture = "default"
             end
         end
 
@@ -294,6 +289,7 @@ function Update()
                 uirend:SetTexture("2_3_Installed_Text")
                 uirend.mColor.w = 1.0
                 _G.objectiveTimer = 0.0
+                _G.ObjectiveIndicatorUI_Texture = "default"
             end
         end
 
@@ -308,6 +304,7 @@ function Update()
                 controllerL2Script:RunFunction("StartBoss")
                 uirend:SetTexture("3_3_Installed_Text")
                 _G.objectiveTimer = 0.0
+                _G.ObjectiveIndicatorUI_Texture = "default"
                 --uirend.mColor.w = 0.0
             end
         end

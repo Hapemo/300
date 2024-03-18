@@ -227,7 +227,7 @@ function Update()
                 uirend:SetTexture("Installing_Text")
                 uirend.mColor.w = 1.0
                 _G.objectiveTimer = 0.0
-               print("Current progress =", progress/objectivesComplete)
+                _G.ObjectiveIndicatorUI_Texture = "Installing"
             end
         end
     end
@@ -251,6 +251,7 @@ function Update()
                     uirend:SetTexture("Return_To_Installation_Point_Text")
                     uirend.mColor.w = 1.0
                     _G.objectiveTimer = 0.0
+                    _G.ObjectiveIndicatorUI_Texture = "default"
                 end
             end
         end
@@ -274,6 +275,7 @@ function Update()
                 uirend:SetTexture("1_3_Installed_Text")
                 uirend.mColor.w = 1.0
                 _G.objectiveTimer = 0.0
+                _G.ObjectiveIndicatorUI_Texture = "default"
             end
         end
 
@@ -289,6 +291,7 @@ function Update()
                 uirend:SetTexture("2_3_Installed_Text")
                 uirend.mColor.w = 1.0
                 _G.objectiveTimer = 0.0
+                _G.ObjectiveIndicatorUI_Texture = "default"
             end
         end
 
@@ -305,6 +308,7 @@ function Update()
             then
                 uirend:SetTexture("3_3_Installed_Text")
                 _G.objectiveTimer = 0.0
+                _G.ObjectiveIndicatorUI_Texture = "default"
 
                 controllerL2Script:RunFunction("ChangeState")
                 --uirend.mColor.w = 0.0
