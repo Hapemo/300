@@ -1,17 +1,17 @@
 [
     {
-        "entityid": 5243020,
+        "entityid": 7340087,
         "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
+            "name": "UI-Spawned",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
+                "x": 0.125,
+                "y": -0.25,
                 "z": 1.0
             },
             "rotate": {
@@ -20,269 +20,39 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 5243021,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
+                "x": -0.46875,
+                "y": -0.7592592835426331,
                 "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
             }
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 2307664127,
+            "textureref": 4650,
             "degree": 0.0,
-            "slider": 0.9980000257492065,
+            "slider": 1.0,
             "color": {
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
                 "w": 1.0
             },
-            "layer": 1,
+            "layer": 2,
             "worldtransform": false
         },
         "scripts": {
-            "scriptscontainer": []
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
+                    "variables": []
+                }
+            ]
         },
         "prefab": {
-            "prefab": "Objective Bar 1"
+            "prefab": "UI-Spawned"
         }
     },
     {
-        "entityid": 5243022,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 5243023,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 5243025,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 5243026,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 5243027,
+        "entityid": 18874681,
         "general": {
             "name": "ObjectiveIndicatorUI",
             "tagid": 0,
@@ -292,8 +62,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.8455353379249573,
-                "y": -0.25,
+                "x": 0.7886735796928406,
+                "y": -0.23318764567375183,
                 "z": 1.0
             },
             "rotate": {
@@ -331,7 +101,7 @@
         }
     },
     {
-        "entityid": 5243028,
+        "entityid": 18874682,
         "general": {
             "name": "Slot_3",
             "tagid": 6,
@@ -378,7 +148,7 @@
         }
     },
     {
-        "entityid": 5243029,
+        "entityid": 18874683,
         "general": {
             "name": "Slot_4",
             "tagid": 6,
@@ -425,7 +195,7 @@
         }
     },
     {
-        "entityid": 5243030,
+        "entityid": 18874685,
         "general": {
             "name": "Slot_5",
             "tagid": 6,
@@ -472,7 +242,7 @@
         }
     },
     {
-        "entityid": 5243031,
+        "entityid": 18874686,
         "general": {
             "name": "Slot_1",
             "tagid": 6,
@@ -519,7 +289,7 @@
         }
     },
     {
-        "entityid": 5243032,
+        "entityid": 18874687,
         "general": {
             "name": "Slot_6",
             "tagid": 6,
@@ -566,7 +336,7 @@
         }
     },
     {
-        "entityid": 5243033,
+        "entityid": 18874688,
         "general": {
             "name": "UI-indicator24",
             "tagid": 6,
@@ -618,7 +388,7 @@
         }
     },
     {
-        "entityid": 5243034,
+        "entityid": 18874689,
         "general": {
             "name": "UI-indicator3",
             "tagid": 6,
@@ -670,7 +440,7 @@
         }
     },
     {
-        "entityid": 5243035,
+        "entityid": 18874690,
         "general": {
             "name": "Leftshift",
             "tagid": 6,
@@ -690,7 +460,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -360.0,
+                "x": -1430.0,
                 "y": -0.5462962985038757,
                 "z": 0.0
             }
@@ -704,7 +474,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -719,7 +489,7 @@
         }
     },
     {
-        "entityid": 5243036,
+        "entityid": 18874691,
         "general": {
             "name": "P4",
             "tagid": 6,
@@ -747,7 +517,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -760,7 +530,7 @@
         }
     },
     {
-        "entityid": 5243038,
+        "entityid": 18874692,
         "general": {
             "name": "P6",
             "tagid": 6,
@@ -788,7 +558,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -801,7 +571,7 @@
         }
     },
     {
-        "entityid": 5243043,
+        "entityid": 18874693,
         "general": {
             "name": "P8",
             "tagid": 6,
@@ -842,7 +612,7 @@
         }
     },
     {
-        "entityid": 5243045,
+        "entityid": 18874694,
         "general": {
             "name": "dashui",
             "tagid": 6,
@@ -869,7 +639,7 @@
         },
         "uirenderer": {
             "texpath": "../assets/Compressed/UI-Dash.ctexture",
-            "textureref": 4125721315,
+            "textureref": 2342451680,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -883,7 +653,7 @@
         }
     },
     {
-        "entityid": 5243081,
+        "entityid": 18874698,
         "general": {
             "name": "UI-indicator20",
             "tagid": 6,
@@ -935,7 +705,7 @@
         }
     },
     {
-        "entityid": 5243085,
+        "entityid": 18874702,
         "general": {
             "name": "UI-indicator19",
             "tagid": 6,
@@ -987,7 +757,7 @@
         }
     },
     {
-        "entityid": 5243101,
+        "entityid": 18874717,
         "general": {
             "name": "UI-indicator17",
             "tagid": 6,
@@ -1039,7 +809,7 @@
         }
     },
     {
-        "entityid": 5243122,
+        "entityid": 18874718,
         "general": {
             "name": "P1",
             "tagid": 6,
@@ -1080,7 +850,7 @@
         }
     },
     {
-        "entityid": 5243125,
+        "entityid": 18874719,
         "general": {
             "name": "UI-indicator14",
             "tagid": 6,
@@ -1132,7 +902,7 @@
         }
     },
     {
-        "entityid": 5243136,
+        "entityid": 18874720,
         "general": {
             "name": "UI-indicator15",
             "tagid": 6,
@@ -1184,7 +954,7 @@
         }
     },
     {
-        "entityid": 5243142,
+        "entityid": 18874721,
         "general": {
             "name": "crosshair-1",
             "tagid": 6,
@@ -1233,7 +1003,7 @@
         }
     },
     {
-        "entityid": 5243149,
+        "entityid": 19922946,
         "general": {
             "name": "crosshair-2",
             "tagid": 6,
@@ -1282,7 +1052,7 @@
         }
     },
     {
-        "entityid": 5243160,
+        "entityid": 19923271,
         "general": {
             "name": "crosshair-4",
             "tagid": 6,
@@ -1331,7 +1101,7 @@
         }
     },
     {
-        "entityid": 5243166,
+        "entityid": 19923298,
         "general": {
             "name": "crosshair-3",
             "tagid": 6,
@@ -1380,7 +1150,7 @@
         }
     },
     {
-        "entityid": 5243182,
+        "entityid": 19923316,
         "general": {
             "name": "P3",
             "tagid": 6,
@@ -1408,7 +1178,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1421,7 +1191,7 @@
         }
     },
     {
-        "entityid": 5243183,
+        "entityid": 19923326,
         "general": {
             "name": "P5",
             "tagid": 6,
@@ -1449,7 +1219,7 @@
         "uirenderer": {
             "texpath": "../assets/Compressed/Brick wall 4_baseColor.ctexture",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1462,7 +1232,7 @@
         }
     },
     {
-        "entityid": 5243184,
+        "entityid": 19923366,
         "general": {
             "name": "HealthBar",
             "tagid": 6,
@@ -1503,7 +1273,7 @@
         }
     },
     {
-        "entityid": 5243185,
+        "entityid": 20971540,
         "general": {
             "name": "UI-indicator16",
             "tagid": 6,
@@ -1555,7 +1325,7 @@
         }
     },
     {
-        "entityid": 5243187,
+        "entityid": 20971557,
         "general": {
             "name": "UI-indicator21",
             "tagid": 6,
@@ -1607,7 +1377,7 @@
         }
     },
     {
-        "entityid": 5243188,
+        "entityid": 20971633,
         "general": {
             "name": "P2",
             "tagid": 6,
@@ -1635,7 +1405,7 @@
         "uirenderer": {
             "texpath": "",
             "textureref": 4923,
-            "degree": 0.0,
+            "degree": 360.0,
             "slider": 1.0,
             "color": {
                 "x": 1.0,
@@ -1648,7 +1418,59 @@
         }
     },
     {
-        "entityid": 5243189,
+        "entityid": 20971737,
+        "general": {
+            "name": "UI-Spawned",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 0.125,
+                "y": -0.25,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.09375,
+                "y": -0.7592592835426331,
+                "z": 3.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 4650,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 2,
+            "worldtransform": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "UI-Spawned"
+        }
+    },
+    {
+        "entityid": 20971742,
         "general": {
             "name": "UI-indicator22",
             "tagid": 6,
@@ -1700,7 +1522,7 @@
         }
     },
     {
-        "entityid": 5243190,
+        "entityid": 20971851,
         "general": {
             "name": "UI-indicator23",
             "tagid": 6,
@@ -1752,7 +1574,7 @@
         }
     },
     {
-        "entityid": 5243191,
+        "entityid": 20971890,
         "general": {
             "name": "Slot_1",
             "tagid": 6,
@@ -1799,7 +1621,7 @@
         }
     },
     {
-        "entityid": 5243193,
+        "entityid": 20971904,
         "general": {
             "name": "Slot_2",
             "tagid": 6,
@@ -1846,7 +1668,7 @@
         }
     },
     {
-        "entityid": 5243194,
+        "entityid": 22020218,
         "general": {
             "name": "UI-indicator18",
             "tagid": 6,
@@ -1898,7 +1720,7 @@
         }
     },
     {
-        "entityid": 5243195,
+        "entityid": 22020287,
         "general": {
             "name": "UI-indicator5",
             "tagid": 6,
@@ -1950,7 +1772,7 @@
         }
     },
     {
-        "entityid": 5243196,
+        "entityid": 22020406,
         "general": {
             "name": "UI-indicator7",
             "tagid": 6,
@@ -2002,7 +1824,7 @@
         }
     },
     {
-        "entityid": 5243197,
+        "entityid": 22020461,
         "general": {
             "name": "UI-indicator13",
             "tagid": 6,
@@ -2054,7 +1876,7 @@
         }
     },
     {
-        "entityid": 5243198,
+        "entityid": 23068922,
         "general": {
             "name": "UI-indicator1",
             "tagid": 6,
@@ -2088,7 +1910,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -2106,7 +1928,7 @@
         }
     },
     {
-        "entityid": 5243199,
+        "entityid": 23069051,
         "general": {
             "name": "Leftshift",
             "tagid": 6,
@@ -2126,7 +1948,7 @@
                 "z": 0.0
             },
             "translate": {
-                "x": -360.0,
+                "x": -1430.0,
                 "y": -0.5462962985038757,
                 "z": 0.0
             }
@@ -2140,7 +1962,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 1.0
+                "w": 0.0
             },
             "layer": 0,
             "worldtransform": false
@@ -2155,7 +1977,7 @@
         }
     },
     {
-        "entityid": 5243200,
+        "entityid": 24117251,
         "general": {
             "name": "Base",
             "tagid": 6,
@@ -2190,7 +2012,7 @@
         }
     },
     {
-        "entityid": 5243201,
+        "entityid": 24117257,
         "general": {
             "name": "UI-indicator2",
             "tagid": 6,
@@ -2224,7 +2046,7 @@
                 "x": 1.0,
                 "y": 1.0,
                 "z": 1.0,
-                "w": 0.0
+                "w": 1.0
             },
             "layer": 0,
             "worldtransform": false
@@ -2242,7 +2064,7 @@
         }
     },
     {
-        "entityid": 5243202,
+        "entityid": 24117259,
         "general": {
             "name": "UI-Circle-Pattern",
             "tagid": 6,
@@ -2291,7 +2113,7 @@
         }
     },
     {
-        "entityid": 5243203,
+        "entityid": 24117355,
         "general": {
             "name": "UI-indicator11",
             "tagid": 6,
@@ -2343,7 +2165,7 @@
         }
     },
     {
-        "entityid": 5243204,
+        "entityid": 24117487,
         "general": {
             "name": "UI-indicator12",
             "tagid": 6,
@@ -2395,7 +2217,7 @@
         }
     },
     {
-        "entityid": 5243205,
+        "entityid": 24117513,
         "general": {
             "name": "HealthBarEmpty",
             "tagid": 0,
@@ -2436,7 +2258,7 @@
         }
     },
     {
-        "entityid": 5243206,
+        "entityid": 24117515,
         "general": {
             "name": "UI-indicator8",
             "tagid": 6,
@@ -2488,7 +2310,7 @@
         }
     },
     {
-        "entityid": 5243207,
+        "entityid": 24117607,
         "general": {
             "name": "UI-indicator9",
             "tagid": 6,
@@ -2540,7 +2362,7 @@
         }
     },
     {
-        "entityid": 5243231,
+        "entityid": 24117609,
         "general": {
             "name": "UI-indicator10",
             "tagid": 6,
@@ -2592,7 +2414,7 @@
         }
     },
     {
-        "entityid": 5243232,
+        "entityid": 24117622,
         "general": {
             "name": "Queue_Text",
             "tagid": 6,
@@ -2633,7 +2455,7 @@
         }
     },
     {
-        "entityid": 5243233,
+        "entityid": 25165836,
         "general": {
             "name": "UI-indicator4",
             "tagid": 6,
@@ -2685,7 +2507,7 @@
         }
     },
     {
-        "entityid": 5243234,
+        "entityid": 25165838,
         "general": {
             "name": "Slot_7",
             "tagid": 6,
@@ -2732,7 +2554,7 @@
         }
     },
     {
-        "entityid": 6291458,
+        "entityid": 25165912,
         "general": {
             "name": "Queue_Arrow (new)",
             "tagid": 6,
@@ -2773,7 +2595,7 @@
         }
     },
     {
-        "entityid": 6291828,
+        "entityid": 25165928,
         "general": {
             "name": "P7",
             "tagid": 6,
@@ -2814,7 +2636,7 @@
         }
     },
     {
-        "entityid": 6291838,
+        "entityid": 25166157,
         "general": {
             "name": "UI-indicator6",
             "tagid": 0,
@@ -2863,7 +2685,7 @@
         }
     },
     {
-        "entityid": 7340052,
+        "entityid": 25166181,
         "general": {
             "name": "UIHider",
             "tagid": 6,
@@ -2907,481 +2729,6 @@
         },
         "prefab": {
             "prefab": "UIHider"
-        }
-    },
-    {
-        "entityid": 7340402,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 7340416,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 8388799,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 8388973,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 9437370,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 9437563,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 10485763,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 10485769,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.5799999833106995,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.9980000257492065,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 10485771,
-        "general": {
-            "name": "Objective Bar 1",
-            "tagid": 6,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.14000000059604645,
-                "y": -0.07999999821186066,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2307664127,
-            "degree": 0.0,
-            "slider": 0.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Objective Bar 1"
-        }
-    },
-    {
-        "entityid": 10485999,
-        "general": {
-            "name": "UI-Spawned",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.125,
-                "y": -0.25,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.09375,
-                "y": -0.7592592835426331,
-                "z": 1.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 4650,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 0.0
-            },
-            "layer": 2,
-            "worldtransform": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/UI-WeaponMovement.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "UI-Spawned"
         }
     }
 ]
