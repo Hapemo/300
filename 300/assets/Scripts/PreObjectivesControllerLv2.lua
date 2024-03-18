@@ -56,7 +56,7 @@ function Update()
                 o2offset.y = -10
                 o2offset.z = objective2:GetTransform().mTranslate.z
                 Helper.SetTranslate(objective2,o2offset)
-                                controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
+                controllerL2 = gameStateSys:GetEntity("DialogueControllerLevel2")
                 
             end
             if objCount == 1 then

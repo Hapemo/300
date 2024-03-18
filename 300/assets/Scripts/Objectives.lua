@@ -33,6 +33,8 @@ local isObjectiveEnabled = false
 local minExposure = 0.1
 local minFilterRadius = 0.001
 local objectiveindicator_triggeronce = false
+_G.objectiveTimer = 0.0
+local objectiveMaxTimer = 7.0
 
 function Alive()
     isInit = false
@@ -199,6 +201,13 @@ function Update()
     ent = gameStateSys:GetEntityByScene("ObjectiveIndicatorUI" , "UI")
     uirend = ent:GetUIrenderer()
 
+    -- print("objectiveTimer", _G.objectiveTimer)
+    if(_G.objectiveTimer > objectiveMaxTimer) then
+        uirend.mColor.w = 0.0
+    else
+        _G.objectiveTimer = _G.objectiveTimer + FPSManager.GetDT()
+    end
+
     if (isInZone == true) 
     then
         objectiveindicator_triggeronce = true
@@ -212,6 +221,7 @@ function Update()
                 -- objectiveindicatorui to be "Installing..."
                 uirend:SetTexture("NextButton_Default")
                 uirend.mColor.w = 1.0
+                _G.objectiveTimer = 0.0
                print("Current progress =", progress/objectivesComplete)
             end
         end
@@ -228,14 +238,14 @@ function Update()
             if (progress > 0) 
             then
                 progress = progress - 1
-                uirend.mColor.w = 0.0
-               print("Current progress =", progress, "triggeronce: ", objectiveindicator_triggeronce)
+                --print("Current progress =", progress, "triggeronce: ", objectiveindicator_triggeronce)
 
                 -- objectiveindicatorui to be "go back to objective point"
                 if(objectiveindicator_triggeronce == true)
                 then
                     uirend:SetTexture("BackButton")
                     uirend.mColor.w = 1.0
+                    _G.objectiveTimer = 0.0
                 end
             end
         end
@@ -257,6 +267,7 @@ function Update()
                 controllerL2Script:RunFunction("FinishObjective1")
                 uirend:SetTexture("Replay_Default")
                 uirend.mColor.w = 1.0
+                _G.objectiveTimer = 0.0
             end
         end
 
@@ -271,6 +282,7 @@ function Update()
                 controllerL2Script:RunFunction("FinishObjective2")
                 uirend:SetTexture("Restart_Default")
                 uirend.mColor.w = 1.0
+                _G.objectiveTimer = 0.0
             end
         end
 
@@ -286,8 +298,9 @@ function Update()
             if controllerL2Script ~= nil 
             then
                 controllerL2Script:RunFunction("ChangeState")
-                uirend:SetTexture("Resume_Default")
-                uirend.mColor.w = 1.0
+                -- uirend:SetTexture("Resume_Default")
+                -- uirend.mColor.w = 1.0
+                -- _G.objectiveTimer = 0.0
             end
         end
 
