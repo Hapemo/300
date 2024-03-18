@@ -219,7 +219,7 @@ function Update()
             then
                 progress = progress + 1
                 -- objectiveindicatorui to be "Installing..."
-                uirend:SetTexture("NextButton_Default")
+                uirend:SetTexture("Installing_Text")
                 uirend.mColor.w = 1.0
                 _G.objectiveTimer = 0.0
                print("Current progress =", progress/objectivesComplete)
@@ -243,7 +243,7 @@ function Update()
                 -- objectiveindicatorui to be "go back to objective point"
                 if(objectiveindicator_triggeronce == true)
                 then
-                    uirend:SetTexture("BackButton")
+                    uirend:SetTexture("Return_To_Installation_Point_Text")
                     uirend.mColor.w = 1.0
                     _G.objectiveTimer = 0.0
                 end
@@ -265,7 +265,7 @@ function Update()
             if controllerL2Script ~= nil 
             then
                 controllerL2Script:RunFunction("FinishObjective1")
-                uirend:SetTexture("Replay_Default")
+                uirend:SetTexture("1_3_Installed_Text")
                 uirend.mColor.w = 1.0
                 _G.objectiveTimer = 0.0
             end
@@ -280,7 +280,7 @@ function Update()
             if controllerL2Script ~= nil 
             then
                 controllerL2Script:RunFunction("FinishObjective2")
-                uirend:SetTexture("Restart_Default")
+                uirend:SetTexture("2_3_Installed_Text")
                 uirend.mColor.w = 1.0
                 _G.objectiveTimer = 0.0
             end
@@ -298,7 +298,7 @@ function Update()
             if controllerL2Script ~= nil 
             then
                 controllerL2Script:RunFunction("ChangeState")
-                -- uirend:SetTexture("Resume_Default")
+                -- uirend:SetTexture("3_3_Installed_Text")
                 uirend.mColor.w = 0.0
                 -- _G.objectiveTimer = 0.0
             end
