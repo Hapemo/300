@@ -48,11 +48,12 @@ end
 
 function OnTriggerEnter(Entity)
     local tagid = Entity:GetGeneral().tagid
+    local name = Entity:GetGeneral().name
 
     if (tagid == 0 or tagid == 3 or tagid == 4 or tagid == 5) then --Things the bullet can hit - "PLAYER", "FLOOR", "WALL", "TELEPORTER"
         print(tagid)
         BulletHit()
-        if (tagid == 0) then 
+        if (name == "Camera") then 
             -- Decrease player health here, when player got hit bullet
             _G.ILYBulletHitPlayer = true
             Entity:GetHealthbar().health = Entity:GetHealthbar().health - damage
