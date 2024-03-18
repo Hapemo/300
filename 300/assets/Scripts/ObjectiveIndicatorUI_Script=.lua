@@ -19,8 +19,6 @@ function Update()
     local sinewave = math.sin(currentCounter * multiplier) * 0.1 + 0.9
     transform.mScale.x = originalScaleX * sinewave
     transform.mScale.y = originalScaleY * sinewave
-
-    print("sin", sinewave)
 end
 
 function Dead()

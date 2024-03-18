@@ -202,6 +202,7 @@ local footstepDelay   = 0.5     -- Delay between each step
 local currentLeftIndex = 1      -- Used to keep track which track is being played (in the left footstep database)   -> lua starts from 1
 local currentRightIndex = 1     -- Used to keep track which track is being played (in the right footstep database)  -> lua starts from 1
 
+local objectiveMaxTimer = 3.0
 
 _G.FreezePlayerControl = false
 
@@ -367,6 +368,16 @@ function Update()
 
     -- print(playerHealthCurrent/playerHealthMax)
     healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
+
+    
+    -- Richmond's. To help with the objective indicator
+    if(_G.objectiveTimer > objectiveMaxTimer) then
+        ent = gameStateSys:GetEntityByScene("ObjectiveIndicatorUI" , "UI")
+        uirend = ent:GetUIrenderer()
+        uirend.mColor.w = 0.0
+    else
+        _G.objectiveTimer = _G.objectiveTimer + FPSManager.GetDT()
+    end
 
 
     if playerHealthCurrent <= 0 then

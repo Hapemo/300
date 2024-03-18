@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 18874602,
+        "entityid": 270,
         "general": {
             "name": "Objective Bar Empty",
             "tagid": 6,
@@ -10,7 +10,7 @@
         },
         "transform": {
             "scale": {
-                "x": -0.3799999952316284,
+                "x": -0.30000001192092896,
                 "y": 0.09000000357627869,
                 "z": 1.0
             },
@@ -20,8 +20,8 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 0.699999988079071,
-                "y": 0.699999988079071,
+                "x": 0.800000011920929,
+                "y": 0.6600000262260437,
                 "z": 0.0
             }
         },
@@ -47,7 +47,7 @@
         }
     },
     {
-        "entityid": 18874606,
+        "entityid": 271,
         "general": {
             "name": "Objectives3",
             "tagid": 0,
@@ -157,7 +157,7 @@
         }
     },
     {
-        "entityid": 18874609,
+        "entityid": 272,
         "general": {
             "name": "Objectives1",
             "tagid": 0,
@@ -267,7 +267,7 @@
         }
     },
     {
-        "entityid": 18874611,
+        "entityid": 273,
         "general": {
             "name": "Controller",
             "tagid": 0,
@@ -302,7 +302,7 @@
         }
     },
     {
-        "entityid": 18874614,
+        "entityid": 274,
         "general": {
             "name": "PreObjectivesController",
             "tagid": 0,
@@ -337,7 +337,7 @@
         }
     },
     {
-        "entityid": 18874616,
+        "entityid": 275,
         "general": {
             "name": "Objectives2",
             "tagid": 0,

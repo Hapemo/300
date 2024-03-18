@@ -99,9 +99,10 @@ function Update()
         end
 
         objectiveBarSpawnPos.x = 0.8;
-        objectiveBarSpawnPos.y = 0.7;
+        objectiveBarSpawnPos.y = 0.66;
         objectiveBarSpawnPos.z = 0;
         objectivebar = systemManager.ecs:NewEntityFromPrefabSceneName("Objective Bar 1", "UI", objectiveBarSpawnPos)
+        objectiveprogressbar = gameStateSys:GetEntity("CapturingObjectiveFill" , "UI")
         -- objectivebar = gameStateSys:GetEntityByScene("Objective Bar 1","Objectives")
         isInit = true
     end
@@ -110,7 +111,8 @@ function Update()
     transform = ent:GetTransform()
     isObjectiveEnabled = false
 
-    if(math.abs(transform.mTranslate.y - -11) <= flt_epsilon or math.abs(transform.mTranslate.y - -6.555) <= flt_epsilon) then
+    if(math.abs(transform.mTranslate.y - -11) <= flt_epsilon 
+        or math.abs(transform.mTranslate.y - -6.555) <= flt_epsilon) then
         isObjectiveEnabled = true
     end
 
@@ -123,15 +125,15 @@ function Update()
             objCount = testScript:ReturnValueInt("GetCountObj")
 
             if objCount == 3 then
-                objectivebar:GetTransform().mTranslate.x =  0.58;
+                objectivebar:GetTransform().mTranslate.x =  0.7;
             end
 
             if objCount == 2 then
-                 objectivebar:GetTransform().mTranslate.x = 0.7;
+                 objectivebar:GetTransform().mTranslate.x = 0.795;
             end
 
             if objCount == 1 then
-                objectivebar:GetTransform().mTranslate.x = 0.815;
+                objectivebar:GetTransform().mTranslate.x = 0.89;
             end
         end
 
@@ -166,7 +168,10 @@ function Update()
         end
     end
 
-    objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
+    if(isObjectiveEnabled) then
+        --objectivebar:GetUIrenderer():SetSlider(progress/objectivesComplete);
+        objectiveprogressbar:GetUIrenderer():SetSlider(progress/objectivesComplete);
+    end
 
     -- print(math.random() +math.random(-20,20) )
 
@@ -201,12 +206,12 @@ function Update()
     ent = gameStateSys:GetEntityByScene("ObjectiveIndicatorUI" , "UI")
     uirend = ent:GetUIrenderer()
 
-    -- print("objectiveTimer", _G.objectiveTimer)
-    if(_G.objectiveTimer > objectiveMaxTimer) then
-        uirend.mColor.w = 0.0
-    else
-        _G.objectiveTimer = _G.objectiveTimer + FPSManager.GetDT()
-    end
+    -- -- print("objectiveTimer", _G.objectiveTimer)
+    -- if(_G.objectiveTimer > objectiveMaxTimer) then
+    --     uirend.mColor.w = 0.0
+    -- else
+    --     _G.objectiveTimer = _G.objectiveTimer + FPSManager.GetDT()
+    -- end
 
     if (isInZone == true) 
     then
@@ -254,6 +259,7 @@ function Update()
     if (progress == objectivesComplete) 
     then
         --objectivebar:GetTransform().mTranslate.y = 20; -- Hide the objective progress
+        objectivebar:GetUIrenderer():SetSlider(1);
         entityobj = Helper.GetScriptEntity(script_entity.id)
         
         if entityobj:GetGeneral().name == "Objectives1" 
@@ -297,10 +303,11 @@ function Update()
 
             if controllerL2Script ~= nil 
             then
+                uirend:SetTexture("3_3_Installed_Text")
+                _G.objectiveTimer = 0.0
+
                 controllerL2Script:RunFunction("ChangeState")
-                -- uirend:SetTexture("3_3_Installed_Text")
-                uirend.mColor.w = 0.0
-                -- _G.objectiveTimer = 0.0
+                --uirend.mColor.w = 0.0
             end
         end
 

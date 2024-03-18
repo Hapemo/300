@@ -1,5 +1,5 @@
 {
-    "entityid": 285,
+    "entityid": 17825978,
     "general": {
         "name": "Objective Bar Empty",
         "tagid": 6,
@@ -9,7 +9,7 @@
     },
     "transform": {
         "scale": {
-            "x": -0.3799999952316284,
+            "x": -0.30000001192092896,
             "y": 0.09000000357627869,
             "z": 1.0
         },
@@ -19,8 +19,8 @@
             "z": 0.0
         },
         "translate": {
-            "x": 0.7799999713897705,
-            "y": 0.699999988079071,
+            "x": 0.800000011920929,
+            "y": 0.6600000262260437,
             "z": 0.0
         }
     },
@@ -37,6 +37,9 @@
         },
         "layer": 0,
         "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": []
     },
     "prefab": {
         "prefab": "Objective Bar Empty"
