@@ -21,6 +21,10 @@ function Alive()
         print("BOSS HP: " , _G.bossHP_healthbar_comp.health)
     end
     initonce = false
+
+    -- hide the objective ui
+    objectiveprogressbarempty = gameStateSys:GetEntity("CapturingObjectiveEmpty" , "UI")
+    objectiveprogressbarempty:GetUIrenderer().mColor.w = 0.0
 end
 
 function Update()

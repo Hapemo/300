@@ -19,7 +19,7 @@ function Update()
 
     local sinewave = math.sin(currentCounter * multiplier) * 0.1 + 0.9
 
-    print(_G.ObjectiveIndicatorUI_Texture)
+    --print(_G.ObjectiveIndicatorUI_Texture)
     if(_G.ObjectiveIndicatorUI_Texture == "Installing")
     then
         transform.mScale.x = (originalScaleX / 2) * sinewave
