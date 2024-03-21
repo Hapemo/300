@@ -1,0 +1,65 @@
+{
+    "entityid": 163,
+    "general": {
+        "name": "Level3WellParticles",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 1.5962247848510742,
+            "y": -14.636449813842773,
+            "z": 8.777902603149414
+        }
+    },
+    "prefab": {
+        "prefab": "Level3WellParticles"
+    },
+    "particleemitter": {
+        "startcolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "endcolor": {
+            "x": 1.0,
+            "y": 0.7572815418243408,
+            "z": 0.0,
+            "w": 0.0
+        },
+        "startsize": 0.0,
+        "endsize": 2.0,
+        "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "offset": {
+            "x": 18.200000762939453,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "gravity": 0.07000000029802322,
+        "rotation": 90.0,
+        "lifetime": 2.0,
+        "loop": true,
+        "loopInterval": 0.0,
+        "speed": 5.0,
+        "count": 256,
+        "emit": false,
+        "particletexture": 2273550607
+    }
+}
