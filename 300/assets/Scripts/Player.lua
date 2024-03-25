@@ -231,7 +231,7 @@ function Alive()
     machineGunAudioEnt = gameStateSys:GetEntity("MachineGun")
 
     if(basicGunAudioEnt ~= nil) then 
-        print("BASIC GUN EXISTS")
+        -- print("BASIC GUN EXISTS")
     end
 
     -- basicGunAudioEnt = gameStateSys:GetEntityByScene("")
@@ -312,8 +312,8 @@ function Alive()
     table.insert(rightFootsteps , footstep_right_3)
     table.insert(rightFootsteps , footstep_right_4)
 
-    print("LEFT FOOTSTEP DATABASE: " , #leftFootsteps)
-    print("RIGHT FOOTSTEP DATABASE: " , #rightFootsteps)
+    -- print("LEFT FOOTSTEP DATABASE: " , #leftFootsteps)
+    -- print("RIGHT FOOTSTEP DATABASE: " , #rightFootsteps)
 
 end
 
@@ -776,7 +776,7 @@ function Update()
             if(_G.gunEquipped == 0) then 
 
                 if(pistolTimer == 0) then
-                    print("SHOOTING PISTOLS")
+                    -- print("SHOOTING PISTOLS")
                     applyGunRecoil(recoil_speed, 0.5)
 
                     positions_final.x = positions.x + viewVecCam.x * 3
@@ -1342,7 +1342,7 @@ function playFootsteps()
             end
             -- Play Left footstep sounds 
             leftFootsteps[currentLeftIndex]:GetAudio():SetPlay(1.0)
-            print("PLAYING LEFT FOOTSTEP: " , currentLeftIndex)
+            -- print("PLAYING LEFT FOOTSTEP: " , currentLeftIndex)
             currentLeftIndex = currentLeftIndex + 1
             currentFootstep = "Right"
         else
@@ -1351,7 +1351,7 @@ function playFootsteps()
             end
             -- Play Right footstep 
             rightFootsteps[currentRightIndex]:GetAudio():SetPlay(1.0)
-            print("PLAYING RIGHT FOOTSTEP: " , currentRightIndex)
+            -- print("PLAYING RIGHT FOOTSTEP: " , currentRightIndex)
             currentRightIndex = currentRightIndex + 1
             currentFootstep = "Left"
         end

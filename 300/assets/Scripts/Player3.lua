@@ -549,15 +549,15 @@ function Update()
         end
 -- Toggle Weapons
         if(inputMapSys:GetButtonDown("Shotgun")) then 
-            print("Swapping to shotgun")
+            -- print("Swapping to shotgun")
             _G.gunEquipped = 2 --"SHOTGUN"
         end
         if(inputMapSys:GetButtonDown("Revolver")) then 
-            print("Swapping to revolver")
+            -- print("Swapping to revolver")
             _G.gunEquipped = 1 --"REVOLVER"
         end
         if(inputMapSys:GetButtonDown("Machine Gun")) then 
-            print("Swapping to machine gun")
+            -- print("Swapping to machine gun")
             _G.gunEquipped = 3 --"MACHINE GUN"
         end
    
@@ -749,7 +749,7 @@ function Update()
             if(_G.gunEquipped == 0) then 
 
                 if(pistolTimer == 0) then
-                    print("SHOOTING PISTOLS")
+                    -- print("SHOOTING PISTOLS")
                     applyGunRecoil(recoil_speed, 0.5)
 
                     positions_final.x = positions.x + viewVecCam.x*3
@@ -1341,7 +1341,7 @@ function playFootsteps()
             end
             -- Play Left footstep sounds 
             leftFootsteps[currentLeftIndex]:GetAudio():SetPlay(1.0)
-            print("PLAYING LEFT FOOTSTEP: " , currentLeftIndex)
+            -- print("PLAYING LEFT FOOTSTEP: " , currentLeftIndex)
             currentLeftIndex = currentLeftIndex + 1
             currentFootstep = "Right"
         else
@@ -1350,7 +1350,7 @@ function playFootsteps()
             end
             -- Play Right footstep 
             rightFootsteps[currentRightIndex]:GetAudio():SetPlay(1.0)
-            print("PLAYING RIGHT FOOTSTEP: " , currentRightIndex)
+            -- print("PLAYING RIGHT FOOTSTEP: " , currentRightIndex)
             currentRightIndex = currentRightIndex + 1
             currentFootstep = "Left"
         end

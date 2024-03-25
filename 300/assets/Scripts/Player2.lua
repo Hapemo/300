@@ -752,7 +752,7 @@ function Update()
             if(_G.gunEquipped == 0) then 
 
                 if(pistolTimer == 0) then
-                    print("SHOOTING PISTOLS")
+                    -- print("SHOOTING PISTOLS")
                     applyGunRecoil(recoil_speed, 0.5)
 
                     positions_final.x = positions.x + viewVecCam.x*3
