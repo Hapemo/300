@@ -1,5 +1,5 @@
 {
-    "entityid": 1048624,
+    "entityid": 2097332,
     "general": {
         "name": "explosion",
         "tagid": 8,
@@ -62,14 +62,15 @@
         ]
     },
     "audio": {
-        "filepath": "",
-        "filename": "",
-        "fullpath": "",
+        "filepath": "../assets\\Audio",
+        "filename": "Enemy_Zipbomb_Explode.wav",
+        "fullpath": "../assets\\Audio/Enemy_Zipbomb_Explode.wav",
         "playonawake": false,
         "islooping": false,
         "audiotype": 1,
         "volume": 1.0,
-        "retainaudio": false
+        "retainaudio": false,
+        "panaudio": false
     },
     "prefab": {
         "prefab": "explosion"

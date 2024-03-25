@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 11534627,
+        "entityid": 20971537,
         "general": {
             "name": "ZipBombEpicAudio",
             "tagid": 8,
@@ -27,8 +27,8 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Zipbomb_Intro.wav",
-            "fullpath": "../assets\\Audio/Zipbomb_Intro.wav",
+            "filename": "ILY_Intro.wav",
+            "fullpath": "../assets\\Audio/ILY_Intro.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -38,7 +38,7 @@
         }
     },
     {
-        "entityid": 12582937,
+        "entityid": 20971606,
         "general": {
             "name": "ZipBombFuseAudio",
             "tagid": 8,
@@ -82,7 +82,7 @@
         }
     },
     {
-        "entityid": 12582940,
+        "entityid": 20971610,
         "general": {
             "name": "MEpicIntroInfoUI",
             "tagid": 6,
@@ -123,7 +123,7 @@
         }
     },
     {
-        "entityid": 12582944,
+        "entityid": 20971638,
         "general": {
             "name": "EpicMelissa",
             "tagid": 1,
@@ -199,7 +199,9 @@
                 2018461449
             ]
         },
-        "animator": {},
+        "animator": {
+            "paused": false
+        },
         "capsulecollider": {
             "translateoffset": {
                 "x": 0.0,
@@ -261,7 +263,7 @@
         }
     },
     {
-        "entityid": 12582945,
+        "entityid": 20971640,
         "general": {
             "name": "EpicIntroManagerlv2",
             "tagid": 8,
@@ -296,7 +298,7 @@
         }
     },
     {
-        "entityid": 12582946,
+        "entityid": 20971648,
         "general": {
             "name": "ZBEpicIntroInfoUI",
             "tagid": 6,
@@ -337,7 +339,7 @@
         }
     },
     {
-        "entityid": 12582948,
+        "entityid": 20971653,
         "general": {
             "name": "EpicZipBomb",
             "tagid": 1,
@@ -413,7 +415,9 @@
                 2357914544
             ]
         },
-        "animator": {},
+        "animator": {
+            "paused": false
+        },
         "boxcollider": {
             "scaleoffset": {
                 "x": 0.8999999761581421,
@@ -510,7 +514,7 @@
         }
     },
     {
-        "entityid": 12582949,
+        "entityid": 20971664,
         "general": {
             "name": "ZipBombEpicTrigger",
             "tagid": 8,
@@ -574,7 +578,7 @@
         }
     },
     {
-        "entityid": 12582953,
+        "entityid": 20971669,
         "general": {
             "name": "MelissaEpicTrigger",
             "tagid": 8,
@@ -638,7 +642,7 @@
         }
     },
     {
-        "entityid": 12582963,
+        "entityid": 20971674,
         "general": {
             "name": "TopBlackBorder",
             "tagid": 6,
@@ -679,7 +683,7 @@
         }
     },
     {
-        "entityid": 12582964,
+        "entityid": 22020110,
         "general": {
             "name": "BottomBlackBorder",
             "tagid": 6,
@@ -720,7 +724,7 @@
         }
     },
     {
-        "entityid": 12582967,
+        "entityid": 22020123,
         "general": {
             "name": "ILYEffectScreen",
             "tagid": 6,
@@ -772,7 +776,7 @@
         }
     },
     {
-        "entityid": 12582968,
+        "entityid": 22020129,
         "general": {
             "name": "UIHider",
             "tagid": 6,
@@ -813,7 +817,7 @@
         }
     },
     {
-        "entityid": 12582971,
+        "entityid": 22020219,
         "general": {
             "name": "MelissaEpicAudio",
             "tagid": 8,
@@ -840,8 +844,8 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Melissa_Intro.wav",
-            "fullpath": "../assets\\Audio/Melissa_Intro.wav",
+            "filename": "ILY_Intro.wav",
+            "fullpath": "../assets\\Audio/ILY_Intro.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
