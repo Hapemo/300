@@ -1,7 +1,7 @@
 {
-    "entityid": 15728672,
+    "entityid": 26214414,
     "general": {
-        "name": "RestartBackground",
+        "name": "QuitBackground",
         "tagid": 6,
         "subtag": 0,
         "isActive": true,
@@ -26,7 +26,7 @@
     },
     "uirenderer": {
         "texpath": "",
-        "textureref": 773465166,
+        "textureref": 3224159142,
         "degree": 0.0,
         "slider": 1.0,
         "color": {
@@ -42,6 +42,6 @@
         "scriptscontainer": []
     },
     "prefab": {
-        "prefab": "RestartBackground"
+        "prefab": "QuitBackground"
     }
 }

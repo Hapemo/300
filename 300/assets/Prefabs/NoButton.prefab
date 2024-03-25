@@ -1,5 +1,5 @@
 {
-    "entityid": 1048586,
+    "entityid": 26214416,
     "general": {
         "name": "NoButton",
         "tagid": 6,
@@ -19,8 +19,8 @@
             "z": 0.0
         },
         "translate": {
-            "x": 0.18000000715255737,
-            "y": -0.4000000059604645,
+            "x": 1000.0,
+            "y": -0.20000000298023224,
             "z": 0.0
         }
     },
@@ -35,14 +35,22 @@
             "z": 1.0,
             "w": 1.0
         },
-        "layer": 1,
+        "layer": 43,
         "worldtransform": false
     },
     "scripts": {
         "scriptscontainer": [
             {
-                "scriptFile": "../assets/Scripts/LoseMenuButton.lua",
-                "variables": []
+                "scriptFile": "../assets/Scripts/PauseConfirmationButtons.lua",
+                "variables": [
+                    {
+                        "key": "gameState",
+                        "val": {
+                            "type": -734751724,
+                            "value": "Test"
+                        }
+                    }
+                ]
             }
         ]
     },

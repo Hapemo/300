@@ -50,6 +50,12 @@ function Alive()
     sfxIncrease = gameStateSys:GetEntity("sfxIncrease")
     gammaDecrease = gameStateSys:GetEntity("gammaDecrease")
     gammaIncrease = gameStateSys:GetEntity("gammaIncrease")
+
+    restartBackground = gameStateSys:GetEntity("RestartBackground")
+    quitBackground = gameStateSys:GetEntity("QuitBackground")
+    mmBackground = gameStateSys:GetEntity("MainMenuBackground")
+    yesButton = gameStateSys:GetEntity("YesButton")
+    noButton = gameStateSys:GetEntity("NoButton")
 end
 
 function Update()
@@ -97,8 +103,17 @@ function Update()
             hoverOver = false;
         end
         if (button.mActivated) then
-                exitSFX:SetPlay(0.2)
-                systemManager:Quit()
+                TranslateQuitElements()
+                quitBackground:GetTransform().mTranslate.x = 0
+                yesButton:GetTransform().mTranslate.x = -0.2
+                noButton:GetTransform().mTranslate.x = 0.2
+                _G.isConfirmationMenu = true
+        end
+
+        if (_G.isYesQuit == true) then
+            _G.isYesQuit = false
+            exitSFX:SetPlay(0.2)
+            systemManager:Quit()
         end
     end
 
@@ -291,4 +306,12 @@ end
 
 function OnTriggerExit(Entity)
     
+end
+
+function TranslateQuitElements()
+    startButton:GetTransform().mTranslate.x = 1000
+    HTPButton:GetTransform().mTranslate.x = 1000
+    settingsButton:GetTransform().mTranslate.x = 1000
+    creditsButton:GetTransform().mTranslate.x = 1000
+    quitButton:GetTransform().mTranslate.x = 1000
 end
