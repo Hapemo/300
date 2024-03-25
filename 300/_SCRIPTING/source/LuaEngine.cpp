@@ -452,6 +452,7 @@ void LuaAISetting()
         "SetTarget", &AISetting::SetTarget,
         "GetTarget", sol::resolve<Entity()>(&AISetting::GetTarget),
         "GetTargetConst", sol::resolve<Entity() const>(&AISetting::GetTarget),
+        "mGraphDataName", &AISetting::mGraphDataName,
         "mTargetName", &AISetting::mTargetName,
         "mStayAway", &AISetting::mStayAway);
 }

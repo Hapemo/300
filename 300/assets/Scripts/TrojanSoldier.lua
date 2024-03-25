@@ -37,6 +37,15 @@ function Alive()
 
     deathTimerCount   = 0
     target = this:GetAISetting():GetTarget()
+
+    -- Change pathfinding graph to match that of the gamestate
+    if (gameStateSys:GetCurrentGameState().mName == "Test") then
+        this:GetAISetting().mGraphDataName = "GroundPath"
+    elseif (gameStateSys:GetCurrentGameState().mName == "Test2") then
+        this:GetAISetting().mGraphDataName = "GroundPath2"
+    elseif (gameStateSys:GetCurrentGameState().mName == "Test3") then
+        this:GetAISetting().mGraphDataName = "GroundPath3"
+    end
 end
 
 function Update()

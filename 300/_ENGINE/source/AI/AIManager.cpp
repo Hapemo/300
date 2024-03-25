@@ -319,7 +319,7 @@ glm::vec3 AIManager::GetAStarDir(Entity _e, AISetting const& _setting) {
 }
 
 std::vector<glm::vec3> AIManager::GetAStarPath(Entity _e, AISetting const& _setting) {
-	float elevation = _setting.mGraphDataName == "GroundPath" ? 3.f : 40.f;
+	float elevation = (_setting.mGraphDataName == "GroundPath" || _setting.mGraphDataName == "GroundPath2") ? 3.f : 40.f;
 	std::vector<glm::vec3> astarPath = systemManager->GetPathfinderManager()->AStarPath(_e, _setting.GetTarget(), { elevation, IGNORETAGS });
 	std::reverse(astarPath.begin(), astarPath.end());
 	return astarPath;

@@ -38,6 +38,15 @@ function Alive()
 
     this:GetAudio():SetPlay()
     target = this:GetAISetting():GetTarget()
+
+    -- Change pathfinding graph to match that of the gamestate
+    if (gameStateSys:GetCurrentGameState().mName == "Test") then
+        this:GetAISetting().mGraphDataName = "FlyingPath"
+    elseif (gameStateSys:GetCurrentGameState().mName == "Test2") then
+        this:GetAISetting().mGraphDataName = "FlyingPath2"
+    elseif (gameStateSys:GetCurrentGameState().mName == "Test3") then
+        this:GetAISetting().mGraphDataName = "FlyingPath3"
+    end
 end
 
 function Update()
