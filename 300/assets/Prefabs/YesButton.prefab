@@ -1,0 +1,59 @@
+{
+    "entityid": 1048587,
+    "general": {
+        "name": "YesButton",
+        "tagid": 6,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.20000000298023224,
+            "y": -0.20000000298023224,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": -0.11999999731779099,
+            "y": -0.4000000059604645,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 968001263,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 1,
+        "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/LoseMenuButton.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "YesButton"
+    },
+    "button": {
+        "interactable": true,
+        "hover": false,
+        "click": false,
+        "activated": false,
+        "renderflag": true
+    }
+}

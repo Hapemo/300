@@ -1,8 +1,8 @@
 {
-    "entityid": 25165848,
+    "entityid": 1048589,
     "general": {
         "name": "Click",
-        "tagid": 0,
+        "tagid": 6,
         "subtag": 0,
         "isActive": true,
         "isPaused": false
@@ -32,7 +32,8 @@
         "islooping": false,
         "audiotype": 1,
         "volume": 1.0,
-        "retainaudio": false
+        "retainaudio": false,
+        "panaudio": false
     },
     "prefab": {
         "prefab": "Click"

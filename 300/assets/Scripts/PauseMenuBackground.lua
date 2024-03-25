@@ -70,7 +70,7 @@ function PauseUpdate()
         graphicssys:HideCursor(false)
         Input.SetCursorCenter()
     --print(_G.isSettingsMenu)
-    if (not _G.isHTPMenu and not _G.isSettingsMenu) then
+    if (not _G.isHTPMenu and not _G.isSettingsMenu and not _G.isConfirmationMenu) then
         mainMenuButton:GetTransform().mTranslate.x = 0.02
         quitButton:GetTransform().mTranslate.x = 0.02
         resumeButton:GetTransform().mTranslate.x = 0.023

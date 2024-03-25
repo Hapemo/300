@@ -23,6 +23,10 @@ gameState = "Test"
 
 _G.isHTPMenu = false
 _G.isSettingsMenu = false
+_G.isYesRestart = false
+_G.isYesMainMenu = false
+_G.isYesQuit = false
+_G.isConfirmationMenu = false
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
@@ -50,6 +54,7 @@ function Alive()
     
     _G.isHTPMenu = false
     _G.isSettingsMenu = false
+    _G.isConfirmationMenu = false
 end
 
 function Update()
@@ -73,6 +78,11 @@ function PauseUpdate()
     gammaEmpty = gameStateSys:GetEntityByScene("gammaEmpty", "SettingsScene")
     gammaIncrease = gameStateSys:GetEntityByScene("gammaIncrease", "SettingsScene")
     gammaDecrease = gameStateSys:GetEntityByScene("gammaDecrease", "SettingsScene")
+    restartBackground = gameStateSys:GetEntityByScene("RestartBackground", "ConfirmationScene")
+    quitBackground = gameStateSys:GetEntityByScene("QuitBackground", "ConfirmationScene")
+    mmBackground = gameStateSys:GetEntityByScene("MainMenuBackground", "ConfirmationScene")
+    yesButton = gameStateSys:GetEntityByScene("YesButton", "ConfirmationScene")
+    noButton = gameStateSys:GetEntityByScene("NoButton", "ConfirmationScene")
 
     --print("INUPDATEEEEEEEEEEEEEEE")
     button = Helper.GetScriptEntity(script_entity.id)
@@ -135,6 +145,24 @@ function PauseUpdate()
             HTPMenu:GetTransform().mTranslate.x = 0
             backButton:GetTransform().mTranslate.x = 0.65
             _G.isHTPMenu = true
+        elseif (button:GetGeneral().name == "PauseRestartButton") then
+            TranslatePauseElements()
+            restartBackground:GetTransform().mTranslate.x = 0
+            yesButton:GetTransform().mTranslate.x = -0.2
+            noButton:GetTransform().mTranslate.x = 0.2
+            _G.isConfirmationMenu = true
+        elseif (button:GetGeneral().name == "PauseQuitButton") then
+            TranslatePauseElements()
+            quitBackground:GetTransform().mTranslate.x = 0
+            yesButton:GetTransform().mTranslate.x = -0.2
+            noButton:GetTransform().mTranslate.x = 0.2
+            _G.isConfirmationMenu = true
+        elseif (button:GetGeneral().name == "PauseMainMenuButton") then
+            TranslatePauseElements()
+            mmBackground:GetTransform().mTranslate.x = 0
+            yesButton:GetTransform().mTranslate.x = -0.2
+            noButton:GetTransform().mTranslate.x = 0.2
+            _G.isConfirmationMenu = true
         elseif (button:GetGeneral().name == "PauseSettingsButton") then
             TranslatePauseElements()
             settingsMenuBackground:GetTransform().mTranslate.x = 0
@@ -153,29 +181,32 @@ function PauseUpdate()
             gammaEmpty:GetTransform().mTranslate.x = 0.22
             gammaDecrease:GetTransform().mTranslate.x = -0.2
             gammaIncrease:GetTransform().mTranslate.x = 0.64
-
             _G.isSettingsMenu = true
         elseif (button:GetGeneral().name == "HTPBackButton") then
             HTPMenu:GetTransform().mTranslate.x = 1000
             backButton:GetTransform().mTranslate.x = 1000
             _G.isHTPMenu = false
-        elseif (button:GetGeneral().name == "PauseRestartButton") then
+        end
+    end
+    if (_G.isYesRestart == true) then
+        _G.isYesRestart = false
         mainMenuButton:GetTransform().mTranslate.x = 1000
         TranslatePauseElements()
-            _G.isPausePauseMenu = false
-            systemManager:SetIsPause(false)
-            gameStateSys:ChangeGameState(gameState)
-        elseif (button:GetGeneral().name == "PauseMainMenuButton") then
-            TranslatePauseElements()
-            _G.isPausePauseMenu = false
-            systemManager:SetIsPause(false)
-            gameStateSys:ChangeGameState("MainMenu")
-        elseif (button:GetGeneral().name == "PauseQuitButton") then
-            TranslatePauseElements()
-            _G.isPausePauseMenu = false
-            systemManager:SetIsPause(false)
-            systemManager:Quit()
-        end
+        _G.isPausePauseMenu = false
+        systemManager:SetIsPause(false)
+        gameStateSys:ChangeGameState(gameState)
+    elseif (_G.isYesMainMenu == true) then
+        _G.isYesMainMenu = false
+        TranslatePauseElements()
+        _G.isPausePauseMenu = false
+        systemManager:SetIsPause(false)
+        gameStateSys:ChangeGameState("MainMenu")
+    elseif (_G.isYesQuit == true) then
+        _G.isYesQuit = false
+        TranslatePauseElements()
+        _G.isPausePauseMenu = false
+        systemManager:SetIsPause(false)
+        systemManager:Quit()
     end
 end
 

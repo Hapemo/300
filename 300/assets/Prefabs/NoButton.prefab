@@ -1,0 +1,59 @@
+{
+    "entityid": 1048586,
+    "general": {
+        "name": "NoButton",
+        "tagid": 6,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 0.20000000298023224,
+            "y": -0.20000000298023224,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.18000000715255737,
+            "y": -0.4000000059604645,
+            "z": 0.0
+        }
+    },
+    "uirenderer": {
+        "texpath": "",
+        "textureref": 2615541395,
+        "degree": 0.0,
+        "slider": 1.0,
+        "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "layer": 1,
+        "worldtransform": false
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/LoseMenuButton.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "NoButton"
+    },
+    "button": {
+        "interactable": true,
+        "hover": false,
+        "click": false,
+        "activated": false,
+        "renderflag": true
+    }
+}
