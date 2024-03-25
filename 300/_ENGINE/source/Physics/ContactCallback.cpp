@@ -89,6 +89,7 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 		{
 
 			triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerEnter", otherEntity);
+			otherEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnOtherTriggerEnter", triggerEntity);
 			//triggeredEntities.push_back(otherID);
 		}
 		else if (current.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
@@ -99,6 +100,8 @@ void ContactCallback::onTrigger(PxTriggerPair* pairs, PxU32 count)
 				triggerEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnTriggerExit", otherEntity);
 			/*	triggeredEntities.erase(itr);
 			}*/
+				otherEntity.GetComponent<Scripts>().RunFunctionForAllScripts("OnOtherTriggerExit", triggerEntity);
+
 		}
 	}
 }

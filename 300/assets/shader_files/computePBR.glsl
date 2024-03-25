@@ -103,9 +103,9 @@ void main()
     vec3 color = vec3(0.3) * albedoSpec.rgb;
     //vec3 color = ambient + lightRadiance;
     vec4 finalColor = vec4(lightRadiance + emission.rgb, 1.0);
-    finalColor = finalColor * customColor;   // Set Custom Color
     float shadow = ShadowCalculation(fragPos.xyz, normal.rgb);
     finalColor = vec4(color, 1.0) + (1.0 - shadow) * finalColor;
+    finalColor = finalColor * customColor;   // Set Custom Color
 
     // HDR
     // check whether fragment output is higher than threshold, if so output as bright color
