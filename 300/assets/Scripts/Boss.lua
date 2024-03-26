@@ -648,6 +648,7 @@ function SpawnHomingSpheres()
         entity = entity_ref, 
         position = entity_ref:GetTransform().mTranslate,  -- Note that this is randomnized by the previous few lines
         direction = Vec3.new(0,0,0), 
+        forward = Vec3.new(0,0,1),
         speed = 0,
         stay_time = 2.0,      -- Time to stay still before homing (in seconds)
         lock_on_time = 15.0,   -- Time to locks onto the player : Used as an internal timer (for each bullet to calculate how long to home and lock on)
@@ -718,7 +719,9 @@ function UpdateHomingProjectiles()
                     -- Save the direction 
                     projectile.direction = directionToPlayer
 
-                    CalculateAngle(projectile.position, player_position)
+                    local angle_to_rotate = CalculateAngle(projectile.position, player_position, forward_vector)
+
+                    print("ANGLE TO ROTATE: " , angle_to_rotate)
                     
                     -- Ensure projectile.entity is not nil before setting velocity
                     if projectile.entity ~= nil then 
@@ -844,17 +847,39 @@ function PortalAnimation()
 
 end
 
+function crossProduct(v1 ,v2)
+    local x = v1[2]*v2[3] - v1[3]*v2[2]
+    local y = v1[3]*v2[1] - v1[1]*v2[3]
+    local z = v1[1]*v2[2] - v1[2]*v2[1]
+    
+    return {x, y, z}
+end
+
 -- M6 : Calculate Homing Bullet's Orientation (angle to rotate) -> bullet to player
-function CalculateAngle(bullet_pos, player_position)
+function CalculateAngle(bullet_pos, player_position, forward_vector)
+
+    -- Calculate the direction vector from bullet to player
     local direction = Vec3.new()
 
     direction.x = player_position.x - bullet_pos.x 
     direction.y = player_position.y - bullet_pos.y 
     direction.z = player_position.z - bullet_pos.z
 
+    -- Normalize the vector/direction
     local directionNorm = Helper.Normalize(direction)
 
-    print("HI Calculate Angle")
+    -- Calculate the angle between the bullet's forward direction & the direction vector.
+    -- [forward direction] -> represents the object's orientation or where it is facing. 
+    local angle = math.acos(forward_vector)
+
+    -- Use <Cross Product> to determine if angle is positive / negative
+    local cross = crossProduct(forward_vector, directionNorm);
+
+    if cross.y < 0 then 
+        angle = -angle
+    end
+
+    return angle
 end
 
 -- function UpdateHomingProjectiles()
