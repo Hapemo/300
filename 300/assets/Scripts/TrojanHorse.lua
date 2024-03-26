@@ -32,6 +32,9 @@ local spawnSoldierCounter = 0
 local state
 
 local audio_played = false
+
+local isHit
+local countHit
 -- Trojan horse states
 -- 1. ROAM. roam around and passively look for player (change to 2. when sees player)
 -- 2. CHARGE. saw player, eyes glow red, play some charge up noise, delay about 3 seconds before charging to player (change to 3. when delay ends)
@@ -61,10 +64,13 @@ function Alive()
 
     deathTimerCount   = 0
     target = this:GetAISetting():GetTarget()
+    isHit = false
+    countHit = 0.0
 end
 
 local timer = 0
 function Update()
+    ChangeColorOnHit()
     -- If trojan horse epic intro is between state 4 and 6, return
 
     -- dt = FPSManager.GetDT()
@@ -284,4 +290,26 @@ function CrashIntoPlayer()
     local velocity = Helper.Scale(Helper.Normalize(this:GetRigidBody().mVelocity), 100)
     velocity.y = 20
     phySys:SetVelocity(target, velocity)
+end
+
+function OnOtherTriggerEnter(Entity)
+    if Entity:GetGeneral().tagid ~= 2 and Entity:GetGeneral().tagid ~= 9 and Entity:GetGeneral().tagid ~= 10 and Entity:GetGeneral().tagid ~= 11 and Entity:GetGeneral().tagid~= 12 then
+        return
+    end
+    isHit = true
+end
+
+function ChangeColorOnHit()
+    this = Helper.GetScriptEntity(script_entity.id)
+    if isHit == true then
+        this:GetMeshRenderer():SetColor(Vec4.new(0.05,0.05,0.05,1))
+        if countHit < 0.1 then 
+            countHit = countHit + FPSManager.GetDT()
+        else 
+            isHit = false
+            countHit = 0
+        end
+    else
+        this:GetMeshRenderer():SetColor(Vec4.new(1,1,1,1))
+    end
 end

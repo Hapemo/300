@@ -73,7 +73,7 @@ end
 function ChangeColorOnHit()
     this = Helper.GetScriptEntity(script_entity.id)
     if isHit == true then
-        this:GetMeshRenderer():SetColor(Vec4.new(0,0,0,1))
+        this:GetMeshRenderer():SetColor(Vec4.new(0.05,0.05,0.05,1))
         if countHit < 0.1 then 
             countHit = countHit + FPSManager.GetDT()
         else 

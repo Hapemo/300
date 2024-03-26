@@ -30,7 +30,8 @@ local state
 -- Melissa states
 -- 1. TRAVEL. walk directly to player using pathfinding (change to 2. when health falls below 50% health and is intended to spawn another melissa)
 -- 2. DUPLICATE. stops moving and vibrate hard. when vibrate timer is up, spawn in another melissa (change to 1. after duplicating)
-
+local isHit
+local countHit
 function Alive()
     math.randomseed(os.time())
 
@@ -63,10 +64,12 @@ function Alive()
     elseif (gameStateSys:GetCurrentGameState().mName == "Test3") then
         this:GetAISetting().mGraphDataName = "GroundPath3"
     end
+    isHit = false
+    countHit = 0.0
 end
 
 function Update()
-
+    ChangeColorOnHit()
     -- if systemManager:mInputActionSystem():GetButtonDown("Test1") then
     --     this:GetHealthbar().health = this:GetHealthbar().health - 10
     -- end
@@ -215,4 +218,24 @@ end
 
 
 
+function OnOtherTriggerEnter(Entity)
+    if Entity:GetGeneral().tagid ~= 2 and Entity:GetGeneral().tagid ~= 9 and Entity:GetGeneral().tagid ~= 10 and Entity:GetGeneral().tagid ~= 11 and Entity:GetGeneral().tagid~= 12 then
+        return
+    end
+    isHit = true
+end
 
+function ChangeColorOnHit()
+    this = Helper.GetScriptEntity(script_entity.id)
+    if isHit == true then
+        this:GetMeshRenderer():SetColor(Vec4.new(0.05,0.05,0.05,1))
+        if countHit < 0.1 then 
+            countHit = countHit + FPSManager.GetDT()
+        else 
+            isHit = false
+            countHit = 0
+        end
+    else
+        this:GetMeshRenderer():SetColor(Vec4.new(1,1,1,1))
+    end
+end

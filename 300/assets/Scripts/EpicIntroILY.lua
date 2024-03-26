@@ -26,7 +26,8 @@ local deathTimerCount
 local state
 
 local this
-
+local isHit
+local countHit
 function Alive()
     this = Helper.GetScriptEntity(script_entity.id)
     if this == nil then
@@ -45,9 +46,13 @@ function Alive()
 
     state = ""
     deathTimerCount = 0
+
+    isHit = false
+    countHit = 0.0
 end
 
 function Update()
+    ChangeColorOnHit()
     if _G.ILYEpicIntroState >= 2 and _G.ILYEpicIntroState < 100 and _G.ILYShotAlready then return end
     targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
     thisPos = this:GetTransform().mTranslate
@@ -218,4 +223,26 @@ function StartDeath()
     phySys:SetVelocity(this, Vec3.new())
     this:GetMeshRenderer():SetMesh("ILY_Death", this) -- Change to death animation 
     gameStateSys:GetEntity("EnemyDeath"):GetAudio():SetPlay()
+end
+
+function OnOtherTriggerEnter(Entity)
+    if Entity:GetGeneral().tagid ~= 2 and Entity:GetGeneral().tagid ~= 9 and Entity:GetGeneral().tagid ~= 10 and Entity:GetGeneral().tagid ~= 11 and Entity:GetGeneral().tagid~= 12 then
+        return
+    end
+    isHit = true
+end
+
+function ChangeColorOnHit()
+    this = Helper.GetScriptEntity(script_entity.id)
+    if isHit == true then
+        this:GetMeshRenderer():SetColor(Vec4.new(0.05,0.05,0.05,1))
+        if countHit < 0.1 then 
+            countHit = countHit + FPSManager.GetDT()
+        else 
+            isHit = false
+            countHit = 0
+        end
+    else
+        this:GetMeshRenderer():SetColor(Vec4.new(1,1,1,1))
+    end
 end
