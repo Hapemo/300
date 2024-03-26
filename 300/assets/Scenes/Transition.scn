@@ -1,6 +1,47 @@
 [
     {
-        "entityid": 1048793,
+        "entityid": 144,
+        "general": {
+            "name": "TransitionBackground",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 2.0,
+                "y": 2.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "uirenderer": {
+            "texpath": "",
+            "textureref": 3674703875,
+            "degree": 0.0,
+            "slider": 1.0,
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "layer": 50,
+            "worldtransform": false
+        }
+    },
+    {
+        "entityid": 1048597,
         "general": {
             "name": "TransitionHelper",
             "tagid": 0,
@@ -43,6 +84,6 @@
             "volume": 1.0,
             "retainaudio": false,
             "panaudio": false
-	}
+        }
     }
 ]

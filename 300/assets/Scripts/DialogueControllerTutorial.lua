@@ -130,13 +130,13 @@ function UpdateDialogues()
                 SkipAnimation()
             end
         elseif currState == 1 then
-            if ObjectiveIntro2Progress >= 1.0 then
+            if TroubleIntro3Progress >= 1.0 then
                 NextDialogue()
             else
                 SkipAnimation()
             end
         elseif currState == 2 then
-            if TroubleIntro3Progress >= 1.0 then
+            if  ObjectiveIntro2Progress>= 1.0 then
                 NextDialogue()
             else
                 SkipAnimation()
@@ -175,29 +175,6 @@ function UpdateDialogues()
         end
     elseif currState == 1 then
         if playing == false then
-            audio = ObjectiveIntro1:GetAudio()
-            audio:SetPlay(0.3)
-            playing = true
-        end
-        if ObjectiveIntro1Progress < 1.0 then 
-            ObjectiveIntro1Progress = speed + ObjectiveIntro1Progress
-            if ObjectiveIntro1Progress > 1.0 then
-                ObjectiveIntro1Progress = 1.1
-                ObjectiveIntro1:GetUIrenderer():SetSlider(1.0)
-            else
-                ObjectiveIntro1:GetUIrenderer():SetSlider(ObjectiveIntro1Progress)
-            end
-        else 
-            ObjectiveIntro2Progress = speed + ObjectiveIntro2Progress
-            if ObjectiveIntro2Progress > 1.0 then
-                ObjectiveIntro2Progress = 1.1
-                ObjectiveIntro2:GetUIrenderer():SetSlider(1.0)
-            else
-                ObjectiveIntro2:GetUIrenderer():SetSlider(ObjectiveIntro2Progress)
-            end
-        end
-    elseif currState == 2 then
-        if playing == false then
             audio = TroubleIntro1:GetAudio()
             audio:SetPlay(0.3)
             playing = true
@@ -229,6 +206,30 @@ function UpdateDialogues()
                 TroubleIntro3:GetUIrenderer():SetSlider(1.0)
             else
                 TroubleIntro3:GetUIrenderer():SetSlider(TroubleIntro3Progress)
+            end
+        end
+        
+    elseif currState == 2 then
+        if playing == false then
+            audio = ObjectiveIntro1:GetAudio()
+            audio:SetPlay(0.3)
+            playing = true
+        end
+        if ObjectiveIntro1Progress < 1.0 then 
+            ObjectiveIntro1Progress = speed + ObjectiveIntro1Progress
+            if ObjectiveIntro1Progress > 1.0 then
+                ObjectiveIntro1Progress = 1.1
+                ObjectiveIntro1:GetUIrenderer():SetSlider(1.0)
+            else
+                ObjectiveIntro1:GetUIrenderer():SetSlider(ObjectiveIntro1Progress)
+            end
+        else 
+            ObjectiveIntro2Progress = speed + ObjectiveIntro2Progress
+            if ObjectiveIntro2Progress > 1.0 then
+                ObjectiveIntro2Progress = 1.1
+                ObjectiveIntro2:GetUIrenderer():SetSlider(1.0)
+            else
+                ObjectiveIntro2:GetUIrenderer():SetSlider(ObjectiveIntro2Progress)
             end
         end
     elseif currState == 3 then
@@ -264,17 +265,18 @@ function SkipAnimation()
         LoadIn1:GetUIrenderer():SetSlider(1.0)
         LoadIn2:GetUIrenderer():SetSlider(1.0)
     elseif currState == 1 then
-        ObjectiveIntro1Progress = 1.1
-        ObjectiveIntro2Progress = 1.1
-        ObjectiveIntro1:GetUIrenderer():SetSlider(1.0)
-        ObjectiveIntro2:GetUIrenderer():SetSlider(1.0)
-    elseif currState == 2 then
         TroubleIntro1Progress = 1.1
         TroubleIntro2Progress = 1.1
         TroubleIntro3Progress = 1.1
         TroubleIntro1:GetUIrenderer():SetSlider(1.0)
         TroubleIntro2:GetUIrenderer():SetSlider(1.0)
         TroubleIntro3:GetUIrenderer():SetSlider(1.0)
+        
+    elseif currState == 2 then
+        ObjectiveIntro1Progress = 1.1
+        ObjectiveIntro2Progress = 1.1
+        ObjectiveIntro1:GetUIrenderer():SetSlider(1.0)
+        ObjectiveIntro2:GetUIrenderer():SetSlider(1.0)
     elseif currState == 3 then
         Option1Progress = 1.1
         Option2Progress = 1.1
@@ -291,10 +293,6 @@ function NextDialogue()
         LoadIn2:GetUIrenderer():SetSlider(0.0)
         currState = currState + 1
     elseif currState == 1 then
-        ObjectiveIntro1:GetUIrenderer():SetSlider(0.0)
-        ObjectiveIntro2:GetUIrenderer():SetSlider(0.0)
-        currState = currState + 1
-    elseif currState == 2 then
         TroubleIntro1:GetUIrenderer():SetSlider(0.0)
         TroubleIntro2:GetUIrenderer():SetSlider(0.0)
         TroubleIntro3:GetUIrenderer():SetSlider(0.0)
@@ -302,6 +300,11 @@ function NextDialogue()
         picture:GetUIrenderer():SetSlider(1.0)
         angry:GetUIrenderer():SetSlider(0.0)
         currState = currState + 1
+    elseif currState == 2 then
+        ObjectiveIntro1:GetUIrenderer():SetSlider(0.0)
+        ObjectiveIntro2:GetUIrenderer():SetSlider(0.0)
+        currState = currState + 1
+        
     elseif currState == 3 then
         Option1:GetUIrenderer():SetSlider(0.0)
         Option2:GetUIrenderer():SetSlider(0.0)
