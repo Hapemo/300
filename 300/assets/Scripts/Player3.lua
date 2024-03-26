@@ -295,8 +295,8 @@ function Alive()
     table.insert(rightFootsteps , footstep_right_3)
     table.insert(rightFootsteps , footstep_right_4)
 
-    print("LEFT FOOTSTEP DATABASE: " , #leftFootsteps)
-    print("RIGHT FOOTSTEP DATABASE: " , #rightFootsteps)
+    -- print("LEFT FOOTSTEP DATABASE: " , #leftFootsteps)
+    -- print("RIGHT FOOTSTEP DATABASE: " , #rightFootsteps)
 
     dmgAudioEnt = gameStateSys:GetEntity("DamageAudio")
 end
@@ -548,18 +548,18 @@ function Update()
             end
         end
 -- Toggle Weapons
-        if(inputMapSys:GetButtonDown("Shotgun")) then 
-            -- print("Swapping to shotgun")
-            _G.gunEquipped = 2 --"SHOTGUN"
-        end
-        if(inputMapSys:GetButtonDown("Revolver")) then 
-            -- print("Swapping to revolver")
-            _G.gunEquipped = 1 --"REVOLVER"
-        end
-        if(inputMapSys:GetButtonDown("Machine Gun")) then 
-            -- print("Swapping to machine gun")
-            _G.gunEquipped = 3 --"MACHINE GUN"
-        end
+        -- if(inputMapSys:GetButtonDown("Shotgun")) then 
+        --     -- print("Swapping to shotgun")
+        --     _G.gunEquipped = 2 --"SHOTGUN"
+        -- end
+        -- if(inputMapSys:GetButtonDown("Revolver")) then 
+        --     -- print("Swapping to revolver")
+        --     _G.gunEquipped = 1 --"REVOLVER"
+        -- end
+        -- if(inputMapSys:GetButtonDown("Machine Gun")) then 
+        --     -- print("Swapping to machine gun")
+        --     _G.gunEquipped = 3 --"MACHINE GUN"
+        -- end
    
 -- end of Toggle Weapons
         

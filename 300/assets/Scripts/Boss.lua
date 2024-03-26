@@ -231,7 +231,7 @@ function Update()
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
-    -- state = 4 --[OK]
+    state = 4 --[OK]
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
@@ -476,6 +476,8 @@ function Update()
 
         -- [4] Homing Eyeballs (From Boss' Mouth / Face)
         if state == 4 and _G.state_checker[4] == false then 
+            
+            -- CalculateAngle()
             -- print("INSIDE STATE 4")
             -- homing_spawn_counter = 0 
             _G.attacking = true -- must include (to stop state choosing)
@@ -715,6 +717,8 @@ function UpdateHomingProjectiles()
 
                     -- Save the direction 
                     projectile.direction = directionToPlayer
+
+                    CalculateAngle(projectile.position, player_position)
                     
                     -- Ensure projectile.entity is not nil before setting velocity
                     if projectile.entity ~= nil then 
@@ -838,6 +842,19 @@ function PortalAnimation()
     portal_open_timer = 0
     portal_max_timer = 3
 
+end
+
+-- M6 : Calculate Homing Bullet's Orientation (angle to rotate) -> bullet to player
+function CalculateAngle(bullet_pos, player_position)
+    local direction = Vec3.new()
+
+    direction.x = player_position.x - bullet_pos.x 
+    direction.y = player_position.y - bullet_pos.y 
+    direction.z = player_position.z - bullet_pos.z
+
+    local directionNorm = Helper.Normalize(direction)
+
+    print("HI Calculate Angle")
 end
 
 -- function UpdateHomingProjectiles()
