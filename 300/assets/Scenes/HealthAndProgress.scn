@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 13631496,
+        "entityid": 125,
         "general": {
             "name": "ProgressionBar",
             "tagid": 0,
@@ -41,48 +41,7 @@
         }
     },
     {
-        "entityid": 13631498,
-        "general": {
-            "name": "HealthBar",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 0.44999998807907104,
-                "y": -0.09000000357627869,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 1267136104,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "layer": 1,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 13631499,
+        "entityid": 127,
         "general": {
             "name": "ObjectiveBarEmpty",
             "tagid": 0,
@@ -103,47 +62,6 @@
             },
             "translate": {
                 "x": 0.699999988079071,
-                "y": 0.699999988079071,
-                "z": 0.0
-            }
-        },
-        "uirenderer": {
-            "texpath": "",
-            "textureref": 2927780683,
-            "degree": 0.0,
-            "slider": 1.0,
-            "color": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "layer": 0,
-            "worldtransform": false
-        }
-    },
-    {
-        "entityid": 13631520,
-        "general": {
-            "name": "HealthBarEmpty",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": -0.3799999952316284,
-                "y": 0.09000000357627869,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -0.699999988079071,
                 "y": 0.699999988079071,
                 "z": 0.0
             }
