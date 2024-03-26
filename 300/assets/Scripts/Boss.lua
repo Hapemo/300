@@ -231,7 +231,7 @@ function Update()
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
-    state = 4 --[OK]
+    -- state = 4 --[OK]
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
@@ -484,7 +484,7 @@ function Update()
 
             -- Initially -> decides the number of homing to spawn
             if number_of_homing == 0 then 
-                number_of_homing = math.random(1, 1)
+                number_of_homing = math.random(5, 8)
                 -- print("NUMBER OF HOMING: " , number_of_homing)
             end
 
@@ -649,7 +649,7 @@ function SpawnHomingSpheres()
         position = entity_ref:GetTransform().mTranslate,  -- Note that this is randomnized by the previous few lines
         direction = Vec3.new(0,0,0), 
         forward = Vec3.new(0,0,1),
-        speed = 0.0001,
+        speed = 0,
         stay_time = 2.0,      -- Time to stay still before homing (in seconds)
         lock_on_time = 15.0,   -- Time to locks onto the player : Used as an internal timer (for each bullet to calculate how long to home and lock on)
         lock_on_bool = false, -- To control when to home and when not to
@@ -694,7 +694,7 @@ function UpdateHomingProjectiles()
                 if projectile.stay_time <= 0 then 
                     -- Starts homing towards the player (by providing speed)
                     -- print("Assigning Initial Speed - Homing")
-                    -- projectile.speed = initial_homing_speed
+                    projectile.speed = initial_homing_speed
                 end
             else
                 -- Lock onto the player after a delay
