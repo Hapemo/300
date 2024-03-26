@@ -136,7 +136,7 @@ namespace GFX
 bool Animator::IsEndOfAnimation()
 {
     // the next frame will loop the animation back to the beginning
-    std::cout << "deltatime: " << mAnimator.m_CurrentTime << " / " << mAnimator.m_CurrentAnimation->m_Duration << "\n";
+    //std::cout << "deltatime: " << mAnimator.m_CurrentTime << " / " << mAnimator.m_CurrentAnimation->m_Duration << "\n";
     if ((mAnimator.m_CurrentTime + (mAnimator.m_CurrentAnimation->m_TicksPerSecond * mAnimator.m_DeltaTime)) >= mAnimator.m_CurrentAnimation->m_Duration)
     {
         return true;

@@ -231,7 +231,7 @@ function Update()
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
-    -- state = 4 --[OK]
+    state = 4 --[OK]
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
@@ -476,13 +476,15 @@ function Update()
 
         -- [4] Homing Eyeballs (From Boss' Mouth / Face)
         if state == 4 and _G.state_checker[4] == false then 
+            
+            -- CalculateAngle()
             -- print("INSIDE STATE 4")
             -- homing_spawn_counter = 0 
             _G.attacking = true -- must include (to stop state choosing)
 
             -- Initially -> decides the number of homing to spawn
             if number_of_homing == 0 then 
-                number_of_homing = math.random(5, 8)
+                number_of_homing = math.random(1, 1)
                 -- print("NUMBER OF HOMING: " , number_of_homing)
             end
 
@@ -501,7 +503,7 @@ function Update()
                     SpawnHomingSpheres()
                     homing_spawn_counter = homing_spawn_counter + 1 -- Increase the counter
                     homing_spawn_timer = 0   -- Reset the counter
-                    -- print("SPAWNING ORB")
+                    -- print("SPAWNING ORB") we'r
                 end
             end
 
@@ -646,7 +648,8 @@ function SpawnHomingSpheres()
         entity = entity_ref, 
         position = entity_ref:GetTransform().mTranslate,  -- Note that this is randomnized by the previous few lines
         direction = Vec3.new(0,0,0), 
-        speed = 0,
+        forward = Vec3.new(0,0,1),
+        speed = 0.0001,
         stay_time = 2.0,      -- Time to stay still before homing (in seconds)
         lock_on_time = 15.0,   -- Time to locks onto the player : Used as an internal timer (for each bullet to calculate how long to home and lock on)
         lock_on_bool = false, -- To control when to home and when not to
@@ -691,13 +694,13 @@ function UpdateHomingProjectiles()
                 if projectile.stay_time <= 0 then 
                     -- Starts homing towards the player (by providing speed)
                     -- print("Assigning Initial Speed - Homing")
-                    projectile.speed = initial_homing_speed
+                    -- projectile.speed = initial_homing_speed
                 end
             else
                 -- Lock onto the player after a delay
                 -- print("Projectile No : " , _G.bulletCounter)
                 -- print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
-                projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
+                -- projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
                 if projectile.lock_on_time > 0 then 
                     -- print("CALCULATING DIRECTION TO GO.")
   
@@ -715,6 +718,23 @@ function UpdateHomingProjectiles()
 
                     -- Save the direction 
                     projectile.direction = directionToPlayer
+                    
+                    -- M6 : Homing Rotation
+                    local angle_to_rotate = CalculateAngle(projectile.position, player_position, projectile.forward)
+                    local axis_to_rotate = Vec3.new()
+                    axis_to_rotate.x = 0 
+                    axis_to_rotate.y = angle_to_rotate * (180 / math.pi)
+                    axis_to_rotate.z = 0
+                    
+                    Helper.SetRealRotateQuaternion(projectile.entity, axis_to_rotate, angle_to_rotate)
+
+                    if projectile.entity ~= nil then 
+               
+                        -- print("HO")
+                    end
+    
+
+                    -- print("ANGLE TO ROTATE: " , angle_to_rotate)
                     
                     -- Ensure projectile.entity is not nil before setting velocity
                     if projectile.entity ~= nil then 
@@ -838,6 +858,67 @@ function PortalAnimation()
     portal_open_timer = 0
     portal_max_timer = 3
 
+end
+
+function crossProduct(v1, v2)
+    local x = v1.y * v2.z - v1.z * v2.y
+    local y = v1.z * v2.x - v1.x * v2.z
+    local z = v1.x * v2.y - v1.y * v2.x
+    
+    return {x = x, y = y, z = z}
+end
+
+function dotProduct(v1, v2)
+    local result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
+    return result
+end
+
+-- M6 : Calculate Homing Bullet's Orientation (angle to rotate) -> bullet to player
+function CalculateAngle(bullet_pos, player_position, forward_vector)
+
+    -- Calculate the direction vector from bullet to player
+    local direction = Vec3.new()
+
+    direction.x = player_position.x - bullet_pos.x 
+    direction.y = player_position.y - bullet_pos.y 
+    direction.z = player_position.z - bullet_pos.z
+
+    -- Normalize the vector/direction
+    local directionNorm = Helper.Normalize(direction)
+
+    -- Calculates the dot product between [bullet's forward direction] & [direction from bullet to player - normalized]
+    local dot_product_forward = dotProduct(forward_vector, directionNorm) 
+
+ 
+    -- Calculate the angle between the bullet's forward direction & the direction vector.
+    -- [forward direction] -> represents the object's orientation or where it is facing. 
+    local angle = math.acos(dot_product_forward)
+
+    -- Use <Cross Product> to determine if angle is positive / negative
+    local cross = crossProduct(forward_vector, directionNorm)
+    print("ANGLE: " , angle * (180 / math.pi))
+
+    local l = dotProduct(cross, cross)
+    
+    --  if l < 0.01 then 
+    --     cross = Vec3.new(0,1,0)
+    --  end
+
+    print("DOT PRODUCT FORWARD: " , dot_product_forward)
+
+    -- if 
+    -- print("L: " , l)
+    --  if dot_product_forward < 0 then  
+    --     angle = angle - (math.pi / 2)
+    --  end
+
+--    if cross.y < 0 then 
+--        angle = -angle
+--    end
+    -- Temp Fix
+    -- if dot_product_forward
+
+    return angle
 end
 
 -- function UpdateHomingProjectiles()

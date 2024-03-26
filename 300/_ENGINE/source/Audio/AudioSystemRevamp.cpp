@@ -225,12 +225,6 @@ void AudioSystem::Update([[maybe_unused]] float dt, bool calling_from_pause)
 					PINFO("AUDIO EXISTS");
 					PINFO("PLAYING AUDIO %s AT: %f", audio_component.mFileName.c_str(), audio_component.mVolume);
 
-		/*			if (audio_component.mFileName == "Player_BasicGun.wav")
-						{
-							int i = 0;
-							std::cout << i;
-						}*/
-
 					unsigned int play_bool = PlaySound(audio_component.mFileName, audio_component.mAudioType, audio_component.mVolume, &audio_component); // audio_component is used to access [3D] data
 					if (play_bool)  // Plays the sound based on parameters
 					{

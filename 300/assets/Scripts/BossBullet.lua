@@ -31,14 +31,14 @@ function Update()
          bulletLifeTime = bulletLifeTime + FPSManager.GetDT()
 
          if(bulletLifeTime > bulletDeathTime) then
-             systemManager.ecs:SetDeleteEntity(bulletObject)
+            --  systemManager.ecs:SetDeleteEntity(bulletObject)
          end
 
          for i , projectile in ipairs(_G.homing_projectiles) do
             if this == projectile.entity then 
                 if(bulletLifeTime > bulletDeathTime) then
-                    table.remove(_G.homing_projectiles, i) -- Delete entry in the table.
-                    systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
+                    -- table.remove(_G.homing_projectiles, i) -- Delete entry in the table.
+                    -- systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
                     break
                 end
             end
