@@ -718,10 +718,23 @@ function UpdateHomingProjectiles()
 
                     -- Save the direction 
                     projectile.direction = directionToPlayer
+                    
+                    -- M6 : Homing Rotation
+                    local angle_to_rotate = CalculateAngle(projectile.position, player_position, projectile.forward)
+                    local axis_to_rotate = Vec3.new()
+                    axis_to_rotate.x = 0 
+                    axis_to_rotate.y = angle_to_rotate * (180 / math.pi)
+                    axis_to_rotate.z = 0
 
-                    local angle_to_rotate = CalculateAngle(projectile.position, player_position, forward_vector)
+                    Helper.SetRealRotateQuaternion(projectile.entity, axis_to_rotate, angle_to_rotate)
 
-                    print("ANGLE TO ROTATE: " , angle_to_rotate)
+                    if projectile.entity ~= nil then 
+               
+                        print("HO")
+                    end
+    
+
+                    -- print("ANGLE TO ROTATE: " , angle_to_rotate)
                     
                     -- Ensure projectile.entity is not nil before setting velocity
                     if projectile.entity ~= nil then 
@@ -847,12 +860,17 @@ function PortalAnimation()
 
 end
 
-function crossProduct(v1 ,v2)
-    local x = v1[2]*v2[3] - v1[3]*v2[2]
-    local y = v1[3]*v2[1] - v1[1]*v2[3]
-    local z = v1[1]*v2[2] - v1[2]*v2[1]
+function crossProduct(v1, v2)
+    local x = v1.y * v2.z - v1.z * v2.y
+    local y = v1.z * v2.x - v1.x * v2.z
+    local z = v1.x * v2.y - v1.y * v2.x
     
-    return {x, y, z}
+    return {x = x, y = y, z = z}
+end
+
+function dotProduct(v1, v2)
+    local result = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
+    return result
 end
 
 -- M6 : Calculate Homing Bullet's Orientation (angle to rotate) -> bullet to player
@@ -868,9 +886,13 @@ function CalculateAngle(bullet_pos, player_position, forward_vector)
     -- Normalize the vector/direction
     local directionNorm = Helper.Normalize(direction)
 
+    -- Calculates the dot product between [bullet's forward direction] & [direction from bullet to player]
+    local dot_product_forward = dotProduct(forward_vector, directionNorm)
+
+    -- print("DOT PRODUCT FORWARD: " , dot_product_forward)
     -- Calculate the angle between the bullet's forward direction & the direction vector.
     -- [forward direction] -> represents the object's orientation or where it is facing. 
-    local angle = math.acos(forward_vector)
+    local angle = math.acos(dot_product_forward)
 
     -- Use <Cross Product> to determine if angle is positive / negative
     local cross = crossProduct(forward_vector, directionNorm);
