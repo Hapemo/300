@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 36700230,
+        "entityid": 18874380,
         "general": {
             "name": "RestartBackground",
             "tagid": 6,
@@ -27,7 +27,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 773465166,
+            "textureref": 422181023,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -47,7 +47,7 @@
         }
     },
     {
-        "entityid": 36700245,
+        "entityid": 18874381,
         "general": {
             "name": "MainMenuBackground",
             "tagid": 6,
@@ -74,7 +74,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 2712324972,
+            "textureref": 4140498284,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -94,7 +94,7 @@
         }
     },
     {
-        "entityid": 51380254,
+        "entityid": 18874382,
         "general": {
             "name": "QuitBackground",
             "tagid": 6,
@@ -121,7 +121,7 @@
         },
         "uirenderer": {
             "texpath": "",
-            "textureref": 3224159142,
+            "textureref": 2701149706,
             "degree": 0.0,
             "slider": 1.0,
             "color": {
@@ -141,7 +141,7 @@
         }
     },
     {
-        "entityid": 51380270,
+        "entityid": 18874386,
         "general": {
             "name": "NoButton",
             "tagid": 6,
@@ -162,7 +162,7 @@
             },
             "translate": {
                 "x": 1000.0,
-                "y": -0.20000000298023224,
+                "y": -0.36000001430511475,
                 "z": 0.0
             }
         },
@@ -208,7 +208,7 @@
         }
     },
     {
-        "entityid": 51380338,
+        "entityid": 18874389,
         "general": {
             "name": "YesButton",
             "tagid": 6,
@@ -229,7 +229,7 @@
             },
             "translate": {
                 "x": 1000.0,
-                "y": -0.20000000298023224,
+                "y": -0.36000001430511475,
                 "z": 0.0
             }
         },

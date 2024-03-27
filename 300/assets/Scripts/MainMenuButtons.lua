@@ -105,8 +105,8 @@ function Update()
         if (button.mActivated) then
                 TranslateQuitElements()
                 quitBackground:GetTransform().mTranslate.x = 0
-                yesButton:GetTransform().mTranslate.x = -0.2
-                noButton:GetTransform().mTranslate.x = 0.2
+                yesButton:GetTransform().mTranslate.x = -0.17
+                noButton:GetTransform().mTranslate.x = 0.22
                 _G.isConfirmationMenu = true
         end
 

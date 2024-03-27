@@ -148,20 +148,20 @@ function PauseUpdate()
         elseif (button:GetGeneral().name == "PauseRestartButton") then
             TranslatePauseElements()
             restartBackground:GetTransform().mTranslate.x = 0
-            yesButton:GetTransform().mTranslate.x = -0.2
-            noButton:GetTransform().mTranslate.x = 0.2
+            yesButton:GetTransform().mTranslate.x = -0.15
+            noButton:GetTransform().mTranslate.x = 0.210
             _G.isConfirmationMenu = true
         elseif (button:GetGeneral().name == "PauseQuitButton") then
             TranslatePauseElements()
             quitBackground:GetTransform().mTranslate.x = 0
-            yesButton:GetTransform().mTranslate.x = -0.2
-            noButton:GetTransform().mTranslate.x = 0.2
+            yesButton:GetTransform().mTranslate.x = -0.15
+            noButton:GetTransform().mTranslate.x = 0.210
             _G.isConfirmationMenu = true
         elseif (button:GetGeneral().name == "PauseMainMenuButton") then
             TranslatePauseElements()
             mmBackground:GetTransform().mTranslate.x = 0
-            yesButton:GetTransform().mTranslate.x = -0.2
-            noButton:GetTransform().mTranslate.x = 0.2
+            yesButton:GetTransform().mTranslate.x = -0.15
+            noButton:GetTransform().mTranslate.x = 0.210
             _G.isConfirmationMenu = true
         elseif (button:GetGeneral().name == "PauseSettingsButton") then
             TranslatePauseElements()
