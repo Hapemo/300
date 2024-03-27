@@ -169,7 +169,7 @@ function Update()
             gammaEmpty:GetTransform().mTranslate.x = -0.20
             settingsFSButton:GetTransform().mTranslate.x = -0.59
             settingsWindowButton:GetTransform().mTranslate.x = -0.08
-            settingsBackButton:GetTransform().mTranslate.x = 0.85
+            settingsBackButton:GetTransform().mTranslate.x = 0.81
             bgmDecrease:GetTransform().mTranslate.x = -0.61
             bgmIncrease:GetTransform().mTranslate.x = 0.21
             sfxDecrease:GetTransform().mTranslate.x = -0.61

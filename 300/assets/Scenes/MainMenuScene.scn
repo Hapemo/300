@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 2097155,
+        "entityid": 13631491,
         "general": {
             "name": "NoButton",
             "tagid": 6,
@@ -78,7 +78,7 @@
         }
     },
     {
-        "entityid": 2097156,
+        "entityid": 13631492,
         "general": {
             "name": "YesButton",
             "tagid": 6,
@@ -156,7 +156,7 @@
         }
     },
     {
-        "entityid": 2097157,
+        "entityid": 13631493,
         "general": {
             "name": "SettingsSfxEmpty",
             "tagid": 6,
@@ -203,7 +203,7 @@
         }
     },
     {
-        "entityid": 2097158,
+        "entityid": 13631494,
         "general": {
             "name": "sfxIncrease",
             "tagid": 6,
@@ -273,7 +273,7 @@
         }
     },
     {
-        "entityid": 2097159,
+        "entityid": 13631495,
         "general": {
             "name": "sfxDecrease",
             "tagid": 6,
@@ -343,7 +343,7 @@
         }
     },
     {
-        "entityid": 2097160,
+        "entityid": 13631496,
         "general": {
             "name": "QuitButton",
             "tagid": 6,
@@ -410,7 +410,7 @@
         }
     },
     {
-        "entityid": 2097161,
+        "entityid": 13631497,
         "general": {
             "name": "Awake",
             "tagid": 0,
@@ -448,7 +448,7 @@
         }
     },
     {
-        "entityid": 2097162,
+        "entityid": 13631498,
         "general": {
             "name": "StartButton",
             "tagid": 6,
@@ -518,7 +518,7 @@
         }
     },
     {
-        "entityid": 2097163,
+        "entityid": 13631499,
         "general": {
             "name": "HTPButton",
             "tagid": 6,
@@ -588,7 +588,7 @@
         }
     },
     {
-        "entityid": 2097164,
+        "entityid": 13631500,
         "general": {
             "name": "Exit",
             "tagid": 0,
@@ -626,7 +626,7 @@
         }
     },
     {
-        "entityid": 2097165,
+        "entityid": 13631501,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -671,7 +671,7 @@
         }
     },
     {
-        "entityid": 2097166,
+        "entityid": 13631502,
         "general": {
             "name": "MenuBackground",
             "tagid": 6,
@@ -712,7 +712,7 @@
         }
     },
     {
-        "entityid": 2097167,
+        "entityid": 13631503,
         "general": {
             "name": "CreditsButton",
             "tagid": 6,
@@ -779,7 +779,7 @@
         }
     },
     {
-        "entityid": 2097168,
+        "entityid": 13631504,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -817,7 +817,7 @@
         }
     },
     {
-        "entityid": 2097169,
+        "entityid": 13631505,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -855,14 +855,14 @@
             },
             "size": {
                 "x": 1135,
-                "y": 639
+                "y": 712
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 2097170,
+        "entityid": 13631506,
         "general": {
             "name": "bgmIncrease",
             "tagid": 6,
@@ -932,7 +932,7 @@
         }
     },
     {
-        "entityid": 2097171,
+        "entityid": 13631507,
         "general": {
             "name": "bgmDecrease",
             "tagid": 6,
@@ -1002,7 +1002,7 @@
         }
     },
     {
-        "entityid": 2097172,
+        "entityid": 15728660,
         "general": {
             "name": "SettingsMenuBackground",
             "tagid": 6,
@@ -1054,7 +1054,7 @@
         }
     },
     {
-        "entityid": 2097173,
+        "entityid": 15728661,
         "general": {
             "name": "SettingsBgmEmpty",
             "tagid": 0,
@@ -1101,7 +1101,7 @@
         }
     },
     {
-        "entityid": 2097174,
+        "entityid": 15728662,
         "general": {
             "name": "SettingsBgmFull",
             "tagid": 0,
@@ -1148,7 +1148,7 @@
         }
     },
     {
-        "entityid": 2097175,
+        "entityid": 15728663,
         "general": {
             "name": "SettingsFSButton",
             "tagid": 6,
@@ -1218,7 +1218,7 @@
         }
     },
     {
-        "entityid": 2097176,
+        "entityid": 15728664,
         "general": {
             "name": "SettingsWindowButton",
             "tagid": 6,
@@ -1288,7 +1288,7 @@
         }
     },
     {
-        "entityid": 2097177,
+        "entityid": 15728665,
         "general": {
             "name": "SettingsBackButton",
             "tagid": 6,
@@ -1298,8 +1298,8 @@
         },
         "transform": {
             "scale": {
-                "x": 0.20000000298023224,
-                "y": -0.15000000596046448,
+                "x": 0.32499998807907104,
+                "y": -0.24500000476837158,
                 "z": 1.0
             },
             "rotate": {
@@ -1309,7 +1309,7 @@
             },
             "translate": {
                 "x": 1000.0,
-                "y": -0.8700000047683716,
+                "y": -0.8299999833106995,
                 "z": 0.0
             }
         },
@@ -1358,7 +1358,7 @@
         }
     },
     {
-        "entityid": 2097178,
+        "entityid": 15728666,
         "general": {
             "name": "SettingsSfxFull",
             "tagid": 6,
@@ -1405,7 +1405,7 @@
         }
     },
     {
-        "entityid": 2097179,
+        "entityid": 15728667,
         "general": {
             "name": "SettingsButton",
             "tagid": 6,
@@ -1472,7 +1472,7 @@
         }
     },
     {
-        "entityid": 2097180,
+        "entityid": 15728668,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -1510,7 +1510,7 @@
         }
     },
     {
-        "entityid": 2097181,
+        "entityid": 15728669,
         "general": {
             "name": "gammaFull",
             "tagid": 6,
@@ -1551,7 +1551,7 @@
         }
     },
     {
-        "entityid": 2097182,
+        "entityid": 27263006,
         "general": {
             "name": "gammaEmpty",
             "tagid": 6,
@@ -1592,7 +1592,7 @@
         }
     },
     {
-        "entityid": 2097183,
+        "entityid": 27263007,
         "general": {
             "name": "QuitBackground",
             "tagid": 6,
@@ -1639,7 +1639,7 @@
         }
     },
     {
-        "entityid": 2097184,
+        "entityid": 27263008,
         "general": {
             "name": "RestartBackground",
             "tagid": 6,
@@ -1686,7 +1686,7 @@
         }
     },
     {
-        "entityid": 2097185,
+        "entityid": 27263009,
         "general": {
             "name": "MainMenuBackground",
             "tagid": 6,
@@ -1733,7 +1733,7 @@
         }
     },
     {
-        "entityid": 3145729,
+        "entityid": 28311553,
         "general": {
             "name": "gammaDecrease",
             "tagid": 6,
@@ -1800,7 +1800,7 @@
         }
     },
     {
-        "entityid": 3145730,
+        "entityid": 28311554,
         "general": {
             "name": "gammaIncrease",
             "tagid": 6,
