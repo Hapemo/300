@@ -250,7 +250,7 @@ void update_Light()
 
 				PointLightSSBO light;
 				light.mPosition = vec4(lightTransform.mTranslate, 0.f);
-				light.mColor = vec4(lightData.mLightColor, 0.f);
+     			light.mColor = vec4(lightData.mLightColor, 0.f);
 				light.mIntensity = lightData.mIntensity;
 				light.mLinear = lightData.mLinearFalloff;
 				light.mQuadratic = lightData.mQuadraticFalloff;

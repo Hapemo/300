@@ -136,6 +136,8 @@ function UpdateDialogues()
             if Intro2Progress >= 1.0 then
                 EndDialogue()
                 finish = true
+                _G.pause_animation_boss = false
+                print("DONE")
             else
                 SkipAnimation()
             end
