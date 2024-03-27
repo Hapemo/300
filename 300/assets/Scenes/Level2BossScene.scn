@@ -1,43 +1,8 @@
 [
     {
-        "entityid": 33554657,
+        "entityid": 5242892,
         "general": {
-            "name": "Level2ControllerBoss",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Level2BossSceneController.lua",
-                    "variables": []
-                }
-            ]
-        }
-    },
-    {
-        "entityid": 92274695,
-        "general": {
-            "name": "BossSlamAudio",
+            "name": "RoarAudio",
             "tagid": 8,
             "subtag": 0,
             "isActive": true,
@@ -62,8 +27,8 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Boss_Slam.wav",
-            "fullpath": "../assets\\Audio/Boss_Slam.wav",
+            "filename": "Boss_Roar_Truncated.wav",
+            "fullpath": "../assets\\Audio/Boss_Roar_Truncated.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -73,45 +38,7 @@
         }
     },
     {
-        "entityid": 92274736,
-        "general": {
-            "name": "BossRoarAudio",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Boss_Roar.wav",
-            "fullpath": "../assets\\Audio/Boss_Roar.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 99614730,
+        "entityid": 5242894,
         "general": {
             "name": "Level2Boss",
             "tagid": 1,
@@ -237,9 +164,9 @@
         }
     },
     {
-        "entityid": 104857696,
+        "entityid": 5242895,
         "general": {
-            "name": "RoarAudio",
+            "name": "BossRoarAudio",
             "tagid": 8,
             "subtag": 0,
             "isActive": true,
@@ -264,14 +191,87 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Boss_Roar.wav",
-            "fullpath": "../assets\\Audio/Boss_Roar.wav",
+            "filename": "Boss_Roar_Truncated.wav",
+            "fullpath": "../assets\\Audio/Boss_Roar_Truncated.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
             "panaudio": false
+        }
+    },
+    {
+        "entityid": 5242897,
+        "general": {
+            "name": "BossSlamAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Boss_Slam.wav",
+            "fullpath": "../assets\\Audio/Boss_Slam.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 5242898,
+        "general": {
+            "name": "Level2ControllerBoss",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level2BossSceneController.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]
