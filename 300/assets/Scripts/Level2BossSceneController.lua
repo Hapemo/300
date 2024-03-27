@@ -49,6 +49,7 @@ local boss_roar_audio
 
 _G.pause_animation_boss = true --used for lv2 boss
  
+local objective_complete_quake_roar = false
 local quake_roar_played = false
 local initial_slam = false
 local secondary_slam = false
@@ -147,6 +148,11 @@ function Update()
                 cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(magnitude.x,magnitude.y)+magfloat
                 cameraEntity:GetTransform().mRotate.y = cameraEntity:GetTransform().mRotate.y+math.random(magnitude.x,magnitude.y)+magfloat
                 Quakeintervalcd =0
+
+                if  objective_complete_quake_roar  == false then 
+                    boss_roar_audio:GetAudio():SetPlay(1.0)
+                    objective_complete_quake_roar  = true
+                end
             end
         else
             quaking = 0
