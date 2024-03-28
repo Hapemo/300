@@ -71,6 +71,8 @@ void SystemManager::Init(bool isEditor, GFX::Window *window)
 	PINFO("Init Game state System");
 	mPhysicsSystem.get()->Init();
 	PINFO("Init Physics System");
+	mIsInGamePause = false;
+	mIsDialogue = false;
 }
 
 void SystemManager::Reset()

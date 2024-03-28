@@ -87,6 +87,7 @@ void Application::MainUpdate()
         FirstUpdate();
         SystemUpdate();
         SecondUpdate(); // This should always be the last
+        
 
         // Graphics update
         mWindow.Update();
