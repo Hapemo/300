@@ -876,7 +876,18 @@ function OnTriggerEnter(Entity)
         -- end
 
         if (generalComponent.name == skiptutTeleporter:GetGeneral().name) then
-            gameStateSys:ChangeGameState("Test")
+            gameStateSys = systemManager:mGameStateSystem()
+        inputMapSys = systemManager:mInputActionSystem()
+        
+            x = gameStateSys:GetEntity("TransitionHelper", "Transition") 
+            y = x:GetScripts()
+            z = y:GetScript("../assets/Scripts/Transition.lua")
+
+            if z ~= nil then
+                z:SetNextGameStateHelper("SetNextGameState", "Test")
+                --z:RunFunctionWithParam("SetNextGameState", "Test2")
+                z:RunFunction("StartTransition")
+            end
         elseif (generalComponent.name == tutTeleporter:GetGeneral().name) then
             tutState = TutBox.SECOND
             travelBox = true

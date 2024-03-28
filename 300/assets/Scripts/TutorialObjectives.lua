@@ -34,7 +34,6 @@ function Update()
     end
     bar:GetUIrenderer():SetSlider(progress/maxProgress)
     if complete == true then
-         gameStateSys:ChangeGameState("Test")
         gameStateSys = systemManager:mGameStateSystem()
         inputMapSys = systemManager:mInputActionSystem()
         
