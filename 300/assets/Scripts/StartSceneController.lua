@@ -30,6 +30,10 @@ local customized_delay = 1.0
 local munching_audio 
 local munching_played = false
 
+local boss_grr_audio 
+local boss_grr_played = false
+local customized_grr_delay = 2.0
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     frame1 = gameStateSys:GetEntity("Frame1")
@@ -46,6 +50,7 @@ function Alive()
     VO_obj2 = gameStateSys:GetEntity("VO_ShesHere")
 
     munching_audio = gameStateSys:GetEntity("MunchAudio")
+    boss_grr_audio = gameStateSys:GetEntity("BossAppearsAudio")
 
     hoverOver = false
 
@@ -121,6 +126,13 @@ function Update()
         Frame6()
     elseif(frame7State) then
         Frame7()
+        customized_grr_delay = customized_grr_delay - FPSManager.GetDT()
+        if customized_grr_delay <= 0 then 
+            if boss_grr_played == false then 
+                boss_grr_audio:GetAudio():SetPlay(1.0)
+                boss_grr_played = true
+            end
+        end
     end
 
     if (skipButton:GetButton().mIsHover) then
