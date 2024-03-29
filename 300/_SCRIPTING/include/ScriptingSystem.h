@@ -46,5 +46,7 @@ public:
 
     void TestingFromScriptSys(std::vector<std::string> const& vect);
 
+    float lerp(float a, float b, float t);
+
     std::vector<std::string> CreateVectorString();
 };

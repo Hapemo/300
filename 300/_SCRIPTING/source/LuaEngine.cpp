@@ -372,7 +372,8 @@ void LuaScripting()
     systemManager->mScriptingSystem->luaState.new_usertype<ScriptingSystem>(
         "mScriptingSystem", sol::constructors<>(),
         "TestingFromScriptSys", &ScriptingSystem::TestingFromScriptSys,
-        "CreateVectorString", &ScriptingSystem::CreateVectorString);
+        "CreateVectorString", &ScriptingSystem::CreateVectorString,
+        "lerp", &ScriptingSystem::lerp);
 }
 
 void LuaPointLight()

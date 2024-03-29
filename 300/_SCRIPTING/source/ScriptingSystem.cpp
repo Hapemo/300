@@ -255,3 +255,8 @@ std::vector<std::string> ScriptingSystem::CreateVectorString()
 {
     return std::vector<std::string>{};
 }
+
+float ScriptingSystem::lerp(float a, float b, float t)
+{ 
+    return std::lerp(a, b, t); 
+}
