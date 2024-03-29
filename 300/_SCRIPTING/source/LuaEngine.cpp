@@ -150,7 +150,11 @@ void LuaEntity()
 
         ADD_COMPONENT("AddParticleEmitter", ParticleEmitter),
         DECLARE_COMPONENT("GetParticleEmitter", ParticleEmitter),
-        "HasParticleEmitter", & Entity::HasComponent<ParticleEmitter>);
+        "HasParticleEmitter", & Entity::HasComponent<ParticleEmitter>,
+
+        ADD_COMPONENT("AddSpotlight", Spotlight),
+        DECLARE_COMPONENT("GetSpotlight", Spotlight),
+        "HasSpotlight", & Entity::HasComponent<Spotlight>);
 }
 
 void LuaGeneral()
@@ -482,4 +486,11 @@ void LuaParticleEmitter()
     systemManager->mScriptingSystem->luaState.new_usertype<ParticleEmitter>(
         "ParticleEmitter", sol::constructors<>(),
         "Emit", &ParticleEmitter::Emit);
+}
+
+void LuaSpotlight()
+{
+    systemManager->mScriptingSystem->luaState.new_usertype<Spotlight>(
+        "Spotlight", sol::constructors<>(),
+        "ZeroIntensity", &Spotlight::ZeroIntensity);
 }

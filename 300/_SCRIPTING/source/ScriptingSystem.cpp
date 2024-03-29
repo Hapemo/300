@@ -121,6 +121,7 @@ void ScriptingSystem::Init()
     LuaHealth();
     LuaButton();
     LuaParticleEmitter();
+    LuaSpotlight();
 
     /******************************************************************************/
     /*!

@@ -39,14 +39,19 @@ function OnTriggerEnter(Entity)
 
         if (string.find(name, "melissa")) then
             _G.activateEpicM = true
-        elseif (string.find(name, "soldier")) then 
+            _G.gameStateSys:GetEntity("SpotlightMelissa"):GetSpotlight():ZeroIntensity()
+        elseif (string.find(name, "soldier")) then
             _G.activateEpicTS = true
+            _G.gameStateSys:GetEntity("SpotlightSoldier"):GetSpotlight():ZeroIntensity()
         elseif (string.find(name, "horse")) then 
             _G.activateEpicTrojanHorse = true
+            _G.gameStateSys:GetEntity("SpotlightHorse"):GetSpotlight():ZeroIntensity()
         elseif (string.find(name, "ily")) then 
             _G.activateEpicILY = true
+            _G.gameStateSys:GetEntity("SpotlightILY"):GetSpotlight():ZeroIntensity()
         elseif (string.find(name, "zipbomb")) then 
             _G.activateEpicZB = true
+            _G.gameStateSys:GetEntity("SpotlightZip"):GetSpotlight():ZeroIntensity()
         end
     end
 end

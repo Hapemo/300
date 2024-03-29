@@ -814,6 +814,9 @@ struct Spotlight : public Serializable
 
 	void SerializeSelf(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer) const;
 	void DeserializeSelf(rapidjson::Value& reader);
+
+	// For scripts
+	void ZeroIntensity() { mIntensity = 0.f; }
 };
 
 /******************************************************************************/
