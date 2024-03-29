@@ -3,6 +3,8 @@ local zeroVector = Vec3.new(0,0,0)
 local viewVec = Vec3.new()
 local viewVecCam = Vec3.new()
 local rotationCam = Vec3.new()
+local original_color = Vec4.new(1, 1, 1, 1)
+local i = 0
 
 local forward = Vec3.new()
 local back = Vec3.new()
@@ -346,9 +348,26 @@ function Update()
 
         if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
             if (playerHealthCurrent < 400) then
+                i = i + (1 * FPSManager:GetDT())
+
+                if(i < 0.8) then
+                    healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x - 0.01
+                    healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y - 0.01
+                    healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z - 0.01
+                elseif(i < 1.6 and i >= 0.8) then
+                    healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x + 0.01
+                    healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y + 0.01
+                    healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z + 0.01   
+                elseif(i >= 1.6) then
+                    i = 0
+                end
                 playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
             end
         end
+    end
+
+    if(playerHealthCurrent >= 93) then
+        healthbar:GetUIrenderer().mColor = original_color
     end
 
     healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
