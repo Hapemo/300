@@ -336,6 +336,7 @@ function UpdateDialogues()
                 if DestroyedAV2Progress >= 1.0 then
                     EndDialogue()
                     finish = true
+                    -- _G.pause_animation_boss_lv1 = false
                 else
                     SkipAnimation()
                 end

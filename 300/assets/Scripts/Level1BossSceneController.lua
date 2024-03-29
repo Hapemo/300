@@ -34,9 +34,34 @@ local ani_timer
 local playtimer =0
 local playlimit = 5
 
+local boss_slam_audio
+local boss_roar_audio
+
+_G.pause_animation_boss_lv1 = true --used for lv1 boss
+
+local objective_complete_quake_roar = false
+local quake_roar_played = false
+local initial_slam = false
+local secondary_slam = false
+local secondary_roar = false
+
+
 function Alive()
     initonce =false
     graphicsSys = systemManager:mGraphicsSystem()
+    gameStateSys = systemManager:mGameStateSystem()
+
+    boss_slam_audio = gameStateSys:GetEntityByScene("BossSlamAudio", "Level1Boss")
+    boss_roar_audio = gameStateSys:GetEntityByScene("BossRoarAudio", "Level1Boss")
+    transition_audio = gameStateSys:GetEntityByScene("TransitionHelper")
+
+    if boss_slam_audio ~= nil then 
+        print("SLAM OK")
+    end
+
+    if boss_roar_audio ~= nil then 
+        print("ROAR OK")
+    end
 end
 
 function Update()
@@ -70,6 +95,13 @@ function Update()
                 cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(magnitude.x,magnitude.y)+magfloat
                 cameraEntity:GetTransform().mRotate.y = cameraEntity:GetTransform().mRotate.y+math.random(magnitude.x,magnitude.y)+magfloat
                 Quakeintervalcd =0
+
+                
+                if  objective_complete_quake_roar  == false then 
+                    boss_roar_audio:GetAudio():SetPlay(1.0)
+                    objective_complete_quake_roar  = true
+                end
+
             end
         else
             quaking = 0
@@ -77,7 +109,12 @@ function Update()
         end
 
     elseif STATE == 1 then
-        bossEntity:GetAnimator():UnpauseAnimation()
+        transition_audio:GetAudio():SetStop()
+
+        -- if _G.pause_animation_boss_lv1 == false then
+            bossEntity:GetAnimator():UnpauseAnimation()
+        -- end
+     
 
         graphicsSys:IgnoreUIScene("UI")
         graphicsSys:IgnoreUIScene("Objectives")
@@ -104,6 +141,27 @@ function Update()
             end
             quakinterv = quakinterv+0.0004
 
+        end
+
+        if bossEntity:GetAnimator():GetFrame() >= 50.0 then 
+            if initial_slam == false then 
+                boss_slam_audio:GetAudio():SetPlay(1.0)
+                initial_slam = true
+            end
+        end
+
+        if bossEntity:GetAnimator():GetFrame() >= 75.0 then 
+            if secondary_slam == false then 
+                boss_slam_audio:GetAudio():SetPlay(1.0)
+                secondary_slam = true
+            end
+        end
+
+        if bossEntity:GetAnimator():GetFrame() >= 95.0 then 
+            if secondary_roar == false then 
+                boss_roar_audio:GetAudio():SetPlay(1.0)
+                secondary_roar = true
+            end
         end
 
         if( fov >35)then

@@ -63,7 +63,7 @@ function Alive()
     bossEntity:GetAnimator():PauseAnimation()
     inittwice = false
     isfightingboss = false
-    gameStateSys = systemManager:mGameStateSystem();
+    gameStateSys = systemManager:mGameStateSystem()
 
     boss_slam_audio = gameStateSys:GetEntityByScene("BossSlamAudio", "Level2BossScene")
     boss_roar_audio = gameStateSys:GetEntityByScene("BossRoarAudio", "Level2BossScene")

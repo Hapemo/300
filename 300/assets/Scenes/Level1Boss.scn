@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 19923034,
+        "entityid": 348,
         "general": {
             "name": "Level2BossScene",
             "tagid": 0,
@@ -35,7 +35,7 @@
         }
     },
     {
-        "entityid": 19923035,
+        "entityid": 349,
         "general": {
             "name": "BossLevel2",
             "tagid": 1,
@@ -111,7 +111,9 @@
                 1257437683
             ]
         },
-        "animator": {},
+        "animator": {
+            "paused": false
+        },
         "capsulecollider": {
             "translateoffset": {
                 "x": 0.0,
@@ -175,6 +177,82 @@
             "height": 0.07000000029802322,
             "frametexture": 0,
             "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 356,
+        "general": {
+            "name": "BossRoarAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Boss_Roar.wav",
+            "fullpath": "../assets\\Audio/Boss_Roar.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 1048931,
+        "general": {
+            "name": "BossSlamAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Boss_Slam.wav",
+            "fullpath": "../assets\\Audio/Boss_Slam.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
         }
     }
 ]
