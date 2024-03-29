@@ -896,7 +896,7 @@ function CalculateAngle(bullet_pos, player_position, forward_vector)
 
     -- Use <Cross Product> to determine if angle is positive / negative
     local cross = crossProduct(forward_vector, directionNorm)
-    print("ANGLE: " , angle * (180 / math.pi))
+    -- print("ANGLE: " , angle * (180 / math.pi))
 
     local l = dotProduct(cross, cross)
     
@@ -904,7 +904,7 @@ function CalculateAngle(bullet_pos, player_position, forward_vector)
     --     cross = Vec3.new(0,1,0)
     --  end
 
-    print("DOT PRODUCT FORWARD: " , dot_product_forward)
+    -- print("DOT PRODUCT FORWARD: " , dot_product_forward)
 
     -- if 
     -- print("L: " , l)

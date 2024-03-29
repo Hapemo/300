@@ -6,6 +6,7 @@ local rotationCam = Vec3.new()
 local original_color = Vec4.new(1, 1, 1, 1)
 local i = 0
 
+
 local forward = Vec3.new()
 local back = Vec3.new()
 local left = Vec3.new()
@@ -161,10 +162,11 @@ local inittedDash = false
 
 local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
 local playerHealthComponent
-local playerHealthCurrent = 1000;
-local playerHealthMax = 1000;
-local playerHealthStartRegenCurrent = 0;
-local playerHealthStartRegenMax = 30; -- this is the time it takes for the player to not be damaged to start regenerating health
+local playerHealthCurrent = 100;
+local playerHealthMax = 100;
+local playerHealthRegen_Cooldown = 0;
+local playerHealthRegen_CooldownMax = 4; -- this is the time it takes for the player to not be damaged to start regenerating health
+
 
 local healthbar
 local healthbarSpawnPos = Vec3.new()
@@ -301,6 +303,7 @@ function Alive()
     -- print("RIGHT FOOTSTEP DATABASE: " , #rightFootsteps)
 
     dmgAudioEnt = gameStateSys:GetEntity("DamageAudio")
+
 end
 
 function Update()
@@ -335,45 +338,31 @@ function Update()
     -- end
 
     -- Player Health System End -- 
-    if (isTakingDamage == true) then
-        playerHealthStartRegenCurrent = 0;
-        playerHealthCurrent = playerHealthCurrent - 6; -- take damagen
-            
-        if play_normal_damage_audio == true then 
-             dmgAudioEnt:GetAudio():SetPlay()
-            play_normal_damage_audio = false
-        end
-
-        -- isTakingDamage = false
-    
-    -- -- Added 3/4/2024 (using healthbar component)
-    -- playerHealthComponent.health =  playerHealthComponent.health - 6
-
+     -- health regen
+     if (playerHealthRegen_Cooldown < playerHealthRegen_CooldownMax) then
+        playerHealthRegen_Cooldown = playerHealthRegen_Cooldown + FPSManager.GetDT();
+        -- print("REGEN COOLDOWN: " , playerHealthRegen_Cooldown)
     end
 
-    if (isTakingDamage == false) then -- if not taking damage
+    if (playerHealthRegen_Cooldown >= playerHealthRegen_CooldownMax) then
+        if (this:GetHealthbar().health < playerHealthMax) then
+            i = i + (1 * FPSManager:GetDT())
 
-        if (playerHealthStartRegenCurrent < playerHealthStartRegenMax) then
-            playerHealthStartRegenCurrent = playerHealthStartRegenCurrent + 1;
-        end
-
-        if (playerHealthStartRegenCurrent == playerHealthStartRegenMax) then
-            if (playerHealthCurrent < 400) then
-                i = i + (1 * FPSManager:GetDT())
-
-                if(i < 0.8) then
-                    healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x - 0.01
-                    healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y - 0.01
-                    healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z - 0.01
-                elseif(i < 1.6 and i >= 0.8) then
-                    healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x + 0.01
-                    healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y + 0.01
-                    healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z + 0.01   
-                elseif(i >= 1.6) then
-                    i = 0
-                end
-                playerHealthCurrent = playerHealthCurrent + 3; -- regen hp
+            if(i < 0.8) then
+                healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x - 0.01
+                healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y - 0.01
+                healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z - 0.01
+            elseif(i < 1.6 and i >= 0.8) then
+                healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x + 0.01
+                healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y + 0.01
+                healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z + 0.01   
+            elseif(i >= 1.6) then
+                i = 0
             end
+
+            this:GetHealthbar().health = this:GetHealthbar().health + 0.5 * FPSManager.GetDT(); -- regen hp
+            print("REGENING")
+
         end
     end
 
@@ -381,14 +370,8 @@ function Update()
         healthbar:GetUIrenderer().mColor = original_color
     end
 
-    -- healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
-    -- print("HP LEFT: " , playerHealthComponent.health)
-    -- print("PERCENTAGE: " , playerHealthComponent.health/playerHealthComponent.maxHealth)
-    healthbar:GetUIrenderer():SetSlider(playerHealthComponent.health/playerHealthComponent.maxHealth)
-
-    if playerHealthCurrent <= 0 then
-        gameStateSys:ChangeGameState("LoseMenu")
-    end
+    healthbar:GetUIrenderer():SetSlider(this:GetHealthbar().health/playerHealthMax);
+    print("current health: ", this:GetHealthbar().health)
 
     -- Player Health System End
 

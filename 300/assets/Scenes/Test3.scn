@@ -1,8 +1,8 @@
 [
     {
-        "entityid": 16777244,
+        "entityid": 8388804,
         "general": {
-            "name": "Jump",
+            "name": "SummonPortalAudio",
             "tagid": 8,
             "subtag": 0,
             "isActive": true,
@@ -27,20 +27,20 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Player_Jump.wav",
-            "fullpath": "../assets\\Audio/Player_Jump.wav",
+            "filename": "Portal.wav",
+            "fullpath": "../assets\\Audio/Portal.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
-            "volume": 0.4000000059604645,
+            "volume": 0.6000000238418579,
             "retainaudio": false,
             "panaudio": false
         }
     },
     {
-        "entityid": 16777245,
+        "entityid": 8388806,
         "general": {
-            "name": "gun",
+            "name": "ShotGun",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -49,63 +49,72 @@
         "transform": {
             "scale": {
                 "x": 1.0,
-                "y": 0.0,
-                "z": 0.25
+                "y": 1.0,
+                "z": 1.0
             },
             "rotate": {
                 "x": 0.0,
-                "y": -75.0,
+                "y": 0.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 0.5,
-                "y": -0.6499999761581421,
-                "z": -0.796999990940094
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             }
         },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2168,
-            "instancecolor": {
-                "x": 0.5,
-                "y": 0.5,
-                "z": 0.5,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.25,
-                "y": 0.25,
-                "z": 0.25,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Gun_Base_Color.ctexture",
-                "../assets/Compressed/Gun_Normal.ctexture",
-                "../assets/Compressed/Gun_Metallic.ctexture",
-                "../assets/Compressed/Gun_Roughness.ctexture",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Gun.geom",
-            "texturerefid": [
-                561120090,
-                236381020,
-                3720350570,
-                2134634497,
-                0,
-                0
-            ]
-        },
-        "parent": {
-            "prevsibling": 17826007,
-            "nextsibling": 19923080,
-            "parent": 17825983
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Shotgun.wav",
+            "fullpath": "../assets\\Audio/Player_Shotgun.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.6000000238418579,
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 17825803,
+        "entityid": 8388807,
+        "general": {
+            "name": "RoarSlamAudio",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 8388808,
         "general": {
             "name": "SpherePhase",
             "tagid": 8,
@@ -143,9 +152,9 @@
         }
     },
     {
-        "entityid": 17825837,
+        "entityid": 8388809,
         "general": {
-            "name": "MachineGun",
+            "name": "RoarAudio",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -170,374 +179,18 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Player_MachineGun.wav",
-            "fullpath": "../assets\\Audio/Player_MachineGun.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.6000000238418579,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 17825841,
-        "general": {
-            "name": "rightWallCollider",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 150.0,
-                "y": 20.0,
-                "z": 5.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 8.0,
-                "z": -62.0880012512207
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        }
-    },
-    {
-        "entityid": 17825935,
-        "general": {
-            "name": "Boss_Bullet_Homing",
-            "tagid": 1,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 90.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 152.13294982910156,
-                "y": 21.94879722595215,
-                "z": 129.814697265625
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 4.386343955993652,
-                "y": 0.013499770313501358,
-                "z": 4.093873977661133
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": false
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2995509121,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Homing_lambert1_BaseColor.ctexture",
-                " ",
-                "../assets/Compressed/Homing_lambert1_Metallic.ctexture",
-                "../assets/Compressed/Homing_lambert1_Roughness.ctexture",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Homing.geom",
-            "texturerefid": [
-                2018166298,
-                0,
-                1193416337,
-                3069698572,
-                0,
-                0
-            ]
-        },
-        "animator": {
-            "paused": false
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/BossBullet.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "Boss_Bullet_Homing"
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "maxhealth": 50.0,
-            "width": 0.0,
-            "height": 0.0,
-            "frametexture": 0,
-            "healthtexture": 0
-        }
-    },
-    {
-        "entityid": 17825937,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 64.6059799194336,
-                "z": 152.43084716796875
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 5.0
-        }
-    },
-    {
-        "entityid": 17825940,
-        "general": {
-            "name": "HomingEyeballAudio",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Homing_Missile.wav",
-            "fullpath": "../assets\\Audio/Homing_Missile.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.5,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 17825941,
-        "general": {
-            "name": "Footstep_Left_2",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 17825984,
-            "nextsibling": 17826001,
-            "parent": 17825983
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Left_2.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Left_2.wav",
+            "filename": "Boss_Roar.wav",
+            "fullpath": "../assets\\Audio/Boss_Roar.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": true,
-            "panbalance": -0.5,
-            "panspeed": 0.0
+            "panaudio": false
         }
     },
     {
-        "entityid": 17825942,
-        "general": {
-            "name": "Footstep_Right_4",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 17826001,
-            "nextsibling": 18874569,
-            "parent": 17825983
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Right_4.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Right_4.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": true,
-            "panbalance": 0.5,
-            "panspeed": 0.0
-        }
-    },
-    {
-        "entityid": 17825943,
+        "entityid": 8388810,
         "general": {
             "name": "Boss_Bullet_Homing",
             "tagid": 1,
@@ -666,9 +319,9 @@
         }
     },
     {
-        "entityid": 17825944,
+        "entityid": 8388811,
         "general": {
-            "name": "RoarSlamAudio",
+            "name": "gun",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -677,201 +330,65 @@
         "transform": {
             "scale": {
                 "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
+                "y": 0.0,
+                "z": 0.25
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": -75.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": 0.5,
+                "y": -0.6499999761581421,
+                "z": -0.796999990940094
             }
         },
-        "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 17825958,
-        "general": {
-            "name": "ShotGun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2168,
+            "instancecolor": {
+                "x": 0.5,
+                "y": 0.5,
+                "z": 0.5,
+                "w": 1.0
             },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+            "bloomthreshold": {
+                "x": 0.25,
+                "y": 0.25,
+                "z": 0.25,
+                "w": 1.0
             },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Shotgun.wav",
-            "fullpath": "../assets\\Audio/Player_Shotgun.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.6000000238418579,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 17825983,
-        "general": {
-            "name": "Camera",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.100000023841858,
-                "y": 1.399999976158142,
-                "z": 1.100000023841858
-            },
-            "rotate": {
-                "x": 179.5,
-                "y": -18.200000762939453,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 52.24589157104492,
-                "y": 0.3109400272369385,
-                "z": 10.05572509765625
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 1,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": true
-            },
-            "gravity": true
-        },
-        "spherecollider": {
-            "scaleoffset": 0.8100000023841858,
-            "translateoffset": {
-                "x": 0.0,
-                "y": -0.5,
-                "z": 0.0
-            },
-            "istrigger": true
-        },
-        "capsulecollider": {
-            "translateoffset": {
-                "x": 0.0,
-                "y": -0.5,
-                "z": 0.0
-            },
-            "radius": 1.0,
-            "halfheight": 0.5,
-            "istrigger": false
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Player3.lua",
-                    "variables": []
-                }
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Gun_Base_Color.ctexture",
+                "../assets/Compressed/Gun_Normal.ctexture",
+                "../assets/Compressed/Gun_Metallic.ctexture",
+                "../assets/Compressed/Gun_Roughness.ctexture",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Gun.geom",
+            "texturerefid": [
+                561120090,
+                236381020,
+                3720350570,
+                2134634497,
+                0,
+                0
             ]
         },
-        "children": {
-            "numchildren": 11,
-            "firstchild": 16777245
-        },
-        "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.0,
-            "retainaudio": false,
-            "panaudio": false
-        },
-        "camera": {
-            "positon": {
-                "x": 52.24589157104492,
-                "y": 0.3109400272369385,
-                "z": 10.05572509765625
-            },
-            "target": {
-                "x": 51.295955657958984,
-                "y": 0.6232749819755554,
-                "z": 10.06401538848877
-            },
-            "size": {
-                "x": 1236,
-                "y": 539
-            },
-            "near": 0.10000000149011612,
-            "far": 900.0
-        },
-        "healthbar": {
-            "healthcolor": {
-                "x": 0.0,
-                "y": 1.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "backcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 1.0
-            },
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "maxhealth": 100.0,
-            "width": 0.0,
-            "height": 0.0,
-            "frametexture": 0,
-            "healthtexture": 0
+        "parent": {
+            "prevsibling": 17825933,
+            "nextsibling": 17825902,
+            "parent": 15728861
         }
     },
     {
-        "entityid": 17825984,
+        "entityid": 8388812,
         "general": {
-            "name": "Footstep_Left_1",
+            "name": "Footstep_Right_4",
             "tagid": 8,
             "subtag": 0,
             "isActive": true,
@@ -895,28 +412,28 @@
             }
         },
         "parent": {
-            "prevsibling": 19923080,
-            "nextsibling": 17825941,
-            "parent": 17825983
+            "prevsibling": 8388820,
+            "nextsibling": 8388813,
+            "parent": 15728861
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Left_1.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Left_1.wav",
+            "filename": "Player_Footsteps_Right_4.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_4.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
             "panaudio": true,
-            "panbalance": -0.5,
+            "panbalance": 0.5,
             "panspeed": 0.0
         }
     },
     {
-        "entityid": 17826001,
+        "entityid": 8388813,
         "general": {
-            "name": "Footstep_Left_3",
+            "name": "Footstep_Right_3",
             "tagid": 8,
             "subtag": 0,
             "isActive": true,
@@ -940,67 +457,29 @@
             }
         },
         "parent": {
-            "prevsibling": 17825941,
-            "nextsibling": 17825942,
-            "parent": 17825983
+            "prevsibling": 8388812,
+            "nextsibling": 13631710,
+            "parent": 15728861
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Left_3.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Left_3.wav",
+            "filename": "Player_Footsteps_Right_3.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_3.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
             "panaudio": true,
-            "panbalance": -0.5,
+            "panbalance": 0.5,
             "panspeed": 0.0
         }
     },
     {
-        "entityid": 17826002,
+        "entityid": 8388814,
         "general": {
-            "name": "BossSlamAudio",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Boss_Slam.wav",
-            "fullpath": "../assets\\Audio/Boss_Slam.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.6000000238418579,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 17826003,
-        "general": {
-            "name": "DamageAudio",
-            "tagid": 0,
+            "name": "Footstep_Left_2",
+            "tagid": 8,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
@@ -1023,24 +502,26 @@
             }
         },
         "parent": {
-            "prevsibling": 17826006,
-            "nextsibling": 17826007,
-            "parent": 17825983
+            "prevsibling": 11534459,
+            "nextsibling": 8388820,
+            "parent": 15728861
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Player_Take_Damage.wav",
-            "fullpath": "../assets\\Audio/Player_Take_Damage.wav",
+            "filename": "Player_Footsteps_Left_2.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Left_2.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
-            "panaudio": false
+            "panaudio": true,
+            "panbalance": -0.5,
+            "panspeed": 0.0
         }
     },
     {
-        "entityid": 17826005,
+        "entityid": 8388817,
         "general": {
             "name": "Boss_Bullet_Homing",
             "tagid": 1,
@@ -1169,9 +650,77 @@
         }
     },
     {
-        "entityid": 17826006,
+        "entityid": 8388819,
         "general": {
-            "name": "Footstep_Right_1",
+            "name": "Level3WellParticlesSmoke",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 3.1999740600585938,
+                "y": -10.68967056274414,
+                "z": 7.547823429107666
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Level3WellParticlesSmoke"
+        },
+        "particleemitter": {
+            "startcolor": {
+                "x": 1.0,
+                "y": 0.5242718458175659,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "endcolor": {
+                "x": 1.0,
+                "y": 0.5533980131149292,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "startsize": 0.0,
+            "endsize": 2.0,
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "offset": {
+                "x": 18.200000762939453,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "gravity": 0.07000000029802322,
+            "rotation": 90.0,
+            "lifetime": 2.0,
+            "loop": true,
+            "loopInterval": 0.0,
+            "speed": 5.0,
+            "count": 256,
+            "emit": false,
+            "particletexture": 2273550607
+        }
+    },
+    {
+        "entityid": 8388820,
+        "general": {
+            "name": "Footstep_Left_3",
             "tagid": 8,
             "subtag": 0,
             "isActive": true,
@@ -1195,14 +744,104 @@
             }
         },
         "parent": {
-            "prevsibling": 19922956,
-            "nextsibling": 17826003,
-            "parent": 17825983
+            "prevsibling": 8388814,
+            "nextsibling": 8388812,
+            "parent": 15728861
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Right_1.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Right_1.wav",
+            "filename": "Player_Footsteps_Left_3.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Left_3.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": -0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 11534459,
+        "general": {
+            "name": "Footstep_Left_1",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 17825902,
+            "nextsibling": 8388814,
+            "parent": 15728861
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Left_1.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Left_1.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": true,
+            "panbalance": -0.5,
+            "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 13631710,
+        "general": {
+            "name": "Footstep_Right_2",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 8388813,
+            "nextsibling": 17825934,
+            "parent": 15728861
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Right_2.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_2.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -1214,78 +853,51 @@
         }
     },
     {
-        "entityid": 17826007,
+        "entityid": 14680192,
         "general": {
-            "name": "DamageLazerAudio",
-            "tagid": 8,
+            "name": "Level3FBX",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
+                "x": 150.0,
+                "y": 100.0,
+                "z": 150.0
             },
             "rotate": {
                 "x": 0.0,
-                "y": 0.0,
+                "y": 90.0,
                 "z": 0.0
             },
             "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
+                "x": -35.42950439453125,
+                "y": -1.7549999952316284,
+                "z": 8.679929733276367
             }
         },
-        "parent": {
-            "prevsibling": 17826003,
-            "nextsibling": 16777245,
-            "parent": 17825983
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Hit_By_Laser_2.wav",
-            "fullpath": "../assets\\Audio/Hit_By_Laser_2.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 17826008,
-        "general": {
-            "name": "Boss_Bullet_Homing",
-            "tagid": 1,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
                 "x": 0.0,
                 "y": 0.0,
                 "z": 0.0
             },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
         },
         "meshrenderer": {
             "vert": "../assets/shader_files/pointLight_vert.glsl",
             "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2995509121,
+            "meshrefid": 3987889398,
             "instancecolor": {
                 "x": 1.0,
                 "y": 1.0,
@@ -1298,21 +910,21 @@
                 "z": 1.0,
                 "w": 1.0
             },
-            "castShadow": true,
+            "castShadow": false,
             "materialinstance": [
-                "../assets/Compressed/Homing_lambert1_BaseColor.ctexture",
-                " ",
-                "../assets/Compressed/Homing_lambert1_Metallic.ctexture",
-                "../assets/Compressed/Homing_lambert1_Roughness.ctexture",
+                "../assets/Compressed/Level3_lambert10_BaseColor.ctexture",
+                "../assets/Compressed/Level3_lambert10_Normal.ctexture",
+                "../assets/Compressed/Level3_lambert10_Metallic.ctexture",
+                "../assets/Compressed/Level3_lambert10_Roughness.ctexture",
                 " ",
                 " "
             ],
-            "mesh": "../assets/compiled_geom/Homing.geom",
+            "mesh": "../assets/compiled_geom/Level3.geom",
             "texturerefid": [
-                2018166298,
-                0,
-                1193416337,
-                3069698572,
+                2428904545,
+                867388106,
+                1148156216,
+                1605960527,
                 0,
                 0
             ]
@@ -1320,125 +932,12 @@
         "animator": {
             "paused": false
         },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/BossBullet.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "Boss_Bullet_Homing"
+        "meshcollider": {
+            "ismeshcollider": true
         }
     },
     {
-        "entityid": 17826009,
-        "general": {
-            "name": "Skybox",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 500.0,
-                "y": 500.0,
-                "z": 500.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": -20.668514251708984,
-                "z": -47.40319061279297
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 2510,
-            "instancecolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 0.20000000298023224,
-                "y": 0.20999999344348907,
-                "z": 0.1599999964237213,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
-                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
-                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
-                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
-                "../assets/Compressed/Environment_Skybox_AO.ctexture"
-            ],
-            "mesh": "../assets/compiled_geom/Skybox.geom",
-            "texturerefid": [
-                437536649,
-                3522280818,
-                1686346496,
-                1590588887,
-                5760,
-                1467793003
-            ]
-        }
-    },
-    {
-        "entityid": 17826010,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 51.55923843383789,
-                "z": -130.379150390625
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 5.0
-        }
-    },
-    {
-        "entityid": 17826077,
+        "entityid": 15728656,
         "general": {
             "name": "Boss_Bullet_Homing",
             "tagid": 1,
@@ -1458,9 +957,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 193.1266326904297,
-                "y": 20.965660095214844,
-                "z": 32.076236724853516
+                "x": 152.13294982910156,
+                "y": 21.94879722595215,
+                "z": 129.814697265625
             }
         },
         "rigidbody": {
@@ -1468,9 +967,9 @@
             "material": 1,
             "motion": 1,
             "velocity": {
-                "x": 5.958370685577393,
-                "y": 0.012390154413878918,
-                "z": 0.7054535150527954
+                "x": 4.386343955993652,
+                "y": 0.013499770313501358,
+                "z": 4.093873977661133
             },
             "rotationconstraints": {
                 "x": false,
@@ -1567,9 +1066,247 @@
         }
     },
     {
-        "entityid": 18874369,
+        "entityid": 15728764,
         "general": {
-            "name": "BGM",
+            "name": "Level3WellParticlesSparks",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 3.200000047683716,
+                "y": -9.883000373840332,
+                "z": 7.547999858856201
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Level3WellParticlesSparks"
+        },
+        "particleemitter": {
+            "startcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "endcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 0.0
+            },
+            "startsize": 0.0,
+            "endsize": 3.0,
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "offset": {
+                "x": 18.200000762939453,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "gravity": 0.07000000029802322,
+            "rotation": 90.0,
+            "lifetime": 2.0,
+            "loop": true,
+            "loopInterval": 0.0,
+            "speed": 5.0,
+            "count": 512,
+            "emit": false,
+            "particletexture": 2451628838
+        }
+    },
+    {
+        "entityid": 15728861,
+        "general": {
+            "name": "Camera",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.100000023841858,
+                "y": 1.399999976158142,
+                "z": 1.100000023841858
+            },
+            "rotate": {
+                "x": 179.5,
+                "y": -18.200000762939453,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 52.24589157104492,
+                "y": 0.3109400272369385,
+                "z": 10.05572509765625
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": true
+            },
+            "gravity": true
+        },
+        "spherecollider": {
+            "scaleoffset": 0.8100000023841858,
+            "translateoffset": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "capsulecollider": {
+            "translateoffset": {
+                "x": 0.0,
+                "y": -0.5,
+                "z": 0.0
+            },
+            "radius": 1.0,
+            "halfheight": 0.5,
+            "istrigger": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Player3.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "children": {
+            "numchildren": 11,
+            "firstchild": 8388811
+        },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.0,
+            "retainaudio": false,
+            "panaudio": false
+        },
+        "camera": {
+            "positon": {
+                "x": 52.24589157104492,
+                "y": 0.3109400272369385,
+                "z": 10.05572509765625
+            },
+            "target": {
+                "x": 51.295955657958984,
+                "y": 0.6232749819755554,
+                "z": 10.06401538848877
+            },
+            "size": {
+                "x": 1135,
+                "y": 534
+            },
+            "near": 0.10000000149011612,
+            "far": 900.0
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "maxhealth": 100.0,
+            "width": 0.0,
+            "height": 0.0,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 16777217,
+        "general": {
+            "name": "Light",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 163.1609344482422,
+                "y": 59.92569351196289,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Light"
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 5.0
+        }
+    },
+    {
+        "entityid": 16777218,
+        "general": {
+            "name": "Jump",
             "tagid": 8,
             "subtag": 0,
             "isActive": true,
@@ -1594,46 +1331,8 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "troubleshooter_wav_3.wav",
-            "fullpath": "../assets\\Audio/troubleshooter_wav_3.wav",
-            "playonawake": true,
-            "islooping": false,
-            "audiotype": 0,
-            "volume": 0.4000000059604645,
-            "retainaudio": true,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 18874370,
-        "general": {
-            "name": "RevolverGun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Revolver.wav",
-            "fullpath": "../assets\\Audio/Player_Revolver.wav",
+            "filename": "Player_Jump.wav",
+            "fullpath": "../assets\\Audio/Player_Jump.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -1643,90 +1342,7 @@
         }
     },
     {
-        "entityid": 18874566,
-        "general": {
-            "name": "BasicGun",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_BasicGun.wav",
-            "fullpath": "../assets\\Audio/Player_BasicGun.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 18874569,
-        "general": {
-            "name": "Footstep_Right_3",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 17825942,
-            "nextsibling": 19922956,
-            "parent": 17825983
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Right_3.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Right_3.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": true,
-            "panbalance": 0.5,
-            "panspeed": 0.0
-        }
-    },
-    {
-        "entityid": 18874611,
+        "entityid": 17825858,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -1764,9 +1380,9 @@
         }
     },
     {
-        "entityid": 18874639,
+        "entityid": 17825859,
         "general": {
-            "name": "Level3FBX",
+            "name": "Light",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -1774,19 +1390,138 @@
         },
         "transform": {
             "scale": {
-                "x": 150.0,
-                "y": 100.0,
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 64.6059799194336,
+                "z": 152.43084716796875
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Light"
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 5.0
+        }
+    },
+    {
+        "entityid": 17825860,
+        "general": {
+            "name": "Boss_Bullet_Homing",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2995509121,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Homing_lambert1_BaseColor.ctexture",
+                " ",
+                "../assets/Compressed/Homing_lambert1_Metallic.ctexture",
+                "../assets/Compressed/Homing_lambert1_Roughness.ctexture",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Homing.geom",
+            "texturerefid": [
+                2018166298,
+                0,
+                1193416337,
+                3069698572,
+                0,
+                0
+            ]
+        },
+        "animator": {
+            "paused": false
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/BossBullet.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Boss_Bullet_Homing"
+        }
+    },
+    {
+        "entityid": 17825861,
+        "general": {
+            "name": "backWallCollider",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 5.0,
+                "y": 20.0,
                 "z": 150.0
             },
             "rotate": {
                 "x": 0.0,
-                "y": 90.0,
+                "y": 0.0,
                 "z": 0.0
             },
             "translate": {
-                "x": -35.42950439453125,
-                "y": -1.7549999952316284,
-                "z": 8.679929733276367
+                "x": -66.53500366210938,
+                "y": 8.0,
+                "z": 8.0600004196167
             }
         },
         "rigidbody": {
@@ -1805,53 +1540,25 @@
             },
             "gravity": true
         },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3987889398,
-            "instancecolor": {
+        "boxcollider": {
+            "scaleoffset": {
                 "x": 1.0,
                 "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
+                "z": 1.0
             },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
             },
-            "castShadow": false,
-            "materialinstance": [
-                "../assets/Compressed/Level3_lambert10_BaseColor.ctexture",
-                "../assets/Compressed/Level3_lambert10_Normal.ctexture",
-                "../assets/Compressed/Level3_lambert10_Metallic.ctexture",
-                "../assets/Compressed/Level3_lambert10_Roughness.ctexture",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Level3.geom",
-            "texturerefid": [
-                2428904545,
-                867388106,
-                1148156216,
-                1605960527,
-                0,
-                0
-            ]
-        },
-        "animator": {
-            "paused": false
-        },
-        "meshcollider": {
-            "ismeshcollider": true
+            "istrigger": false
         }
     },
     {
-        "entityid": 19922949,
+        "entityid": 17825862,
         "general": {
-            "name": "SummonPortalAudio",
-            "tagid": 8,
+            "name": "DamageAudio",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
@@ -1873,22 +1580,126 @@
                 "z": 0.0
             }
         },
+        "parent": {
+            "prevsibling": 17825934,
+            "nextsibling": 17825933,
+            "parent": 15728861
+        },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Portal.wav",
-            "fullpath": "../assets\\Audio/Portal.wav",
+            "filename": "Player_Take_Damage.wav",
+            "fullpath": "../assets\\Audio/Player_Take_Damage.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
-            "volume": 0.6000000238418579,
+            "volume": 1.0,
             "retainaudio": false,
             "panaudio": false
         }
     },
     {
-        "entityid": 19922953,
+        "entityid": 17825863,
         "general": {
-            "name": "RoarAudio",
+            "name": "Light",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -226.87857055664063,
+                "y": 43.82014465332031,
+                "z": 0.0
+            }
+        },
+        "scripts": {
+            "scriptscontainer": []
+        },
+        "prefab": {
+            "prefab": "Light"
+        },
+        "pointlight": {
+            "lightcolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "linearfalloff": 0.0,
+            "quadraticfalloff": 0.0,
+            "intensity": 5.0
+        }
+    },
+    {
+        "entityid": 17825864,
+        "general": {
+            "name": "rightWallCollider",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 150.0,
+                "y": 20.0,
+                "z": 5.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 8.0,
+                "z": -62.0880012512207
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        }
+    },
+    {
+        "entityid": 17825865,
+        "general": {
+            "name": "BossSlamAudio",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -1913,20 +1724,76 @@
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Boss_Roar.wav",
-            "fullpath": "../assets\\Audio/Boss_Roar.wav",
+            "filename": "Boss_Slam.wav",
+            "fullpath": "../assets\\Audio/Boss_Slam.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
-            "volume": 1.0,
+            "volume": 0.6000000238418579,
             "retainaudio": false,
             "panaudio": false
         }
     },
     {
-        "entityid": 19922956,
+        "entityid": 17825866,
         "general": {
-            "name": "Footstep_Right_2",
+            "name": "frontWallCollider",
+            "tagid": 4,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 5.0,
+                "y": 20.0,
+                "z": 150.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 67.3866195678711,
+                "y": 8.0,
+                "z": 10.0
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 0,
+            "velocity": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotationconstraints": {
+                "x": true,
+                "y": true,
+                "z": false
+            },
+            "gravity": true
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": false
+        }
+    },
+    {
+        "entityid": 17825902,
+        "general": {
+            "name": "Footstep_Left_4",
             "tagid": 8,
             "subtag": 0,
             "isActive": true,
@@ -1950,14 +1817,138 @@
             }
         },
         "parent": {
-            "prevsibling": 18874569,
-            "nextsibling": 17826006,
-            "parent": 17825983
+            "prevsibling": 8388811,
+            "nextsibling": 11534459,
+            "parent": 15728861
+        },
+        "audio": {
+            "filepath": "",
+            "filename": "",
+            "fullpath": "",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 17825924,
+        "general": {
+            "name": "HomingEyeballAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
         },
         "audio": {
             "filepath": "../assets\\Audio",
-            "filename": "Player_Footsteps_Right_2.wav",
-            "fullpath": "../assets\\Audio/Player_Footsteps_Right_2.wav",
+            "filename": "Homing_Missile.wav",
+            "fullpath": "../assets\\Audio/Homing_Missile.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.5,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 17825933,
+        "general": {
+            "name": "DamageLazerAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 17825862,
+            "nextsibling": 8388811,
+            "parent": 15728861
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Hit_By_Laser_2.wav",
+            "fullpath": "../assets\\Audio/Hit_By_Laser_2.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 17825934,
+        "general": {
+            "name": "Footstep_Right_1",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "parent": {
+            "prevsibling": 13631710,
+            "nextsibling": 17825862,
+            "parent": 15728861
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Footsteps_Right_1.wav",
+            "fullpath": "../assets\\Audio/Player_Footsteps_Right_1.wav",
             "playonawake": false,
             "islooping": false,
             "audiotype": 1,
@@ -1969,7 +1960,7 @@
         }
     },
     {
-        "entityid": 19922957,
+        "entityid": 17825935,
         "general": {
             "name": "Boss_Bullet_Homing",
             "tagid": 1,
@@ -2098,7 +2089,288 @@
         }
     },
     {
-        "entityid": 19922958,
+        "entityid": 17825936,
+        "general": {
+            "name": "MachineGun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_MachineGun.wav",
+            "fullpath": "../assets\\Audio/Player_MachineGun.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.6000000238418579,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 17825938,
+        "general": {
+            "name": "BasicGun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_BasicGun.wav",
+            "fullpath": "../assets\\Audio/Player_BasicGun.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 17825939,
+        "general": {
+            "name": "RevolverGun",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Revolver.wav",
+            "fullpath": "../assets\\Audio/Player_Revolver.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.4000000059604645,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 17825941,
+        "general": {
+            "name": "BGM",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "troubleshooter_wav_3.wav",
+            "fullpath": "../assets\\Audio/troubleshooter_wav_3.wav",
+            "playonawake": true,
+            "islooping": true,
+            "audiotype": 0,
+            "volume": 0.4000000059604645,
+            "retainaudio": true,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 17825942,
+        "general": {
+            "name": "Boss_Bullet_Homing",
+            "tagid": 1,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 193.1266326904297,
+                "y": 20.965660095214844,
+                "z": 32.076236724853516
+            }
+        },
+        "rigidbody": {
+            "density": 10.0,
+            "material": 1,
+            "motion": 1,
+            "velocity": {
+                "x": 5.958370685577393,
+                "y": 0.012390154413878918,
+                "z": 0.7054535150527954
+            },
+            "rotationconstraints": {
+                "x": false,
+                "y": false,
+                "z": false
+            },
+            "gravity": false
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2995509121,
+            "instancecolor": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Homing_lambert1_BaseColor.ctexture",
+                " ",
+                "../assets/Compressed/Homing_lambert1_Metallic.ctexture",
+                "../assets/Compressed/Homing_lambert1_Roughness.ctexture",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Homing.geom",
+            "texturerefid": [
+                2018166298,
+                0,
+                1193416337,
+                3069698572,
+                0,
+                0
+            ]
+        },
+        "animator": {
+            "paused": false
+        },
+        "boxcollider": {
+            "scaleoffset": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "translateoffset": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "istrigger": true
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/BossBullet.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "Boss_Bullet_Homing"
+        },
+        "healthbar": {
+            "healthcolor": {
+                "x": 0.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "backcolor": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+            },
+            "position": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "maxhealth": 50.0,
+            "width": 0.0,
+            "height": 0.0,
+            "frametexture": 0,
+            "healthtexture": 0
+        }
+    },
+    {
+        "entityid": 18874495,
         "general": {
             "name": "leftWallCollider",
             "tagid": 4,
@@ -2154,7 +2426,7 @@
         }
     },
     {
-        "entityid": 19922987,
+        "entityid": 20971566,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -2174,9 +2446,9 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 163.1609344482422,
-                "y": 59.92569351196289,
-                "z": 0.0
+                "x": 0.0,
+                "y": 51.55923843383789,
+                "z": -130.379150390625
             }
         },
         "scripts": {
@@ -2197,9 +2469,9 @@
         }
     },
     {
-        "entityid": 19922991,
+        "entityid": 22020140,
         "general": {
-            "name": "Level3WellParticlesSparks",
+            "name": "Skybox",
             "tagid": 0,
             "subtag": 0,
             "isActive": true,
@@ -2207,9 +2479,9 @@
         },
         "transform": {
             "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
+                "x": 500.0,
+                "y": 500.0,
+                "z": 500.0
             },
             "rotate": {
                 "x": 0.0,
@@ -2217,317 +2489,45 @@
                 "z": 0.0
             },
             "translate": {
-                "x": 3.200000047683716,
-                "y": -9.883000373840332,
-                "z": 7.547999858856201
+                "x": 0.0,
+                "y": -20.668514251708984,
+                "z": -47.40319061279297
             }
         },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Level3WellParticlesSparks"
-        },
-        "particleemitter": {
-            "startcolor": {
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 2510,
+            "instancecolor": {
                 "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
+                "y": 1.0,
+                "z": 1.0,
                 "w": 1.0
             },
-            "endcolor": {
-                "x": 1.0,
-                "y": 0.0,
-                "z": 0.0,
-                "w": 0.0
-            },
-            "startsize": 0.0,
-            "endsize": 3.0,
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "offset": {
-                "x": 18.200000762939453,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "gravity": 0.07000000029802322,
-            "rotation": 90.0,
-            "lifetime": 2.0,
-            "loop": true,
-            "loopInterval": 0.0,
-            "speed": 5.0,
-            "count": 512,
-            "emit": false,
-            "particletexture": 2451628838
-        }
-    },
-    {
-        "entityid": 19922992,
-        "general": {
-            "name": "Level3WellParticlesSmoke",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 3.1999740600585938,
-                "y": -10.68967056274414,
-                "z": 7.547823429107666
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Level3WellParticlesSmoke"
-        },
-        "particleemitter": {
-            "startcolor": {
-                "x": 1.0,
-                "y": 0.5242718458175659,
-                "z": 0.0,
+            "bloomthreshold": {
+                "x": 0.20000000298023224,
+                "y": 0.20999999344348907,
+                "z": 0.1599999964237213,
                 "w": 1.0
             },
-            "endcolor": {
-                "x": 1.0,
-                "y": 0.5533980131149292,
-                "z": 0.0,
-                "w": 0.0
-            },
-            "startsize": 0.0,
-            "endsize": 2.0,
-            "position": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "offset": {
-                "x": 18.200000762939453,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "gravity": 0.07000000029802322,
-            "rotation": 90.0,
-            "lifetime": 2.0,
-            "loop": true,
-            "loopInterval": 0.0,
-            "speed": 5.0,
-            "count": 256,
-            "emit": false,
-            "particletexture": 2273550607
-        }
-    },
-    {
-        "entityid": 19923080,
-        "general": {
-            "name": "Footstep_Left_4",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "parent": {
-            "prevsibling": 16777245,
-            "nextsibling": 17825984,
-            "parent": 17825983
-        },
-        "audio": {
-            "filepath": "",
-            "filename": "",
-            "fullpath": "",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 19923086,
-        "general": {
-            "name": "frontWallCollider",
-            "tagid": 4,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 5.0,
-                "y": 20.0,
-                "z": 150.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 67.3866195678711,
-                "y": 8.0,
-                "z": 10.0
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": true,
-                "y": true,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
-        }
-    },
-    {
-        "entityid": 19923088,
-        "general": {
-            "name": "Light",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -226.87857055664063,
-                "y": 43.82014465332031,
-                "z": 0.0
-            }
-        },
-        "scripts": {
-            "scriptscontainer": []
-        },
-        "prefab": {
-            "prefab": "Light"
-        },
-        "pointlight": {
-            "lightcolor": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "linearfalloff": 0.0,
-            "quadraticfalloff": 0.0,
-            "intensity": 5.0
-        }
-    },
-    {
-        "entityid": 19923090,
-        "general": {
-            "name": "backWallCollider",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 5.0,
-                "y": 20.0,
-                "z": 150.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -66.53500366210938,
-                "y": 8.0,
-                "z": 8.0600004196167
-            }
-        },
-        "rigidbody": {
-            "density": 10.0,
-            "material": 1,
-            "motion": 0,
-            "velocity": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "rotationconstraints": {
-                "x": false,
-                "y": false,
-                "z": false
-            },
-            "gravity": true
-        },
-        "boxcollider": {
-            "scaleoffset": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "translateoffset": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "istrigger": false
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_Normal.ctexture",
+                "../assets/Compressed/Environment_Skybox_Metallic.ctexture",
+                "../assets/Compressed/Environment_Skybox_Roughness.ctexture",
+                "../assets/Compressed/Environment_Skybox_BaseColor.ctexture",
+                "../assets/Compressed/Environment_Skybox_AO.ctexture"
+            ],
+            "mesh": "../assets/compiled_geom/Skybox.geom",
+            "texturerefid": [
+                437536649,
+                3522280818,
+                1686346496,
+                1590588887,
+                5760,
+                1467793003
+            ]
         }
     }
 ]
