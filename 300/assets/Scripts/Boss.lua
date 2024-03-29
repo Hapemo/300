@@ -231,7 +231,7 @@ function Update()
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
-    -- state = 4 --[OK]
+    state = 4 --[OK]
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
@@ -653,6 +653,7 @@ function SpawnHomingSpheres()
         stay_time = 2.0,      -- Time to stay still before homing (in seconds)
         lock_on_time = 15.0,   -- Time to locks onto the player : Used as an internal timer (for each bullet to calculate how long to home and lock on)
         lock_on_bool = false, -- To control when to home and when not to
+        chuckle_played = false -- Chuckle Audio
     }
 
     next_homing_id = next_homing_id + 1 -- Increment the id counter.
@@ -690,7 +691,7 @@ function UpdateHomingProjectiles()
                 -- print("STAYING STILL")
                 -- Stay still for awhile
                 projectile.stay_time = projectile.stay_time - FPSManager.GetDT()  
-                -- print("PROJECTILE STAY TIME: " , projectile.stay_time)
+                print("PROJECTILE STAY TIME: " , projectile.stay_time)
                 if projectile.stay_time <= 0 then 
                     -- Starts homing towards the player (by providing speed)
                     -- print("Assigning Initial Speed - Homing")
@@ -701,11 +702,13 @@ function UpdateHomingProjectiles()
                 -- print("Projectile No : " , _G.bulletCounter)
                 -- print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
                 -- projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
-                if projectile.lock_on_time > 0 then 
+                -- if projectile.lock_on_time > 0 then 
                     -- print("CALCULATING DIRECTION TO GO.")
-  
+                    
+               
                     -- Subtract Vector 
                     local directionToPlayer = Subtract(player_position, projectile.position)
+                    projectile.direction = directionToPlayer
                     
                     -- print("PROJECTILE POS: " , projectile.position.x , ", " , projectile.position.y , ", " , projectile.position.z)
                     -- print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
@@ -717,7 +720,10 @@ function UpdateHomingProjectiles()
                     directionToPlayer.z = directionToPlayer.z * projectile.speed
 
                     -- Save the direction 
-                    projectile.direction = directionToPlayer
+                    if projectile.chuckle_played == false then
+                        projectile.entity:GetAudio():SetPlay(1.0)
+                        projectile.chuckle_played = true
+                    end
                     
                     -- M6 : Homing Rotation
                     local angle_to_rotate = CalculateAngle(projectile.position, player_position, projectile.forward)
@@ -745,7 +751,7 @@ function UpdateHomingProjectiles()
                         -- physicsSys:SetVelocity(projectile.entity, random_vec3)
                     else
                         print("Projectile entity is nil!")
-                    end
+                    -- end
                     -- print("SETTING VELOCITY")
                     -- print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
                     -- physicsSys:SetVelocity(projectile.entity, directionToPlayer)

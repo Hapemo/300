@@ -361,7 +361,7 @@ function Update()
             end
 
             this:GetHealthbar().health = this:GetHealthbar().health + 0.5 * FPSManager.GetDT(); -- regen hp
-            print("REGENING")
+            -- print("REGENING")
 
         end
     end
@@ -371,7 +371,7 @@ function Update()
     end
 
     healthbar:GetUIrenderer():SetSlider(this:GetHealthbar().health/playerHealthMax);
-    print("current health: ", this:GetHealthbar().health)
+    -- print("current health: ", this:GetHealthbar().health)
 
     -- Player Health System End
 

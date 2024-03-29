@@ -1,5 +1,5 @@
 {
-    "entityid": 1048606,
+    "entityid": 4194310,
     "general": {
         "name": "Boss_Bullet_Homing",
         "tagid": 1,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 11.322985649108887,
-            "y": 17.562259674072266,
-            "z": 14.885177612304688
+            "x": 18.39202880859375,
+            "y": 12.580523490905762,
+            "z": 16.75234603881836
         }
     },
     "rigidbody": {
@@ -75,7 +75,9 @@
             0
         ]
     },
-    "animator": {},
+    "animator": {
+        "paused": false
+    },
     "boxcollider": {
         "scaleoffset": {
             "x": 1.0,
@@ -96,6 +98,17 @@
                 "variables": []
             }
         ]
+    },
+    "audio": {
+        "filepath": "../assets\\Audio",
+        "filename": "Homing_Chuckle.wav",
+        "fullpath": "../assets\\Audio/Homing_Chuckle.wav",
+        "playonawake": false,
+        "islooping": false,
+        "audiotype": 1,
+        "volume": 1.0,
+        "retainaudio": false,
+        "panaudio": false
     },
     "prefab": {
         "prefab": "Boss_Bullet_Homing"

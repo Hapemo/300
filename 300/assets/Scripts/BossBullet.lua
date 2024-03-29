@@ -12,6 +12,8 @@ local gameStateSys
 
 local dmgAudioEnt
 
+-- local homing_chuckle_audio
+
 function Alive()
     bulletObject = Helper.GetScriptEntity(script_entity.id)
     this = Helper.GetScriptEntity(script_entity.id)
@@ -19,6 +21,8 @@ function Alive()
     general = this:GetGeneral()
 
     dmgAudioEnt = gameStateSys:GetEntity("DamageAudio")
+
+    -- homing_chuckle_audio = this:GetAudio()
 end
 
 function Update()
