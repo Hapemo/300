@@ -691,7 +691,7 @@ function UpdateHomingProjectiles()
                 -- print("STAYING STILL")
                 -- Stay still for awhile
                 projectile.stay_time = projectile.stay_time - FPSManager.GetDT()  
-                print("PROJECTILE STAY TIME: " , projectile.stay_time)
+                -- print("PROJECTILE STAY TIME: " , projectile.stay_time)
                 if projectile.stay_time <= 0 then 
                     -- Starts homing towards the player (by providing speed)
                     -- print("Assigning Initial Speed - Homing")

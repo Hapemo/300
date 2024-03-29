@@ -115,7 +115,7 @@ function OnTriggerEnter(Entity)
     local healthComponent 
     
     if(Entity:HasHealthbar()) then 
-        -- print("HIT AN ENTITY WITH HEALTHBAR")
+        print("HIT AN ENTITY WITH HEALTHBAR")
         healthComponent = Entity:GetHealthbar()
     end
 
@@ -131,6 +131,7 @@ function OnTriggerEnter(Entity)
 
     tagid = generalComponent.tagid
     if (tagid == 1) then
+        print("OI GOT HIT ORNOT")
         -- enemyDamagedAudio:GetAudio():SetPlay(0.2)
 
         if _G.gunEquipped == 3 then 
@@ -155,8 +156,8 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "PISTOL") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - pistolDamage * _G.powerLevel
-                -- print("HP LEFT: " , healthComponent.health)
-                -- print("PISTOL HIT")
+                print("HP LEFT: " , healthComponent.health)
+                print("PISTOL HIT")
                 -- print("HP Left: ", healthComponent.health)
                 -- if(healthComponent.health <= 0 ) then
                 --     systemManager.ecs:SetDeleteEntity(Entity)
@@ -299,7 +300,7 @@ function OnTriggerEnter(Entity)
     -- end
 
     if(tagid == 14) then 
-        print("BAWSE")
+        -- print("BAWSE")
 
         if(bulletTag == "PISTOL") then 
             if(_G.bossHP_healthbar_comp ~= nil) then 
@@ -329,9 +330,40 @@ function OnTriggerEnter(Entity)
 
             end
         end
+    end
 
+    
+    if(tagid == 15) then 
+        -- print("HOMING")
 
+        if(bulletTag == "PISTOL") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - pistolDamage * _G.powerLevel
 
+            end
+        end
+
+        
+        if(bulletTag == "REVOLVER") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - revolverDamage * _G.powerLevel
+
+            end
+        end
+
+        if(bulletTag == "SHOTGUN") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - shotGunDamage * _G.powerLevel
+
+            end
+        end
+
+        if(bulletTag == "MACHINE_GUN") then 
+            if(_G.bossHP_healthbar_comp ~= nil) then 
+                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - machineGunDamage * _G.powerLevel
+
+            end
+        end
     end
 
 end
