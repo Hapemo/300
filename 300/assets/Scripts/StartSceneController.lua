@@ -27,6 +27,9 @@ local VO_played = false
 local VO_played2 = false
 local customized_delay = 1.0
 
+local munching_audio 
+local munching_played = false
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     frame1 = gameStateSys:GetEntity("Frame1")
@@ -41,6 +44,8 @@ function Alive()
 
     VO_obj = gameStateSys:GetEntity("VO_ItCantBe")
     VO_obj2 = gameStateSys:GetEntity("VO_ShesHere")
+
+    munching_audio = gameStateSys:GetEntity("MunchAudio")
 
     hoverOver = false
 
@@ -90,6 +95,10 @@ function Update()
         Frame1()
     elseif(frame2State) then
         Frame2()
+        if munching_played == false then 
+            munching_audio:GetAudio():SetPlay(1.0)
+            munching_audio = true
+        end
     elseif(frame3State) then
         Shake()
     elseif(frame4State) then

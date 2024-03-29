@@ -1,6 +1,44 @@
 [
     {
-        "entityid": 2097167,
+        "entityid": 2097171,
+        "general": {
+            "name": "MunchAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Munch.wav",
+            "fullpath": "../assets\\Audio/Munch.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 7340052,
         "general": {
             "name": "VO_ItCantBe",
             "tagid": 8,
@@ -38,7 +76,7 @@
         }
     },
     {
-        "entityid": 3145731,
+        "entityid": 7340053,
         "general": {
             "name": "Click",
             "tagid": 6,
@@ -82,7 +120,7 @@
         }
     },
     {
-        "entityid": 3145732,
+        "entityid": 7340054,
         "general": {
             "name": "Frame8",
             "tagid": 6,
@@ -123,7 +161,7 @@
         }
     },
     {
-        "entityid": 3145733,
+        "entityid": 7340055,
         "general": {
             "name": "Frame7",
             "tagid": 6,
@@ -164,7 +202,7 @@
         }
     },
     {
-        "entityid": 3145734,
+        "entityid": 7340056,
         "general": {
             "name": "Frame6",
             "tagid": 0,
@@ -205,7 +243,7 @@
         }
     },
     {
-        "entityid": 3145735,
+        "entityid": 7340057,
         "general": {
             "name": "Frame5",
             "tagid": 6,
@@ -246,7 +284,7 @@
         }
     },
     {
-        "entityid": 3145736,
+        "entityid": 7340058,
         "general": {
             "name": "Frame4",
             "tagid": 6,
@@ -287,7 +325,7 @@
         }
     },
     {
-        "entityid": 3145737,
+        "entityid": 7340059,
         "general": {
             "name": "Frame3",
             "tagid": 6,
@@ -328,7 +366,7 @@
         }
     },
     {
-        "entityid": 3145738,
+        "entityid": 7340060,
         "general": {
             "name": "Frame2",
             "tagid": 6,
@@ -369,7 +407,7 @@
         }
     },
     {
-        "entityid": 3145739,
+        "entityid": 7340061,
         "general": {
             "name": "Frame1",
             "tagid": 6,
@@ -410,7 +448,7 @@
         }
     },
     {
-        "entityid": 3145740,
+        "entityid": 7340062,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -447,15 +485,15 @@
                 "z": 0.0
             },
             "size": {
-                "x": 1223,
-                "y": 583
+                "x": 1135,
+                "y": 534
             },
             "near": 0.10000000149011612,
             "far": 900.0
         }
     },
     {
-        "entityid": 3145741,
+        "entityid": 7340063,
         "general": {
             "name": "StartSceneController",
             "tagid": 8,
@@ -490,7 +528,7 @@
         }
     },
     {
-        "entityid": 3145742,
+        "entityid": 7340064,
         "general": {
             "name": "SkipButton",
             "tagid": 0,
@@ -557,9 +595,9 @@
         }
     },
     {
-        "entityid": 4194305,
+        "entityid": 7340065,
         "general": {
-            "name": "NewObject",
+            "name": "CutsceneBGM",
             "tagid": 8,
             "subtag": 0,
             "isActive": true,
@@ -595,7 +633,7 @@
         }
     },
     {
-        "entityid": 4194306,
+        "entityid": 8388609,
         "general": {
             "name": "VO_ShesHere",
             "tagid": 8,
@@ -626,6 +664,44 @@
             "fullpath": "../assets\\Audio/VO_ShesHere.wav",
             "playonawake": false,
             "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 8388610,
+        "general": {
+            "name": "AmbienceAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Cutscene_Ambience.wav",
+            "fullpath": "../assets\\Audio/Cutscene_Ambience.wav",
+            "playonawake": true,
+            "islooping": true,
             "audiotype": 1,
             "volume": 1.0,
             "retainaudio": false,
