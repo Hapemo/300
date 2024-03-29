@@ -1,44 +1,6 @@
 [
     {
-        "entityid": 29360316,
-        "general": {
-            "name": "Bullet Shoot",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Player_Attack_Shoot.wav",
-            "fullpath": "../assets\\Audio/Player_Attack_Shoot.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 0.30000001192092896,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 29360356,
+        "entityid": 3,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -48,80 +10,7 @@
         },
         "transform": {
             "scale": {
-                "x": 1.069937825202942,
-                "y": 1.0,
-                "z": 5.970000267028809
-            },
-            "rotate": {
-                "x": -90.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": -2.1892669200897217,
-                "y": 60.5,
-                "z": 7.9289021492004395
-            }
-        },
-        "meshrenderer": {
-            "vert": "../assets/shader_files/pointLight_vert.glsl",
-            "frag": "../assets/shader_files/pointLight_frag.glsl",
-            "meshrefid": 3314,
-            "instancecolor": {
-                "x": 0.0,
-                "y": 0.6886792182922363,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "bloomthreshold": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0,
-                "w": 1.0
-            },
-            "castShadow": true,
-            "materialinstance": [
-                "../assets/Compressed/Cube_Texture_White.ctexture",
-                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
-                " ",
-                " ",
-                " ",
-                " "
-            ],
-            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
-            "texturerefid": [
-                2075419717,
-                1949753341,
-                0,
-                0,
-                0,
-                0
-            ]
-        },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
-                    "variables": []
-                }
-            ]
-        },
-        "prefab": {
-            "prefab": "TriggerIndicator"
-        }
-    },
-    {
-        "entityid": 30408766,
-        "general": {
-            "name": "TriggerIndicator",
-            "tagid": 0,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.069937825202942,
+                "x": 1.0699373483657837,
                 "y": 1.0,
                 "z": 5.970000267028809
             },
@@ -184,7 +73,7 @@
         }
     },
     {
-        "entityid": 30408768,
+        "entityid": 4,
         "general": {
             "name": "ShotGun",
             "tagid": 0,
@@ -222,7 +111,7 @@
         }
     },
     {
-        "entityid": 30408863,
+        "entityid": 5,
         "general": {
             "name": "Level2_Building1",
             "tagid": 0,
@@ -303,7 +192,7 @@
         }
     },
     {
-        "entityid": 30408867,
+        "entityid": 6,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -376,7 +265,7 @@
         }
     },
     {
-        "entityid": 30408889,
+        "entityid": 7,
         "general": {
             "name": "DamageAudio",
             "tagid": 8,
@@ -402,9 +291,9 @@
             }
         },
         "parent": {
-            "prevsibling": 32506082,
-            "nextsibling": 60817525,
-            "parent": 56623298
+            "prevsibling": 15,
+            "nextsibling": 52,
+            "parent": 42
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -419,7 +308,7 @@
         }
     },
     {
-        "entityid": 30408893,
+        "entityid": 8,
         "general": {
             "name": "Dash",
             "tagid": 0,
@@ -457,7 +346,7 @@
         }
     },
     {
-        "entityid": 30408900,
+        "entityid": 9,
         "general": {
             "name": "RevolverGun",
             "tagid": 0,
@@ -495,7 +384,7 @@
         }
     },
     {
-        "entityid": 30408977,
+        "entityid": 10,
         "general": {
             "name": "Footstep_Right_1",
             "tagid": 8,
@@ -521,9 +410,9 @@
             }
         },
         "parent": {
-            "prevsibling": 54526333,
-            "nextsibling": 57671816,
-            "parent": 56623298
+            "prevsibling": 36,
+            "nextsibling": 46,
+            "parent": 42
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -540,7 +429,7 @@
         }
     },
     {
-        "entityid": 31457505,
+        "entityid": 11,
         "general": {
             "name": "BasicGun",
             "tagid": 0,
@@ -578,7 +467,7 @@
         }
     },
     {
-        "entityid": 32505921,
+        "entityid": 12,
         "general": {
             "name": "Level2_Stairs",
             "tagid": 0,
@@ -643,7 +532,7 @@
         }
     },
     {
-        "entityid": 32506043,
+        "entityid": 13,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -653,7 +542,7 @@
         },
         "transform": {
             "scale": {
-                "x": 1.069937825202942,
+                "x": 1.0699372291564941,
                 "y": 1.0,
                 "z": 5.970000267028809
             },
@@ -716,7 +605,7 @@
         }
     },
     {
-        "entityid": 32506053,
+        "entityid": 14,
         "general": {
             "name": "Level2Floor",
             "tagid": 3,
@@ -797,7 +686,7 @@
         }
     },
     {
-        "entityid": 32506082,
+        "entityid": 15,
         "general": {
             "name": "Footstep_Right_2",
             "tagid": 8,
@@ -823,9 +712,9 @@
             }
         },
         "parent": {
-            "prevsibling": 34603296,
-            "nextsibling": 30408889,
-            "parent": 56623298
+            "prevsibling": 20,
+            "nextsibling": 7,
+            "parent": 42
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -842,7 +731,7 @@
         }
     },
     {
-        "entityid": 32506111,
+        "entityid": 16,
         "general": {
             "name": "pauseMenu",
             "tagid": 6,
@@ -898,7 +787,7 @@
         }
     },
     {
-        "entityid": 32506138,
+        "entityid": 17,
         "general": {
             "name": "Level2StairCollider",
             "tagid": 4,
@@ -960,7 +849,7 @@
         }
     },
     {
-        "entityid": 33554609,
+        "entityid": 18,
         "general": {
             "name": "Level2_Wall",
             "tagid": 4,
@@ -1022,7 +911,7 @@
         }
     },
     {
-        "entityid": 34603276,
+        "entityid": 19,
         "general": {
             "name": "BGM",
             "tagid": 0,
@@ -1060,7 +949,7 @@
         }
     },
     {
-        "entityid": 34603296,
+        "entityid": 20,
         "general": {
             "name": "Footstep_Right_3",
             "tagid": 8,
@@ -1086,9 +975,9 @@
             }
         },
         "parent": {
-            "prevsibling": 57671816,
-            "nextsibling": 32506082,
-            "parent": 56623298
+            "prevsibling": 46,
+            "nextsibling": 15,
+            "parent": 42
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -1105,7 +994,7 @@
         }
     },
     {
-        "entityid": 35651655,
+        "entityid": 21,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -1148,7 +1037,7 @@
         }
     },
     {
-        "entityid": 35651792,
+        "entityid": 22,
         "general": {
             "name": "Jump",
             "tagid": 0,
@@ -1186,7 +1075,7 @@
         }
     },
     {
-        "entityid": 35651799,
+        "entityid": 23,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1259,7 +1148,7 @@
         }
     },
     {
-        "entityid": 42991910,
+        "entityid": 24,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1332,7 +1221,7 @@
         }
     },
     {
-        "entityid": 47186169,
+        "entityid": 25,
         "general": {
             "name": "Pistol Bullet",
             "tagid": 9,
@@ -1493,7 +1382,7 @@
         }
     },
     {
-        "entityid": 49283438,
+        "entityid": 26,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1566,7 +1455,7 @@
         }
     },
     {
-        "entityid": 49283440,
+        "entityid": 27,
         "general": {
             "name": "Level2_Buildings2",
             "tagid": 0,
@@ -1647,7 +1536,7 @@
         }
     },
     {
-        "entityid": 49283470,
+        "entityid": 28,
         "general": {
             "name": "Skybox",
             "tagid": 0,
@@ -1709,7 +1598,7 @@
         }
     },
     {
-        "entityid": 50331716,
+        "entityid": 29,
         "general": {
             "name": "Skill_Activate",
             "tagid": 0,
@@ -1747,7 +1636,7 @@
         }
     },
     {
-        "entityid": 51380424,
+        "entityid": 30,
         "general": {
             "name": "MachineGun",
             "tagid": 0,
@@ -1785,7 +1674,7 @@
         }
     },
     {
-        "entityid": 51380599,
+        "entityid": 31,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -1858,7 +1747,7 @@
         }
     },
     {
-        "entityid": 52428843,
+        "entityid": 32,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -1895,7 +1784,7 @@
         }
     },
     {
-        "entityid": 52428894,
+        "entityid": 33,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -2003,7 +1892,7 @@
         }
     },
     {
-        "entityid": 52429155,
+        "entityid": 34,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -2076,7 +1965,7 @@
         }
     },
     {
-        "entityid": 53477616,
+        "entityid": 35,
         "general": {
             "name": "Level2StairCollider",
             "tagid": 4,
@@ -2138,7 +2027,7 @@
         }
     },
     {
-        "entityid": 54526333,
+        "entityid": 36,
         "general": {
             "name": "Footstep_Left_2",
             "tagid": 8,
@@ -2164,9 +2053,9 @@
             }
         },
         "parent": {
-            "prevsibling": 65011814,
-            "nextsibling": 30408977,
-            "parent": 56623298
+            "prevsibling": 54,
+            "nextsibling": 10,
+            "parent": 42
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -2183,7 +2072,7 @@
         }
     },
     {
-        "entityid": 55574908,
+        "entityid": 37,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -2226,7 +2115,7 @@
         }
     },
     {
-        "entityid": 55574932,
+        "entityid": 38,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -2299,7 +2188,7 @@
         }
     },
     {
-        "entityid": 55574948,
+        "entityid": 39,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -2372,7 +2261,7 @@
         }
     },
     {
-        "entityid": 56623202,
+        "entityid": 40,
         "general": {
             "name": "ShadowCaster",
             "tagid": 8,
@@ -2414,7 +2303,7 @@
         }
     },
     {
-        "entityid": 56623228,
+        "entityid": 41,
         "general": {
             "name": "Footstep_Left_4",
             "tagid": 8,
@@ -2440,9 +2329,9 @@
             }
         },
         "parent": {
-            "prevsibling": 58720379,
-            "nextsibling": 65011814,
-            "parent": 56623298
+            "prevsibling": 49,
+            "nextsibling": 54,
+            "parent": 42
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -2459,7 +2348,7 @@
         }
     },
     {
-        "entityid": 56623298,
+        "entityid": 42,
         "general": {
             "name": "Camera",
             "tagid": 0,
@@ -2529,7 +2418,7 @@
         },
         "children": {
             "numchildren": 10,
-            "firstchild": 60817525
+            "firstchild": 52
         },
         "audio": {
             "filepath": "",
@@ -2554,8 +2443,8 @@
                 "z": -14.523016929626465
             },
             "size": {
-                "x": 1223,
-                "y": 583
+                "x": 1135,
+                "y": 534
             },
             "near": 0.10000000149011612,
             "far": 900.0
@@ -2586,7 +2475,7 @@
         }
     },
     {
-        "entityid": 56623450,
+        "entityid": 43,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -2629,7 +2518,7 @@
         }
     },
     {
-        "entityid": 57671698,
+        "entityid": 44,
         "general": {
             "name": "Level2_Stairs",
             "tagid": 0,
@@ -2697,7 +2586,7 @@
         }
     },
     {
-        "entityid": 57671754,
+        "entityid": 45,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -2740,7 +2629,7 @@
         }
     },
     {
-        "entityid": 57671816,
+        "entityid": 46,
         "general": {
             "name": "Footstep_Right_4",
             "tagid": 8,
@@ -2766,9 +2655,9 @@
             }
         },
         "parent": {
-            "prevsibling": 30408977,
-            "nextsibling": 34603296,
-            "parent": 56623298
+            "prevsibling": 10,
+            "nextsibling": 20,
+            "parent": 42
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -2785,7 +2674,7 @@
         }
     },
     {
-        "entityid": 58720277,
+        "entityid": 47,
         "general": {
             "name": "TriggerIndicator",
             "tagid": 0,
@@ -2858,7 +2747,7 @@
         }
     },
     {
-        "entityid": 58720341,
+        "entityid": 48,
         "general": {
             "name": "Skill_Ending",
             "tagid": 0,
@@ -2896,7 +2785,7 @@
         }
     },
     {
-        "entityid": 58720379,
+        "entityid": 49,
         "general": {
             "name": "Footstep_Left_1",
             "tagid": 8,
@@ -2922,9 +2811,9 @@
             }
         },
         "parent": {
-            "prevsibling": 60817525,
-            "nextsibling": 56623228,
-            "parent": 56623298
+            "prevsibling": 52,
+            "nextsibling": 41,
+            "parent": 42
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -2941,7 +2830,7 @@
         }
     },
     {
-        "entityid": 59768885,
+        "entityid": 50,
         "general": {
             "name": "Player_Movement",
             "tagid": 0,
@@ -2979,7 +2868,7 @@
         }
     },
     {
-        "entityid": 59769188,
+        "entityid": 51,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -3022,7 +2911,7 @@
         }
     },
     {
-        "entityid": 60817525,
+        "entityid": 52,
         "general": {
             "name": "gun",
             "tagid": 0,
@@ -3063,7 +2952,7 @@
                 "z": 0.25,
                 "w": 1.0
             },
-            "castShadow": true,
+            "castShadow": false,
             "materialinstance": [
                 "../assets/Compressed/Gun_Base_Color.ctexture",
                 "../assets/Compressed/Gun_Normal.ctexture",
@@ -3083,13 +2972,13 @@
             ]
         },
         "parent": {
-            "prevsibling": 30408889,
-            "nextsibling": 58720379,
-            "parent": 56623298
+            "prevsibling": 7,
+            "nextsibling": 49,
+            "parent": 42
         }
     },
     {
-        "entityid": 61866351,
+        "entityid": 53,
         "general": {
             "name": "Light",
             "tagid": 0,
@@ -3126,7 +3015,7 @@
         }
     },
     {
-        "entityid": 65011814,
+        "entityid": 54,
         "general": {
             "name": "Footstep_Left_3",
             "tagid": 8,
@@ -3152,9 +3041,9 @@
             }
         },
         "parent": {
-            "prevsibling": 56623228,
-            "nextsibling": 54526333,
-            "parent": 56623298
+            "prevsibling": 41,
+            "nextsibling": 36,
+            "parent": 42
         },
         "audio": {
             "filepath": "../assets\\Audio",
@@ -3168,6 +3057,201 @@
             "panaudio": true,
             "panbalance": 0.5,
             "panspeed": 0.0
+        }
+    },
+    {
+        "entityid": 199,
+        "general": {
+            "name": "Spotlight1",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -2.0,
+                "y": 12.671960830688477,
+                "z": 7.943244934082031
+            }
+        },
+        "spotlight": {
+            "direction": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": 0.0
+            },
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "cutoff": 0.0,
+            "outercutoff": 10.0,
+            "intensity": 5.0
+        }
+    },
+    {
+        "entityid": 200,
+        "general": {
+            "name": "Spotlight2",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 2.86405348777771,
+                "y": 12.238031387329102,
+                "z": 27.111482620239258
+            }
+        },
+        "spotlight": {
+            "direction": {
+                "x": 0.0,
+                "y": -1.0,
+                "z": -0.11999999731779099
+            },
+            "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "cutoff": 0.0,
+            "outercutoff": 10.0,
+            "intensity": 5.0
+        }
+    },
+    {
+        "entityid": 1048577,
+        "general": {
+            "name": "TriggerIndicator",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.069937825202942,
+                "y": 1.0,
+                "z": 5.970000267028809
+            },
+            "rotate": {
+                "x": -90.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": -2.1892669200897217,
+                "y": 60.5,
+                "z": 7.9289021492004395
+            }
+        },
+        "meshrenderer": {
+            "vert": "../assets/shader_files/pointLight_vert.glsl",
+            "frag": "../assets/shader_files/pointLight_frag.glsl",
+            "meshrefid": 3314,
+            "instancecolor": {
+                "x": 0.0,
+                "y": 0.6886792182922363,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "bloomthreshold": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+            },
+            "castShadow": true,
+            "materialinstance": [
+                "../assets/Compressed/Cube_Texture_White.ctexture",
+                "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+                " ",
+                " ",
+                " ",
+                " "
+            ],
+            "mesh": "../assets/compiled_geom/Cylinder_Arrow.geom",
+            "texturerefid": [
+                2075419717,
+                1949753341,
+                0,
+                0,
+                0,
+                0
+            ]
+        },
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/TriggerIndicatorLifetime.lua",
+                    "variables": []
+                }
+            ]
+        },
+        "prefab": {
+            "prefab": "TriggerIndicator"
+        }
+    },
+    {
+        "entityid": 1048578,
+        "general": {
+            "name": "Bullet Shoot",
+            "tagid": 0,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Player_Attack_Shoot.wav",
+            "fullpath": "../assets\\Audio/Player_Attack_Shoot.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 0.30000001192092896,
+            "retainaudio": false,
+            "panaudio": false
         }
     }
 ]
