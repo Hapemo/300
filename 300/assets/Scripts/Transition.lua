@@ -3,6 +3,14 @@ local onAlive
 local currAlpha
 
 local startedTransition 
+
+-- local transition_audio
+local reverse_transition
+local this  -- transition_audio
+
+local transition_in_once = false
+local transition_out_once = false
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     graphicsSys = systemManager:mGraphicsSystem()   
@@ -10,11 +18,18 @@ function Alive()
     currAlpha = 1.0
     speed = 0.01
     startedTransition = false
+
+    this = Helper.GetScriptEntity(script_entity.id)
+    reverse_transition = gameStateSys:GetEntityByScene("TransitionOut" , "Transition")
 end
 
 function Update()
     if onAlive == true then
         background = gameStateSys:GetEntity("TransitionBackground")
+        if transition_in_once == false then 
+            reverse_transition:GetAudio():SetPlay(1.0)
+            transition_in_once = true
+        end
         currAlpha = currAlpha - speed
         if currAlpha < 0 then
             onAlive = false
@@ -24,6 +39,10 @@ function Update()
     end
 
     if startedTransition == true and onAlive == false then
+        if transition_out_once == false then 
+            this:GetAudio():SetPlay(1.0)
+            transition_out_once = true
+        end
         background = gameStateSys:GetEntity("TransitionBackground")
         currAlpha = currAlpha + speed
         if currAlpha > 1.0 then

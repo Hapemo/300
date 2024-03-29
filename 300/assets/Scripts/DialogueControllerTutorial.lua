@@ -35,6 +35,10 @@ local done
 local boss
 local playing
 local audio
+
+local delay_for_transition = 3.0
+local delay_timer = 0
+
 --:GetUIrenderer():SetSlider(progress/objectivesComplete)
 
 function Alive()
@@ -68,6 +72,8 @@ function Alive()
 
     currState = 0
 
+    delay_timer = 0
+
     speed = 0.01
     framespeed = 0.25
     picturespeed = 0.03125
@@ -82,8 +88,16 @@ function Alive()
 end
 
 function Update()
+
+    if delay_timer <= delay_for_transition then
+        delay_timer = delay_timer + FPSManager.GetDT()
+        print("DELAY: " , delay_timer)
+    end
+
     if frameOpened == false then
-        OpenFrame()
+        if delay_timer >= delay_for_transition then
+            OpenFrame()
+        end
     end
 
     if frameOpened == true and done == false then
@@ -151,63 +165,66 @@ function UpdateDialogues()
     end
 
     if currState == 0 then
-        if playing == false then
-            audio = LoadIn1:GetAudio()
-            audio:SetPlay(0.3)
-            playing = true
-        end
-        if LoadIn1Progress < 1.0 then 
-            LoadIn1Progress = speed + LoadIn1Progress
-            if LoadIn1Progress > 1.0 then
-                LoadIn1Progress = 1.1
-                LoadIn1:GetUIrenderer():SetSlider(1.0)
-            else
-                LoadIn1:GetUIrenderer():SetSlider(LoadIn1Progress)
+        if delay_timer >= delay_for_transition then
+            if playing == false then
+                audio = LoadIn1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
             end
-        else 
-            LoadIn2Progress = speed + LoadIn2Progress
-            if LoadIn2Progress > 1.0 then
-                LoadIn2Progress = 1.1
-                LoadIn2:GetUIrenderer():SetSlider(1.0)
-            else
-                LoadIn2:GetUIrenderer():SetSlider(LoadIn2Progress)
+            if LoadIn1Progress < 1.0 then 
+                LoadIn1Progress = speed + LoadIn1Progress
+                if LoadIn1Progress > 1.0 then
+                    LoadIn1Progress = 1.1
+                    LoadIn1:GetUIrenderer():SetSlider(1.0)
+                else
+                    LoadIn1:GetUIrenderer():SetSlider(LoadIn1Progress)
+                end
+            else 
+                LoadIn2Progress = speed + LoadIn2Progress
+                if LoadIn2Progress > 1.0 then
+                    LoadIn2Progress = 1.1
+                    LoadIn2:GetUIrenderer():SetSlider(1.0)
+                else
+                    LoadIn2:GetUIrenderer():SetSlider(LoadIn2Progress)
+                end
             end
         end
-    elseif currState == 1 then
-        if playing == false then
-            audio = TroubleIntro1:GetAudio()
-            audio:SetPlay(0.3)
-            playing = true
-        end
-        boss:GetUIrenderer():SetSlider(1.0)
-        picture:GetUIrenderer():SetSlider(0.0)
-        angry:GetUIrenderer():SetSlider(1.0)
+        elseif currState == 1 then
+            if playing == false then
+                audio = TroubleIntro1:GetAudio()
+                audio:SetPlay(0.3)
+                playing = true
+            end
+            boss:GetUIrenderer():SetSlider(1.0)
+            picture:GetUIrenderer():SetSlider(0.0)
+            angry:GetUIrenderer():SetSlider(1.0)
 
-        if TroubleIntro1Progress < 1.0 then 
-            TroubleIntro1Progress = speed + TroubleIntro1Progress
-            if TroubleIntro1Progress > 1.0 then
-                TroubleIntro1Progress = 1.1
-                TroubleIntro1:GetUIrenderer():SetSlider(1.0)
-            else
-                TroubleIntro1:GetUIrenderer():SetSlider(TroubleIntro1Progress)
+            if TroubleIntro1Progress < 1.0 then 
+                TroubleIntro1Progress = speed + TroubleIntro1Progress
+                if TroubleIntro1Progress > 1.0 then
+                    TroubleIntro1Progress = 1.1
+                    TroubleIntro1:GetUIrenderer():SetSlider(1.0)
+                else
+                    TroubleIntro1:GetUIrenderer():SetSlider(TroubleIntro1Progress)
+                end
+            elseif TroubleIntro2Progress < 1.0 then
+                TroubleIntro2Progress = speed + TroubleIntro2Progress
+                if TroubleIntro2Progress > 1.0 then
+                    TroubleIntro2Progress = 1.1
+                    TroubleIntro2:GetUIrenderer():SetSlider(1.0)
+                else
+                    TroubleIntro2:GetUIrenderer():SetSlider(TroubleIntro2Progress)
+                end
+            else 
+                TroubleIntro3Progress = speed + TroubleIntro3Progress
+                if TroubleIntro3Progress > 1.0 then
+                    TroubleIntro3Progress = 1.1
+                    TroubleIntro3:GetUIrenderer():SetSlider(1.0)
+                else
+                    TroubleIntro3:GetUIrenderer():SetSlider(TroubleIntro3Progress)
+                end
             end
-        elseif TroubleIntro2Progress < 1.0 then
-            TroubleIntro2Progress = speed + TroubleIntro2Progress
-            if TroubleIntro2Progress > 1.0 then
-                TroubleIntro2Progress = 1.1
-                TroubleIntro2:GetUIrenderer():SetSlider(1.0)
-            else
-                TroubleIntro2:GetUIrenderer():SetSlider(TroubleIntro2Progress)
-            end
-        else 
-            TroubleIntro3Progress = speed + TroubleIntro3Progress
-            if TroubleIntro3Progress > 1.0 then
-                TroubleIntro3Progress = 1.1
-                TroubleIntro3:GetUIrenderer():SetSlider(1.0)
-            else
-                TroubleIntro3:GetUIrenderer():SetSlider(TroubleIntro3Progress)
-            end
-        end
+    
         
     elseif currState == 2 then
         if playing == false then
