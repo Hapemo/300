@@ -27,8 +27,8 @@ local VO_good_job_done = false
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
     
-    --graphicsSys = systemManager:mGraphicsSystem();
-    --graphicsSys:HideCursor(false)
+    graphicsSys = systemManager:mGraphicsSystem();
+    graphicsSys:HideCursor(false)
 
     frame1 = gameStateSys:GetEntity("Frame1E")
     frame2 = gameStateSys:GetEntity("Frame2E")
