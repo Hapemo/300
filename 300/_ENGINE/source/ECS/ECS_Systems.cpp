@@ -95,6 +95,8 @@ void SystemManager::ResetForChangeGS() {
 	mAudioSystem.get()->scene_switched = true;
 	mPhysicsSystem.get()->Init();
 	mGraphicsSystem.get()->Init();
+	mIsInGamePause = false;
+	mIsDialogue = false;
 }
 
 void SystemManager::Pause()
