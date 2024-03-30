@@ -1,6 +1,6 @@
 [
     {
-        "entityid": 348,
+        "entityid": 7340187,
         "general": {
             "name": "Level2BossScene",
             "tagid": 0,
@@ -35,7 +35,7 @@
         }
     },
     {
-        "entityid": 349,
+        "entityid": 7340188,
         "general": {
             "name": "BossLevel2",
             "tagid": 1,
@@ -112,7 +112,7 @@
             ]
         },
         "animator": {
-            "paused": false
+            "paused": true
         },
         "capsulecollider": {
             "translateoffset": {
@@ -180,7 +180,7 @@
         }
     },
     {
-        "entityid": 356,
+        "entityid": 7340189,
         "general": {
             "name": "BossRoarAudio",
             "tagid": 8,
@@ -218,7 +218,7 @@
         }
     },
     {
-        "entityid": 1048931,
+        "entityid": 7340190,
         "general": {
             "name": "BossSlamAudio",
             "tagid": 8,

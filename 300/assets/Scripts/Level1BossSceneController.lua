@@ -46,7 +46,10 @@ local secondary_slam = false
 local secondary_roar = false
 
 
+local bossEntity
+
 function Alive()
+    bossEntity = gameStateSys:GetEntity("BossLevel2")
     initonce =false
     graphicsSys = systemManager:mGraphicsSystem()
     gameStateSys = systemManager:mGameStateSystem()
@@ -54,6 +57,10 @@ function Alive()
     boss_slam_audio = gameStateSys:GetEntityByScene("BossSlamAudio", "Level1Boss")
     boss_roar_audio = gameStateSys:GetEntityByScene("BossRoarAudio", "Level1Boss")
     transition_audio = gameStateSys:GetEntity("TransitionHelper")
+
+
+
+    bossEntity:GetAnimator():SetFrame(10.0) 
 
     if boss_slam_audio ~= nil then 
         print("SLAM OK")
@@ -72,7 +79,7 @@ function Update()
     bossEntity:GetAnimator():PauseAnimation()
     --print("current frame: ", bossEntity:GetAnimator():GetFrame())
     if STATE == 0 then
-        bossEntity:GetAnimator():SetFrame(0.0) -- intialize initial position
+        bossEntity:GetAnimator():SetFrame(10.0) -- intialize initial position
         bossEntity:GetAnimator():PauseAnimation()
         if firstTrigger == false then
             firstTrigger = true

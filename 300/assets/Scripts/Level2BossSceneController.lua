@@ -8,7 +8,7 @@ local savedplayerrotate = Vec3.new(0,0,0)
 
 local deadbosspos = Vec3.new(0, -30, -42.6)
 
-local STATE =  0 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
+local STATE =  -1 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
 local firstTrigger = false
 local bossEntity
 local cameraEntity
