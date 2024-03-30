@@ -6,7 +6,7 @@ local savedbosspos = Vec3.new(-4.2,10,-28.6)
 local savedrotate = Vec3.new(270,1.070,72)
 local savedplayerrotate = Vec3.new(0,0,0)
 
-local STATE =  -1 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
+local STATE =  0 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
 local firstTrigger = false
 local bossEntity
 local cameraEntity
@@ -116,6 +116,12 @@ function Update()
         end
 
     elseif STATE == 1 then
+
+        if(bossEntity:GetAnimator():IsEndOfAnimation()) then
+            --print("i've entered here")
+            bossEntity:GetMeshRenderer():SetMesh("Boss_Idle", bossEntity)
+        end
+
         transition_audio:GetAudio():SetStop()
 
         -- if _G.pause_animation_boss_lv1 == false then
@@ -170,6 +176,10 @@ function Update()
                 secondary_roar = true
             end
         end
+
+
+
+
 
         if( fov >35)then
             fov = fov -0.05

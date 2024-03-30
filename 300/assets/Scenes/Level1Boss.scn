@@ -1,9 +1,9 @@
 [
     {
-        "entityid": 7340187,
+        "entityid": 2097369,
         "general": {
-            "name": "Level2BossScene",
-            "tagid": 0,
+            "name": "BossSlamAudio",
+            "tagid": 8,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
@@ -25,17 +25,58 @@
                 "z": 0.0
             }
         },
-        "scripts": {
-            "scriptscontainer": [
-                {
-                    "scriptFile": "../assets/Scripts/Level1BossSceneController.lua",
-                    "variables": []
-                }
-            ]
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Boss_Slam.wav",
+            "fullpath": "../assets\\Audio/Boss_Slam.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
         }
     },
     {
-        "entityid": 7340188,
+        "entityid": 2097370,
+        "general": {
+            "name": "BossRoarAudio",
+            "tagid": 8,
+            "subtag": 0,
+            "isActive": true,
+            "isPaused": false
+        },
+        "transform": {
+            "scale": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0
+            },
+            "rotate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "translate": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        "audio": {
+            "filepath": "../assets\\Audio",
+            "filename": "Boss_Roar.wav",
+            "fullpath": "../assets\\Audio/Boss_Roar.wav",
+            "playonawake": false,
+            "islooping": false,
+            "audiotype": 1,
+            "volume": 1.0,
+            "retainaudio": false,
+            "panaudio": false
+        }
+    },
+    {
+        "entityid": 2097371,
         "general": {
             "name": "BossLevel2",
             "tagid": 1,
@@ -174,16 +215,16 @@
             },
             "maxhealth": 200.0,
             "width": 0.800000011920929,
-            "height": 0.07000000029802322,
+            "height": 0.0,
             "frametexture": 0,
             "healthtexture": 0
         }
     },
     {
-        "entityid": 7340189,
+        "entityid": 2097372,
         "general": {
-            "name": "BossRoarAudio",
-            "tagid": 8,
+            "name": "Level2BossScene",
+            "tagid": 0,
             "subtag": 0,
             "isActive": true,
             "isPaused": false
@@ -205,54 +246,13 @@
                 "z": 0.0
             }
         },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Boss_Roar.wav",
-            "fullpath": "../assets\\Audio/Boss_Roar.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": false
-        }
-    },
-    {
-        "entityid": 7340190,
-        "general": {
-            "name": "BossSlamAudio",
-            "tagid": 8,
-            "subtag": 0,
-            "isActive": true,
-            "isPaused": false
-        },
-        "transform": {
-            "scale": {
-                "x": 1.0,
-                "y": 1.0,
-                "z": 1.0
-            },
-            "rotate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            },
-            "translate": {
-                "x": 0.0,
-                "y": 0.0,
-                "z": 0.0
-            }
-        },
-        "audio": {
-            "filepath": "../assets\\Audio",
-            "filename": "Boss_Slam.wav",
-            "fullpath": "../assets\\Audio/Boss_Slam.wav",
-            "playonawake": false,
-            "islooping": false,
-            "audiotype": 1,
-            "volume": 1.0,
-            "retainaudio": false,
-            "panaudio": false
+        "scripts": {
+            "scriptscontainer": [
+                {
+                    "scriptFile": "../assets/Scripts/Level1BossSceneController.lua",
+                    "variables": []
+                }
+            ]
         }
     }
 ]
