@@ -609,7 +609,7 @@ end
 function SetupILYEpicIntro() 
     epicIntroUI = _G.gameStateSys:GetEntity("ILYEpicIntroInfoUI")
     epicIntroUI:GetTransform().mTranslate.x = hideLeftEpicUIPos
-    Helper.SetTranslate(epicILY, Vec3.new(-17, -2.437, 24.575))
+    Helper.SetTranslate(epicILY, Vec3.new(-17, 2.437, 24.575))
     _G.ILYEpicIntroState = 1
     shotTriggerEffectTime = 2.33
     shotWaitTime = shotTriggerEffectTime + 0.5
