@@ -1,0 +1,113 @@
+{
+    "entityid": 6291612,
+    "general": {
+        "name": "parti_boss",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 3.0,
+            "y": 3.0,
+            "z": 3.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 8.293867111206055,
+            "z": -16.75372886657715
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2285,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/Cube_Texture_White.ctexture",
+            "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+            " ",
+            " ",
+            "../assets/Compressed/cube_emission.ctexture",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/cube.geom",
+        "texturerefid": [
+            2075419717,
+            1949753341,
+            0,
+            0,
+            3806423867,
+            0
+        ]
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/Particle.lua",
+                "variables": [
+                    {
+                        "key": "deathtime",
+                        "val": {
+                            "type": 694561268,
+                            "value": 0.0
+                        }
+                    },
+                    {
+                        "key": "movement",
+                        "val": {
+                            "type": -655306154,
+                            "value": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    },
+                    {
+                        "key": "randomdeath",
+                        "val": {
+                            "type": 694561268,
+                            "value": 1.0
+                        }
+                    },
+                    {
+                        "key": "spawned",
+                        "val": {
+                            "type": -1129103353,
+                            "value": true
+                        }
+                    },
+                    {
+                        "key": "speed",
+                        "val": {
+                            "type": 694561268,
+                            "value": 5.0
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "parti_boss"
+    }
+}

@@ -182,9 +182,9 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "REVOLVER") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - revolverDamage * _G.powerLevel
-                print("DAMAGE (REVOLVER): " , revolverDamage * _G.powerLevel)
-                print("HP LEFT: " , healthComponent.health)
-                print("REVOLVER HIT")
+                -- print("DAMAGE (REVOLVER): " , revolverDamage * _G.powerLevel)
+                -- print("HP LEFT: " , healthComponent.health)
+                -- print("REVOLVER HIT")
                 -- if(healthComponent.health <= 0 ) then
                 --     systemManager.ecs:SetDeleteEntity(Entity)
                 --     -- Interacts with "TutorialMonsterSpawner.lua"
@@ -230,8 +230,8 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "MACHINE_GUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - machineGunDamage * _G.powerLevel
-                print("HP LEFT: " , healthComponent.health)
-                print("MACHINE GUN HIT")
+                -- print("HP LEFT: " , healthComponent.health)
+                -- print("MACHINE GUN HIT")
                 -- if(healthComponent.health <= 0 ) then
                 --     systemManager.ecs:SetDeleteEntity(Entity)
 
@@ -307,6 +307,11 @@ function OnTriggerEnter(Entity)
 
     if(tagid == 14) then 
         -- print("BAWSE")
+        
+        for i = 3, 1, -1
+        do
+            spawnedBoss(i)
+        end
 
         if(bulletTag == "PISTOL") then 
             if(_G.bossHP_healthbar_comp ~= nil) then 
@@ -339,38 +344,6 @@ function OnTriggerEnter(Entity)
     end
 
     
-    if(tagid == 15) then 
-        -- print("HOMING")
-
-        if(bulletTag == "PISTOL") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - pistolDamage * _G.powerLevel
-
-            end
-        end
-
-        
-        if(bulletTag == "REVOLVER") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - revolverDamage * _G.powerLevel
-
-            end
-        end
-
-        if(bulletTag == "SHOTGUN") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - shotGunDamage * _G.powerLevel
-
-            end
-        end
-
-        if(bulletTag == "MACHINE_GUN") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - machineGunDamage * _G.powerLevel
-
-            end
-        end
-    end
 
 end
 
@@ -390,6 +363,15 @@ function spawned(value)
     positions = entityobj:GetTransform().mTranslate
 
     prefabEntity = systemManager.ecs:NewEntityFromPrefab("parti",positions )   
+
+    meshSys = prefabEntity:GetMeshRenderer()
+    meshSys:SetColor(allcolor[value])
+end
+
+function spawnedBoss(value)
+    positions = entityobj:GetTransform().mTranslate
+
+    prefabEntity = systemManager.ecs:NewEntityFromPrefab("parti_boss",positions )   
 
     meshSys = prefabEntity:GetMeshRenderer()
     meshSys:SetColor(allcolor[value])

@@ -85,7 +85,7 @@ local homing_bullet
 local next_homing_id = 0                                -- Used in [SpawnHomingSpheres] -> for ID recognition (used for deletion logic)
 _G.homing_projectiles = {}                              -- Define a table to store projectile data -> used in [BossBullet.lua] also
 local projectile_stay_time = 2                          -- timer for the bullet to stay still before it starts homing into the player
-local initial_homing_speed = 6                          -- Starting Homing Speed
+local initial_homing_speed = 8                         -- Starting Homing Speed
 
 
 -- [5] Lazer Attack 
@@ -264,9 +264,9 @@ function Update()
     -- Debug States
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-    -- state = 3 -- [OK]
+    state = 3 -- [OK]
     -- state = 4 --[OK]
-    state = 5 -- [OK]
+    -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
     if _G.level3intro == false and debug_mode == false then 
@@ -394,7 +394,7 @@ function SpawnBulletsPattern1(number_of_bullets)
     for i = 0 , number_of_bullets do 
 
         bulletDirection = Vec3.new(1,0,0)
-        bulletSpeed = 5
+        bulletSpeed = 5 + (5 * current_phase)
         -- Caluclate direction vector in 3D space
         RotateVectorAroundYAxis(bulletDirection, angle) -- Testing
         -- print("X: " , bulletDirection.x , " Y: " , bulletDirection.y , " Z: ", bulletDirection.z)
@@ -501,7 +501,7 @@ function UpdateHomingProjectiles()
                     
                
                     -- Subtract Vector 
-                    local directionToPlayer = Subtract(player_position, projectile.position)
+                    local directionToPlayer = Subtract(player_position, projectile.entity:GetTransform().mTranslate)
                     projectile.direction = directionToPlayer
                     
                     -- print("PROJECTILE POS: " , projectile.position.x , ", " , projectile.position.y , ", " , projectile.position.z)
@@ -520,7 +520,7 @@ function UpdateHomingProjectiles()
                     end
                     
                     -- M6 : Homing Rotation
-                    local angle_to_rotate = CalculateAngle(projectile.position, player_position, projectile.forward)
+                    local angle_to_rotate = CalculateAngle(projectile.entity:GetTransform().mTranslate, player_position, projectile.forward)
                     local axis_to_rotate = Vec3.new()
                     axis_to_rotate.x = 0 
                     axis_to_rotate.y = angle_to_rotate * (180 / math.pi)
