@@ -342,22 +342,23 @@ function Update()
     -- end
     
 --region -- player camera
-    if(inputMapSys:GetButtonDown("Mouse")) then
-        if (mouse_on == true) then
-            mouse_on = false
-        else
-            mouse_on =true
-        end
-    end
+    -- if(inputMapSys:GetButtonDown("Mouse")) then
+    --     if (mouse_on == true) then
+    --         mouse_on = false
+    --     else
+    --         mouse_on =true
+    --     end
+    -- end
 
-    if  (mouse_on)    then
+    -- if  (mouse_on)    then
 
         centerscreen = Input:GetCursorCenter()
         mouse_move.x = Input.CursorPos().x - centerscreen.x
         mouse_move.y = Input.CursorPos().y - centerscreen.y
         -- print("cursorx "..Input.CursorPos().x)
         -- print("cursory "..Input.CursorPos().y)
-
+        -- print(mouse_move.x)
+        -- print(mouse_move.y)
 
         -- print("cursorx "..Input.CursorPos().x)
         -- print("cursory "..Input.CursorPos().y)
@@ -365,10 +366,10 @@ function Update()
         -- print("luax "..centerscreen.x)
         -- print("luay "..centerscreen.y)
 
-        Camera_Scripting.RotateCameraView(cameraEntity, mouse_move)
         Input.SetCursorCenter()
+        Camera_Scripting.RotateCameraView(cameraEntity, mouse_move)
 
-    end
+    -- end
 
     if tutState == TutBox.SECOND then
         if travelBox == true then

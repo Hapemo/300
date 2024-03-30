@@ -12,18 +12,27 @@ function Update()
     --set >= 4 for now as there are 4 'A' enemies in the scene rn
     -- print("OBJECTIVE COUNTER: " , _G.PreObjectivesCounter)
     --if _G.PreObjectivesCounter >= 4 then
-    if(_G.completedEpicTH == true and _G.completedEpicTS == true and _G.completedEpicILY == true) then
-        if initonce==false then
-
+    if(_G.completedEpicTH == true and _G.completedEpicTS == true and _G.completedEpicILY == true) 
+    then
+        if initonce==false 
+        then
             controllerL2 = gameStateSys:GetEntity("DialogueController")
             controllerL2Scripts = controllerL2:GetScripts()
             controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/DialogueControllerLevel1.lua")
-        
+            
+            ent = gameStateSys:GetEntityByScene("ObjectiveIndicatorUI" , "UI")
+            uirend = ent:GetUIrenderer()
+            uirend:SetTexture("0_3_Installed_Text")
+            uirend.mColor.w = 1.0
+            _G.objectiveTimer = 0.0
+            _G.ObjectiveIndicatorUI_Texture = "default"
+
             if controllerL2Script ~= nil then
                 controllerL2Script:RunFunction("FinishedCutscenes")
             end
             initonce = true
         end
+
         gameStateSys = systemManager:mGameStateSystem();
         testScriptEntity = gameStateSys:GetEntity("Controller")
         TestScripts = testScriptEntity:GetScripts()

@@ -186,6 +186,7 @@ function PauseUpdate()
             HTPMenu:GetTransform().mTranslate.x = 1000
             backButton:GetTransform().mTranslate.x = 1000
             _G.isHTPMenu = false
+            TranslateBackPauseElements()
         end
     end
     if (_G.isYesRestart == true) then
@@ -234,4 +235,14 @@ function TranslatePauseElements()
     menuBackground:GetTransform().mTranslate.x = 1000
     restartButton:GetTransform().mTranslate.x = 1000
     settingsButton:GetTransform().mTranslate.x = 1000
+end
+
+function TranslateBackPauseElements()
+    mainMenuButton:GetTransform().mTranslate.x = 0.02
+    quitButton:GetTransform().mTranslate.x = 0.02
+    resumeButton:GetTransform().mTranslate.x = 0.023
+    htpButton:GetTransform().mTranslate.x = 0.02
+    menuBackground:GetTransform().mTranslate.x = 0
+    restartButton:GetTransform().mTranslate.x = 0.02
+    settingsButton:GetTransform().mTranslate.x = 0.02
 end

@@ -59,17 +59,17 @@ function PauseUpdate()
     inputMapSys = systemManager:mInputActionSystem()
     if (inputMapSys:GetButtonDown("pause")) then
         if (_G.isPausePauseMenu and not _G.isHTPMenu and not _G.isSettingsMenu) then
+            print("CAME TO GET BUTTON DOWN PAUSEEEEEEEEEEEEEEEE")
+            _G.mouse_on = true
             graphicssys:HideCursor(true)
+            print("over cursor alr")
             systemManager.mIsInGamePause = false
+            systemManager:SetIsPause(false)
             _G.isPausePauseMenu = false
             runOnce2 = true
         end
     end
 
-    if not _G.isPausePauseMenu then return end
-        graphicssys:HideCursor(false)
-        Input.SetCursorCenter()
-    --print(_G.isSettingsMenu)
     if (not _G.isHTPMenu and not _G.isSettingsMenu and not _G.isConfirmationMenu) then
         mainMenuButton:GetTransform().mTranslate.x = 0.02
         quitButton:GetTransform().mTranslate.x = 0.02
@@ -79,6 +79,11 @@ function PauseUpdate()
         restartButton:GetTransform().mTranslate.x = 0.02
         settingsButton:GetTransform().mTranslate.x = 0.02
     end
+
+    if not _G.isPausePauseMenu then return end
+        graphicssys:HideCursor(false)
+        Input.SetCursorCenter()
+    --print(_G.isSettingsMenu)
 end
 
 function Dead()
