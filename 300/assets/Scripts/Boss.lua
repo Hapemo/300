@@ -94,6 +94,7 @@ _G.activateLazerScript = false
 -- Boss states
 local state = 0              -- Phase 1 (1 Mechanic at a time)
 local secondary_state = -1   -- Phase 2 (2 Mechanics at a time)
+local secondary_chosen = false
 local current_phase = 1      -- [1] - Phase 1, [2] - Phase 2 , [3] - Phase 3
 -- State Checker List -> checks if this attack has been used (if used, won't repeat again until a certain conditions hits)
 -- [1] - Summon Minions -> visual : through a portal  (OK)
@@ -127,7 +128,7 @@ local homing_audio
 
 
 -- Phases Stuff - Boss Starts with 2000 HP
-local phase_2_threshold = 1500 -- gets faster (2 mechanics at one time)
+local phase_2_threshold = 100 -- gets faster (2 mechanics at one time)
 local phase_3_threshold = 800  -- gets faster  
 local boss_healthbar_comp
 
@@ -265,7 +266,7 @@ function Update()
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
     -- state = 4 --[OK]
-    state = 5 -- [OK]
+    -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
     if _G.level3intro == false and debug_mode == false then 
@@ -300,6 +301,26 @@ function Update()
             Mechanic_5_Lazer_Beam()
         end
     end
+
+    -- Secondary Attack 
+    if secondary_state ~= -1 then 
+        if secondary_state == 1 then 
+            Mechanic_1_PortalSummonMinions()
+            print("SECONDARY: (1) PORTAL")
+        elseif secondary_state == 2 then 
+            Mechanic_2_GroundSlam()
+            print("SECONDARY: (2) GROUND SLAM")
+        elseif secondary_state == 3 then 
+            Mechanic_3_Sphere_Spiral()
+            print("SECONDARY: (3) SPHERE SPIRAL")
+        elseif secondary_state == 4 then 
+            Mechanic_4_Homing_Bullets()
+            print("SECONDARY: (4) HOMING")
+        elseif secondary_state == 5 then 
+            Mechanic_5_Lazer_Beam()
+            print("SECONDARY: (5) LAZER BEAM")
+        end
+    end 
 end
 
 function Dead()
@@ -708,6 +729,7 @@ end
 -- M6 : Wrapper Function for Mechanics
 function Mechanic_1_PortalSummonMinions()
 
+    print("INSIDE PORTAL MECHANIC")
     _G.attacking = true -- must include (to stop state choosing)
 
     -- Decide how many enemies to spawn this phase.

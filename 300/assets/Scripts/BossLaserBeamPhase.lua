@@ -55,7 +55,7 @@ function Update()
             laser_audio_played = true
         end
         lazer_timer = lazer_timer + FPSManager.GetDT()  
-        print("LAZER TIMER: " , lazer_timer)
+        -- print("LAZER TIMER: " , lazer_timer)
    
         if(lazer_timer < lazer_duration) then
             translation.y = -1.19
