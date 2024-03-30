@@ -2,38 +2,38 @@ _G.PreObjectivesCounter = 0;
 local objective1
 local objective2
 local objective3
+local initonce
+
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
-
-    -- objective1 =  gameStateSys:GetEntityByScene("Objectives1" , "testSerialization")
-    -- objective2 =  gameStateSys:GetEntityByScene("Objectives2" , "testSerialization")
-    -- objective3 =  gameStateSys:GetEntityByScene("Objectives3" , "testSerialization")
-
-    -- game starts with first objective spawned
-    -- objectives = gameStateSys:GetEntity("Objectives1")
-    -- local starting_offset = Vec3.new()
-    -- starting_offset.x = objectives:GetTransform().mTranslate.x
-    -- starting_offset.y = -10.5
-    -- starting_offset.z = objectives:GetTransform().mTranslate.z
-
+    initonce = false
 end
+
 
 function Update()
     --set >= 4 for now as there are 4 'A' enemies in the scene rn
     -- print("OBJECTIVE COUNTER: " , _G.PreObjectivesCounter)
     --if _G.PreObjectivesCounter >= 4 then
 
-    if(_G.completedEpicM == true and _G.completedEpicZB == true) then
-    -- if(false) then
-        -- print("All objectives completed")
+    if(_G.completedEpicM == true and _G.completedEpicZB == true) 
+    then
+        if initonce == false
+        then
+            ent = gameStateSys:GetEntityByScene("ObjectiveIndicatorUI" , "UI")
+            uirend = ent:GetUIrenderer()
+            uirend:SetTexture("0_3_Installed_Text")
+            uirend.mColor.w = 1.0
+            _G.objectiveTimer = 0.0
+            _G.ObjectiveIndicatorUI_Texture = "default"
+            initonce = true
+        end
+
         gameStateSys = systemManager:mGameStateSystem();
         testScriptEntity = gameStateSys:GetEntity("Controller")
         TestScripts = testScriptEntity:GetScripts()
         testScript = TestScripts:GetScript("../assets/Scripts/ObjectivesController.lua")
         objCount = testScript:ReturnValueInt("GetCountObj")
 
-        --spawn the objectives portals
-        --print("SPAWN PORTALS")
         objective1 = gameStateSys:GetEntity("Objectives1")
         objective2 = gameStateSys:GetEntity("Objectives2")
         objective3 = gameStateSys:GetEntity("Objectives3")
