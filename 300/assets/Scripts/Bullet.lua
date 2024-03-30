@@ -308,7 +308,7 @@ function OnTriggerEnter(Entity)
     if(tagid == 14) then 
         -- print("BAWSE")
         
-        for i = 3, 1, -1
+        for i = 5, 1, -1
         do
             spawnedBoss(i)
         end
