@@ -34,7 +34,7 @@ function Update()
     if _G.bossDeath == true then
         entityobj = Helper.GetScriptEntity(script_entity.id)
 
-        for i = 122, 1, -1
+        for i = 10, 1, -1
         do
             spawned(1)
         end

@@ -26,6 +26,10 @@ local VO_good_job_done = false
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
+    
+    --graphicsSys = systemManager:mGraphicsSystem();
+    --graphicsSys:HideCursor(false)
+
     frame1 = gameStateSys:GetEntity("Frame1E")
     frame2 = gameStateSys:GetEntity("Frame2E")
     frame3 = gameStateSys:GetEntity("Frame3E")
@@ -50,6 +54,7 @@ end
 -- end 
 
 function Update()
+    -- print("updating endscenecontroller.lua")
     frame3Translate = frame3:GetTransform().mTranslate
     frame4Translate = frame4:GetTransform().mTranslate
     frame4Scale = frame4:GetTransform().mScale

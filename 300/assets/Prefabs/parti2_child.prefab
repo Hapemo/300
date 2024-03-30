@@ -1,0 +1,148 @@
+{
+    "entityid": 14680110,
+    "general": {
+        "name": "parti2_child",
+        "tagid": 0,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 36.263153076171875,
+            "z": 0.0
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 2285,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/Cube_Texture_White.ctexture",
+            "../assets/Compressed/Cube_Texture_White_Normal.ctexture",
+            " ",
+            " ",
+            "../assets/Compressed/cube_emission.ctexture",
+            " "
+        ],
+        "mesh": "../assets/compiled_geom/cube.geom",
+        "texturerefid": [
+            2075419717,
+            1949753341,
+            0,
+            0,
+            3806423867,
+            0
+        ]
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/Particle2_child.lua",
+                "variables": [
+                    {
+                        "key": "deathtime",
+                        "val": {
+                            "type": 694561268,
+                            "value": 0.0
+                        }
+                    },
+                    {
+                        "key": "movement",
+                        "val": {
+                            "type": -655306154,
+                            "value": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            }
+                        }
+                    },
+                    {
+                        "key": "randomdeath",
+                        "val": {
+                            "type": 694561268,
+                            "value": 1.0
+                        }
+                    },
+                    {
+                        "key": "spawned",
+                        "val": {
+                            "type": -1129103353,
+                            "value": true
+                        }
+                    },
+                    {
+                        "key": "speed",
+                        "val": {
+                            "type": 694561268,
+                            "value": 5.0
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "parti2_child"
+    },
+    "particleemitter": {
+        "startcolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "endcolor": {
+            "x": 0.9368932247161865,
+            "y": 0.1910170465707779,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "startsize": 1.2999999523162842,
+        "endsize": 0.20000000298023224,
+        "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "offset": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "gravity": 0.05000000074505806,
+        "rotation": 0.0,
+        "lifetime": 2.4000000953674316,
+        "loop": true,
+        "loopInterval": 0.10000000149011612,
+        "speed": 3.0,
+        "count": 10,
+        "emit": false,
+        "particletexture": 2451628838
+    }
+}

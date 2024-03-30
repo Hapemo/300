@@ -2,7 +2,7 @@ local fov = 45
 
 local savedpos = Vec3.new(-1.6,33.4,58.7)
 local savedplayerpos = Vec3.new(-1.1,-2.1,-16.3)
-local savedbosspos = Vec3.new(0,30,-48)
+local savedbosspos = Vec3.new(0,30,-42.6)
 local savedrotate = Vec3.new(270,-1.5,72)
 local savedplayerrotate = Vec3.new(0,0,0)
 
@@ -68,21 +68,12 @@ function Alive()
     boss_slam_audio = gameStateSys:GetEntityByScene("BossSlamAudio", "Level2BossScene")
     boss_roar_audio = gameStateSys:GetEntityByScene("BossRoarAudio", "Level2BossScene")
 
-    -- if boss_slam_audio ~= nil then 
-    --     print("SLAM OK")
-    -- end
 
-    -- if boss_roar_audio ~= nil then 
-    --     print("ROAR OK")
-    -- end
 end
 
 function Update()
-    -- if inputMapSys:GetButton("up") then 
-    --     _G.pause_animation_boss = false
-    -- end
     -- STATE = 1
-    isfightingboss = true
+    -- print("STATE: " , STATE)
     cameraEntity = gameStateSys:GetEntity("Camera")
     bossEntity = gameStateSys:GetEntity("Level2Boss")
     gunEntity = gameStateSys:GetEntity("gun")
@@ -103,9 +94,7 @@ function Update()
             bossEntity:GetTransform().mTranslate.y = savedbosspos.y
             bossEntity:GetTransform().mTranslate.z = savedbosspos.z
             if(looper == 0) then
-                bossEntity:GetMeshRenderer():SetMesh("Boss_Intro", bossEntity)
-                bossEntity:GetAnimator():PauseAnimation()
-                -- boss_roar_audio:GetAudio():SetPlay(1.0)
+                bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
                 looper = 1
             elseif(looper == 1) then
                 if(bossEntity:GetAnimator():IsEndOfAnimation()) then
@@ -160,12 +149,12 @@ function Update()
         end
 
     elseif STATE == 1 then
-        -- bossEntity:PauseAnimation()
         -- boss intro fbx
-        -- print("PAUSE ANIMATION BOSS: " , _G.pause_animation_boss)
-        if _G.pause_animation_boss == false then
-            bossEntity:GetAnimator():UnpauseAnimation()
-        end
+        -- if _G.pause_animation_boss == false then
+        -- bossEntity:GetMeshRenderer():SetMesh("Boss_Intro", bossEntity)
+        bossEntity:GetAnimator():UnpauseAnimation()
+
+        -- end
 
         graphicsSys:IgnoreUIScene("UI")
         graphicsSys:IgnoreUIScene("Objectives2")
@@ -210,6 +199,7 @@ function Update()
             end
         end
 
+
         if(quaking<=QuakeLimit2)then
             quaking = quaking+FPSManager.GetDT()
             Quakeintervalcd= Quakeintervalcd+FPSManager.GetDT()
@@ -241,7 +231,6 @@ function Update()
     elseif STATE == 2 then
         if(looper == 0) then
             bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
-            -- boss_roar_audio:GetAudio():SetPlay(1.0)
             looper = 1
         elseif(looper == 1) then
             if(bossEntity:GetAnimator():IsEndOfAnimation()) then
@@ -384,7 +373,6 @@ function DialogueUpdate()
     if(bossEntity:GetAnimator():IsEndOfAnimation()) then
         --print("i've entered here")
         bossEntity:GetMeshRenderer():SetMesh("Boss_Roar", bossEntity)
-        -- boss_roar_audio:GetAudio():SetPlay(1.0)
     end
 end
 
