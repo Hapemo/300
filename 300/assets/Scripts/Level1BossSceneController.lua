@@ -53,7 +53,7 @@ function Alive()
 
     boss_slam_audio = gameStateSys:GetEntityByScene("BossSlamAudio", "Level1Boss")
     boss_roar_audio = gameStateSys:GetEntityByScene("BossRoarAudio", "Level1Boss")
-    transition_audio = gameStateSys:GetEntityByScene("TransitionHelper")
+    transition_audio = gameStateSys:GetEntity("TransitionHelper")
 
     if boss_slam_audio ~= nil then 
         print("SLAM OK")
