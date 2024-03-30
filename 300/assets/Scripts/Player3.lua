@@ -794,7 +794,7 @@ function Update()
                     positions_final.y = positions.y + viewVecCam.y*3
                     positions_final.z = positions.z + viewVecCam.z*3  
 
-                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("bullet", positions_final)
+                    prefabEntity = systemManager.ecs:NewEntityFromPrefab("Revolver Bullet", positions_final)
                     -- rotationCam.x = rotationCam.x *0
                     -- rotationCam.y = rotationCam.y *0
                     -- rotationCam.z = rotationCam.z *0

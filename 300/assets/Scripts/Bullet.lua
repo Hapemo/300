@@ -319,7 +319,7 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "REVOLVER") then 
             if(_G.bossHP_healthbar_comp ~= nil) then 
                 _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - revolverDamage * _G.powerLevel
-
+                print("REVOLVER BAWSE")
             end
         end
 
