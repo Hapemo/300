@@ -26,7 +26,7 @@ end
 function Update()
     
     if(spawned == true)then
-        randomdeath = math.random(1,6)
+        randomdeath = math.random(3,6)
     end
 
     dt = FPSManager.GetDT()
