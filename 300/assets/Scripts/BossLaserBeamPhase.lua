@@ -63,6 +63,8 @@ function Update()
             Helper.SetRealRotateQuaternion(ent, axis, angle)
         else            
             laserPhaseAudio:SetStop()
+            local position = Vec3.new(0 , - 100, 8.5)
+            Helper.SetTranslate(ent, position)
             _G.state_checker[5] = true -- mark the database
             attacking = false     
             
@@ -75,7 +77,8 @@ function Update()
         end
 
     else
-        translation.y = -100  
+        local position = Vec3.new(0 , - 100, 8.5)
+        Helper.SetTranslate(ent, position)
     end
 end
 
