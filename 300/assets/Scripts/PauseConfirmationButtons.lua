@@ -20,6 +20,14 @@ function Alive()
     mmBackground = gameStateSys:GetEntity("MainMenuBackground")
     yesButton = gameStateSys:GetEntity("YesButton")
     noButton = gameStateSys:GetEntity("NoButton")
+
+    mainMenuButton = gameStateSys:GetEntity("PauseMainMenuButton")
+    quitButton = gameStateSys:GetEntity("PauseQuitButton")
+    resumeButton = gameStateSys:GetEntity("PauseResumeButton")
+    htpButton = gameStateSys:GetEntity("PauseHTPButton")
+    restartButton = gameStateSys:GetEntity("PauseRestartButton")
+    settingsButton = gameStateSys:GetEntity("PauseSettingsButton")
+    menuBackground = gameStateSys:GetEntity("PauseMenuBackground")
 end
 
 function Update()
@@ -69,6 +77,7 @@ function PauseUpdate()
                 --TranslateConfirmationElements()
             end
         elseif (button:GetGeneral().name == "NoButton") then
+            TranslateBackPauseElements()
             TranslateConfirmationElements()
         end
     end
@@ -97,4 +106,14 @@ function TranslateConfirmationElements()
     yesButton:GetTransform().mTranslate.x = 1000
     noButton:GetTransform().mTranslate.x = 1000
     _G.isConfirmationMenu = false
+end
+
+function TranslateBackPauseElements()
+    mainMenuButton:GetTransform().mTranslate.x = 0.02
+    quitButton:GetTransform().mTranslate.x = 0.02
+    resumeButton:GetTransform().mTranslate.x = 0.023
+    htpButton:GetTransform().mTranslate.x = 0.02
+    menuBackground:GetTransform().mTranslate.x = 0
+    restartButton:GetTransform().mTranslate.x = 0.02
+    settingsButton:GetTransform().mTranslate.x = 0.02
 end
