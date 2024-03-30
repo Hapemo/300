@@ -1,0 +1,103 @@
+{
+    "entityid": 3145751,
+    "general": {
+        "name": "Boss",
+        "tagid": 1,
+        "subtag": 0,
+        "isActive": true,
+        "isPaused": false
+    },
+    "transform": {
+        "scale": {
+            "x": 50.0,
+            "y": 50.0,
+            "z": 50.0
+        },
+        "rotate": {
+            "x": 0.0,
+            "y": 90.0,
+            "z": 0.0
+        },
+        "translate": {
+            "x": 0.0,
+            "y": 8.819999694824219,
+            "z": 8.740693092346191
+        }
+    },
+    "meshrenderer": {
+        "vert": "../assets/shader_files/pointLight_vert.glsl",
+        "frag": "../assets/shader_files/pointLight_frag.glsl",
+        "meshrefid": 500282633,
+        "instancecolor": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "bloomthreshold": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+        },
+        "castShadow": true,
+        "materialinstance": [
+            "../assets/Compressed/Boss_Head_Particles_Spine_BaseColor.ctexture",
+            "../assets/Compressed/Boss_Head_Particles_Spine_Normal.ctexture",
+            "../assets/Compressed/Boss_Head_Particles_Spine_Metallic.ctexture",
+            "../assets/Compressed/Boss_Head_Particles_Spine_Roughness.ctexture",
+            "../assets/Compressed/Boss_Head_Particles_Spine_Emissive.ctexture",
+            "../assets/Compressed/Boss_Head_Particles_Spine_AO.ctexture"
+        ],
+        "mesh": "../assets/compiled_geom/Boss_Intro.geom",
+        "texturerefid": [
+            206604193,
+            2914982666,
+            2945292664,
+            557562255,
+            3232324542,
+            1257437683
+        ]
+    },
+    "animator": {
+        "paused": false
+    },
+    "meshcollider": {
+        "ismeshcollider": true
+    },
+    "scripts": {
+        "scriptscontainer": [
+            {
+                "scriptFile": "../assets/Scripts/Boss.lua",
+                "variables": []
+            }
+        ]
+    },
+    "prefab": {
+        "prefab": "Boss"
+    },
+    "healthbar": {
+        "healthcolor": {
+            "x": 0.0,
+            "y": 1.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "backcolor": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+        },
+        "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+        },
+        "maxhealth": 1500.0,
+        "width": 0.0,
+        "height": 0.0,
+        "frametexture": 0,
+        "healthtexture": 0
+    }
+}

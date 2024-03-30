@@ -92,7 +92,9 @@ local initial_homing_speed = 6                          -- Starting Homing Speed
 _G.activateLazerScript = false
 
 -- Boss states
-local state = 0
+local state = 0              -- Phase 1 (1 Mechanic at a time)
+local secondary_state = -1   -- Phase 2 (2 Mechanics at a time)
+local current_phase = 1      -- [1] - Phase 1, [2] - Phase 2 , [3] - Phase 3
 -- State Checker List -> checks if this attack has been used (if used, won't repeat again until a certain conditions hits)
 -- [1] - Summon Minions -> visual : through a portal  (OK)
 -- [2] - Ground Slam (AOE)                            (OK)  -> need to review
@@ -122,6 +124,13 @@ local play_sphere_audio
 local play_laser_audio
 
 local homing_audio
+
+
+-- Phases Stuff - Boss Starts with 1500 HP
+local phase_2_threshold = 1000 -- gets faster (2 mechanics at one time)
+local phase_3_threshold = 500  -- gets faster  
+local boss_healthbar_comp
+
 function Alive()
     print("ALIVE")
     this = Helper.GetScriptEntity(script_entity.id)
@@ -164,11 +173,26 @@ function Alive()
     homing_audio = gameStateSys:GetEntity("HomingEyeballAudio")
 
 
+    -- M6 - Phases
+    boss_healthbar_comp = this:GetHealthbar()
+
+    -- if boss_healthbar_comp ~= nil then 
+    --     print("BOSS HEALTHBAR EXISTS")
+    -- end
     -- debug_mode = true
 
 end
 
 function Update()
+
+    -- M6 (Threshold to go into Phase 2)
+    if current_phase == 1 then 
+        if boss_healthbar_comp.health <= phase_2_threshold then 
+            print("BOSS GOING PHASE 2")
+        end 
+    end
+
+
     if state~= 3 then
         play_sphere_audio = false
     end
@@ -231,7 +255,7 @@ function Update()
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
-    state = 4 --[OK]
+    -- state = 4 --[OK]
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
