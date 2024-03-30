@@ -26,29 +26,32 @@ function Alive()
 end
 
 function Update()
-    while bulletObject ~= nil do 
-        -- Customized Check (to prevent homing from despawning unless it collides with something) -> disable lifetime
-        if(general.name == spawn_bullet_name) then -- won't delete the homing bullets
-            break
-        end
+
+    if this:GetHealthbar().health <= 0 then 
+        print("BULLET DED")
+        systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
+     end
+
   
-         bulletLifeTime = bulletLifeTime + FPSManager.GetDT()
 
-         if(bulletLifeTime > bulletDeathTime) then
-            --  systemManager.ecs:SetDeleteEntity(bulletObject)
-         end
+     bulletLifeTime = bulletLifeTime + FPSManager.GetDT()
 
-         for i , projectile in ipairs(_G.homing_projectiles) do
-            if this == projectile.entity then 
-                if(bulletLifeTime > bulletDeathTime) then
-                    -- table.remove(_G.homing_projectiles, i) -- Delete entry in the table.
-                    -- systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
-                    break
-                end
+        if(bulletLifeTime > bulletDeathTime) then
+            systemManager.ecs:SetDeleteEntity(bulletObject)
+        end
+
+
+
+        for i , projectile in ipairs(_G.homing_projectiles) do
+        if this == projectile.entity then 
+            if(bulletLifeTime > bulletDeathTime) then
+                table.remove(_G.homing_projectiles, i) -- Delete entry in the table.
+                systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
+                break
             end
         end
-         break
-     end
+    end
+
 end
 
 function Dead()

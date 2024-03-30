@@ -131,7 +131,7 @@ function OnTriggerEnter(Entity)
 
     tagid = generalComponent.tagid
     if (tagid == 1) then
-        print("OI GOT HIT ORNOT")
+        -- print("OI GOT HIT ORNOT")
         -- enemyDamagedAudio:GetAudio():SetPlay(0.2)
 
         if _G.gunEquipped == 3 then 
@@ -156,8 +156,8 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "PISTOL") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - pistolDamage * _G.powerLevel
-                print("HP LEFT: " , healthComponent.health)
-                print("PISTOL HIT")
+                -- print("HP LEFT: " , healthComponent.health)
+                -- print("PISTOL HIT")
                 -- print("HP Left: ", healthComponent.health)
                 -- if(healthComponent.health <= 0 ) then
                 --     systemManager.ecs:SetDeleteEntity(Entity)
@@ -182,7 +182,9 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "REVOLVER") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - revolverDamage * _G.powerLevel
-                -- print("DAMAGE (REVOLVER): " , revolverDamage * _G.powerLevel)
+                print("DAMAGE (REVOLVER): " , revolverDamage * _G.powerLevel)
+                print("HP LEFT: " , healthComponent.health)
+                print("REVOLVER HIT")
                 -- if(healthComponent.health <= 0 ) then
                 --     systemManager.ecs:SetDeleteEntity(Entity)
                 --     -- Interacts with "TutorialMonsterSpawner.lua"
@@ -204,6 +206,8 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "SHOTGUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - shotGunDamage * _G.powerLevel
+                -- print("HP LEFT: " , healthComponent.health)
+                -- print("SHOTGUN HIT")
                 -- if(healthComponent.health <= 0 ) then
                 --     systemManager.ecs:SetDeleteEntity(Entity)
 
@@ -226,6 +230,8 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "MACHINE_GUN") then 
             if(healthComponent ~= nil) then 
                 healthComponent.health = healthComponent.health - machineGunDamage * _G.powerLevel
+                print("HP LEFT: " , healthComponent.health)
+                print("MACHINE GUN HIT")
                 -- if(healthComponent.health <= 0 ) then
                 --     systemManager.ecs:SetDeleteEntity(Entity)
 
