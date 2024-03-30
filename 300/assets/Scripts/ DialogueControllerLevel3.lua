@@ -26,7 +26,7 @@ local picture
 local playing
 local audio
 local gameStateSys
-
+local transitioning
 --neeae
 function Alive()
     inputMapSys = systemManager:mInputActionSystem();
@@ -59,6 +59,7 @@ function Alive()
     picture = angry
 
     playing = false
+    transitioning = false
 end
 
 function Update()
@@ -88,6 +89,7 @@ function OnContactExit(Entity)
 end
 
 function DialogueUpdate()
+    if transitioning == true then return end
         if currState == "intro" then
             picture = angry
         elseif currState == "boss" then
@@ -118,6 +120,7 @@ function DialogueUpdate()
                 if z ~= nil then
                     z:SetNextGameStateHelper("SetNextGameState", "EndCutscene")
                     z:RunFunction("StartTransition")
+                    transitioning = true
                 end
             end
             frameOpened = false
