@@ -390,7 +390,7 @@ function Update()
 
     -- print(playerHealthCurrent/playerHealthMax)
     healthbar:GetUIrenderer():SetSlider(playerHealthCurrent/playerHealthMax);
-    print("current health: ", playerHealthCurrent)
+    -- print("current health: ", playerHealthCurrent)
     
     -- Richmond's. To help with the objective indicator
     if(_G.objectiveTimer > objectiveMaxTimer) then
