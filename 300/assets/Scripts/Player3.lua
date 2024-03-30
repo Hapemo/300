@@ -820,7 +820,7 @@ function Update()
             if(_G.gunEquipped == 2) then -- SHOTGUN
                 if(shotGunTimer == 0) then 
 
-                    moreAccurateShotgun(10)
+                    moreAccurateShotgun(5)
                     applyGunRecoil(recoil_speed * 0.5, 0.1)
 
                     shotGunTimer = shotGunTimer + shotGunCooldown
