@@ -351,6 +351,8 @@ end
 function SetupTrojanHorseEpicIntro() 
     epicIntroUI = _G.gameStateSys:GetEntity("THEpicIntroInfoUI")
     epicIntroUI:GetTransform().mTranslate.x = hideRightEpicUIPos
+    _G.phySys:SetVelocity(epicTrojanHorse, Vec3.new())
+    Helper.SetTranslate(epicTrojanHorse, Vec3.new(-24.472, -6.627, 26.394))
     _G.TrojanHorseEpicIntroState = 1
     GeneralSetup()
 end
@@ -607,6 +609,7 @@ end
 function SetupILYEpicIntro() 
     epicIntroUI = _G.gameStateSys:GetEntity("ILYEpicIntroInfoUI")
     epicIntroUI:GetTransform().mTranslate.x = hideLeftEpicUIPos
+    Helper.SetTranslate(epicILY, Vec3.new(-17, -2.437, 24.575))
     _G.ILYEpicIntroState = 1
     shotTriggerEffectTime = 2.33
     shotWaitTime = shotTriggerEffectTime + 0.5
@@ -688,6 +691,7 @@ function SetupZBEpicIntro()
     --print("SetupZBEpicIntro()")
     epicIntroUI = _G.gameStateSys:GetEntity("ZBEpicIntroInfoUI")
     epicIntroUI:GetTransform().mTranslate.x = hideRightEpicUIPos
+    Helper.SetTranslate(epicZB, Vec3.new(-5.937, -4.528, 14.424))
     _G.ZBEpicIntroState = 1
     ZBPos1 = Vec3.new(-2.2, -3.8, 13.5)
     ZBPos15 = Vec3.new(-2.2, -3.8, 12.3)
@@ -783,6 +787,9 @@ function SetupMEpicIntro()
     --print("SetupMEpicIntro()")
     epicIntroUI = _G.gameStateSys:GetEntity("MEpicIntroInfoUI")
     epicIntroUI:GetTransform().mTranslate.x = hideLeftEpicUIPos
+    _G.phySys:SetVelocity(epicM, Vec3.new())
+    Helper.SetTranslate(epicM, Vec3.new(-11.089, -11.314, 13.2))
+
     _G.MEpicIntroState = 1
     MPos1 = Vec3.new(2.39, -10.4, 19.4)
     MView1 = Vec3.new(200, 1, 0)
