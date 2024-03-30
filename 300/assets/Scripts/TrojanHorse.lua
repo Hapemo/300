@@ -70,6 +70,10 @@ end
 
 local timer = 0
 function Update()
+    if _G.FreezePlayerControl == true then
+        phySys:SetVelocity(this, Vec3.new(0,0,0))
+        return
+    end
     ChangeColorOnHit()
     -- If trojan horse epic intro is between state 4 and 6, return
 

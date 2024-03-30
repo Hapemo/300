@@ -69,6 +69,10 @@ function Alive()
 end
 
 function Update()
+    if _G.FreezePlayerControl == true then
+        phySys:SetVelocity(this, Vec3.new(0,0,0))
+        return
+    end
     ChangeColorOnHit()
     -- if systemManager:mInputActionSystem():GetButtonDown("Test1") then
     --     this:GetHealthbar().health = this:GetHealthbar().health - 10

@@ -60,6 +60,10 @@ function Alive()
 end
 
 function Update()
+    if _G.FreezePlayerControl == true then
+        phySys:SetVelocity(this, Vec3.new(0,0,0))
+        return
+    end
     ChangeColorOnHit()
     targetPos = this:GetAISetting():GetTarget():GetTransform().mTranslate
     thisPos = this:GetTransform().mTranslate

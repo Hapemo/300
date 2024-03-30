@@ -109,6 +109,7 @@ function Update()
 
     if STATE == 0 then
         -- need to pause animation and initialize
+        _G.FreezePlayerControl = true
         bossEntity:GetAnimator():SetFrame(0.0) -- intialize initial position
         bossEntity:GetAnimator():PauseAnimation()
         bossEntity:GetTransform().mTranslate.x = savedbosspos.x
@@ -117,7 +118,7 @@ function Update()
         if firstTrigger == false then
             firstTrigger = true
 
-            _G.FreezePlayerControl = true
+            
             savedplayerrotate.x = cameraEntity:GetTransform().mRotate.x
             savedplayerrotate.y = cameraEntity:GetTransform().mRotate.y
             savedplayerrotate.z = cameraEntity:GetTransform().mRotate.z
