@@ -8,7 +8,7 @@ local savedplayerrotate = Vec3.new(0,0,0)
 
 local deadbosspos = Vec3.new(0, -30, -42.6)
 
-local STATE =  -1 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
+local STATE =  0 ------------------------------------ CHANGE THIS FOR INTRO---------------------------------------------
 local firstTrigger = false
 local bossEntity
 local cameraEntity
@@ -151,7 +151,7 @@ function Update()
     elseif STATE == 1 then
         -- boss intro fbx
         -- if _G.pause_animation_boss == false then
-        bossEntity:GetMeshRenderer():SetMesh("Boss_Intro", bossEntity)
+        -- bossEntity:GetMeshRenderer():SetMesh("Boss_Intro", bossEntity)
         bossEntity:GetAnimator():UnpauseAnimation()
 
         -- end
