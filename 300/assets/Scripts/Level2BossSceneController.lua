@@ -42,6 +42,20 @@ local loop3r = 0
 
 local graphicsSys
 local isfightingboss
+
+-- boss audio variables
+local boss_slam_audio
+local boss_roar_audio
+
+_G.pause_animation_boss = true --used for lv2 boss
+ 
+local objective_complete_quake_roar = false
+local quake_roar_played = false
+local initial_slam = false
+local secondary_slam = false
+local secondary_roar = false
+
+
 function Alive()
     initonce =false
     graphicsSys = systemManager:mGraphicsSystem()
@@ -49,10 +63,17 @@ function Alive()
     bossEntity:GetAnimator():PauseAnimation()
     inittwice = false
     isfightingboss = false
+    gameStateSys = systemManager:mGameStateSystem()
+
+    boss_slam_audio = gameStateSys:GetEntityByScene("BossSlamAudio", "Level2BossScene")
+    boss_roar_audio = gameStateSys:GetEntityByScene("BossRoarAudio", "Level2BossScene")
+
+
 end
 
 function Update()
     -- STATE = 1
+    -- print("STATE: " , STATE)
     cameraEntity = gameStateSys:GetEntity("Camera")
     bossEntity = gameStateSys:GetEntity("Level2Boss")
     gunEntity = gameStateSys:GetEntity("gun")
@@ -116,6 +137,11 @@ function Update()
                 cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(magnitude.x,magnitude.y)+magfloat
                 cameraEntity:GetTransform().mRotate.y = cameraEntity:GetTransform().mRotate.y+math.random(magnitude.x,magnitude.y)+magfloat
                 Quakeintervalcd =0
+
+                if  objective_complete_quake_roar  == false then 
+                    boss_roar_audio:GetAudio():SetPlay(1.0)
+                    objective_complete_quake_roar  = true
+                end
             end
         else
             quaking = 0
@@ -124,7 +150,11 @@ function Update()
 
     elseif STATE == 1 then
         -- boss intro fbx
+        -- if _G.pause_animation_boss == false then
+        bossEntity:GetMeshRenderer():SetMesh("Boss_Intro", bossEntity)
         bossEntity:GetAnimator():UnpauseAnimation()
+
+        -- end
 
         graphicsSys:IgnoreUIScene("UI")
         graphicsSys:IgnoreUIScene("Objectives2")
@@ -148,6 +178,28 @@ function Update()
             bossEntity:GetTransform().mTranslate.z = savedbosspos.z
         end
 
+        if bossEntity:GetAnimator():GetFrame() >= 50.0 then 
+            if initial_slam == false then 
+                boss_slam_audio:GetAudio():SetPlay(1.0)
+                initial_slam = true
+            end
+        end
+
+        if bossEntity:GetAnimator():GetFrame() >= 75.0 then 
+            if secondary_slam == false then 
+                boss_slam_audio:GetAudio():SetPlay(1.0)
+                secondary_slam = true
+            end
+        end
+
+        if bossEntity:GetAnimator():GetFrame() >= 95.0 then 
+            if secondary_roar == false then 
+                boss_roar_audio:GetAudio():SetPlay(1.0)
+                secondary_roar = true
+            end
+        end
+
+
         if(quaking<=QuakeLimit2)then
             quaking = quaking+FPSManager.GetDT()
             Quakeintervalcd= Quakeintervalcd+FPSManager.GetDT()
@@ -156,6 +208,12 @@ function Update()
                 cameraEntity:GetTransform().mRotate.x = cameraEntity:GetTransform().mRotate.x+math.random(magnitude.x,magnitude.y)+magfloat
                 cameraEntity:GetTransform().mRotate.y = cameraEntity:GetTransform().mRotate.y+math.random(magnitude.x,magnitude.y)+magfloat
                 Quakeintervalcd = 0
+
+                if quake_roar_played == false then 
+                    boss_roar_audio:GetAudio():SetPlay(1.0)
+                    quake_roar_played = true
+                end
+                
 
             end
             --quakinterv = quakinterv+0.0004
