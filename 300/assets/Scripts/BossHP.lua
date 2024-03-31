@@ -77,7 +77,7 @@ function Update()
             deathtimer = deathtimer + FPSManager.GetDT()
         end
 
-        if( deathtimer>1)then
+        if( deathtimer>3)then
 
             if controllerL2Script ~= nil then
                 controllerL2Script:RunFunction("FinishBoss")
