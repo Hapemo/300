@@ -50,7 +50,7 @@ function Update()
 
 
             -- boss_entity:GetAnimator():SetFrame(2)
-
+            _G.bossDeath = true
         end
 
 
@@ -66,7 +66,7 @@ function Update()
             controllerL2Script = controllerL2Scripts:GetScript("../assets/Scripts/ DialogueControllerLevel3.lua")
         
 
-            _G.bossDeath = true
+            
             
 
             
