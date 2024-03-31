@@ -135,7 +135,8 @@ function Update()
 
     elseif state == "SPRINT" then   -- charge toward last seen player position at high speed (change to 4. when collided with something)
         Helper.SetRealRotate(this, Vec3.new(0,Helper.DirectionToAngle(this, stareDirection),0))
-        if (_G.TrojanHorseEpicIntroState >= 5 and _G.TrojanHorseEpicIntroState <= 7) then return end
+        if _G.TrojanHorseEpicIntroState ~= nil and _G.TrojanHorseEpicIntroState ~= nil then
+        if (_G.TrojanHorseEpicIntroState >= 5 and _G.TrojanHorseEpicIntroState <= 7) then return end end
         -- Charge towards last seen player position at high speed
         phySys:SetVelocity(this, s3SprintVelocity);
         -- Stop and change state when collided with something
