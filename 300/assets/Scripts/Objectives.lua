@@ -49,11 +49,11 @@ function Alive()
     mobSpawnPos2.y = -11
     mobSpawnPos2.z = 63.6
 
-    mobSpawnPos3.x = -4.5
-    mobSpawnPos3.y = -6.555
-    mobSpawnPos3.z = -1.5
+    mobSpawnPos3.x = -20
+    mobSpawnPos3.y = -11
+    mobSpawnPos3.z = -14
 
-    mobSpawnPos4.x = 4.6
+    mobSpawnPos4.x = -17
     mobSpawnPos4.y = -11
     mobSpawnPos4.z = -13.5
 
