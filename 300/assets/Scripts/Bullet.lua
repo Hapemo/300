@@ -316,6 +316,7 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "PISTOL") then 
             if(_G.bossHP_healthbar_comp ~= nil) then 
                 _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - pistolDamage * _G.powerLevel
+                print("PISTOL, HP LEFT: " , _G.bossHP_healthbar_comp.health)
 
             end
         end
@@ -324,13 +325,15 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "REVOLVER") then 
             if(_G.bossHP_healthbar_comp ~= nil) then 
                 _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - revolverDamage * _G.powerLevel
-                print("REVOLVER BAWSE")
+                -- print("REVOLVER BAWSE")
+                print("REVOLVER, HP LEFT: " , _G.bossHP_healthbar_comp.health)
             end
         end
 
         if(bulletTag == "SHOTGUN") then 
             if(_G.bossHP_healthbar_comp ~= nil) then 
                 _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - shotGunDamage * _G.powerLevel
+                print("SHOTGUN, HP LEFT: " ,_G.bossHP_healthbar_comp.health)
 
             end
         end
@@ -338,7 +341,7 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "MACHINE_GUN") then 
             if(_G.bossHP_healthbar_comp ~= nil) then 
                 _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - machineGunDamage * _G.powerLevel
-
+                print("MACHINE GUN, HP LEFT: " , _G.bossHP_healthbar_comp.health)
             end
         end
     end

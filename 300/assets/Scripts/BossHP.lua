@@ -31,6 +31,7 @@ end
 
 function Update()
     this:GetUIrenderer():SetSlider(_G.bossHP_healthbar_comp.health / _G.bossHP_healthbar_comp.maxHealth)
+    -- print("BOSS HP: " , _G.bossHP_healthbar_comp.health)
 
     if(_G.bossHP_healthbar_comp.health < 0) then 
 
