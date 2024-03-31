@@ -9,7 +9,7 @@ local isInZone = false
 local currentSpawnTimer = 0 -- keeps track of how often enemy spawning interval
 local spawnTimer = 2.5 -- sets how long the enemy spawning interval is
 local currentEnemyCount = 0 -- keeps track of how many enemies there are in the map
-local maxEnemyCount = 20 -- sets how many enemies are allowed in the map
+local maxEnemyCount = 12 -- sets how many enemies are allowed in the map
 
 local mobSpawnPos1 = Vec3.new()
 local mobSpawnPos2 = Vec3.new()
