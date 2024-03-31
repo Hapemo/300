@@ -2318,6 +2318,7 @@ void MeshRenderer::SetMesh(const std::string& meshName, Entity inst)
 
 	mMeshRef.data = reinterpret_cast<void*>(systemManager->mResourceTySystem->get_mesh(guid));
 	mMeshPath = systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+	mMeshName = meshName;
 
 	GFX::Mesh* meshinst = reinterpret_cast<GFX::Mesh*>(mMeshRef.data);
 	if (inst.HasComponent<Animator>())
@@ -2381,10 +2382,17 @@ void MeshRenderer::SetMeshDelayed(const std::string& meshName, Entity inst)
 		// there is no animation, then set the mesh immediately
 		mMeshRef.data	= reinterpret_cast<void*>(meshinst);
 		mMeshPath		= systemManager->mResourceTySystem->compiled_geom_path + meshName + ".geom";
+		mMeshName		= meshName;
 
 		if (inst.HasComponent<Animator>())
 			inst.GetComponent<Animator>().mAnimator.SetAnimation(nullptr);	// reset the animation as needed
 	}
+}
+
+
+std::string MeshRenderer::GetMeshName()
+{
+	return mMeshName;
 }
 
 

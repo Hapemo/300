@@ -393,6 +393,7 @@ void LuaMeshRenderer()
         "MeshRenderer", sol::constructors<>(),
         "SetColor", &MeshRenderer::SetColor,
         "SetMesh", &MeshRenderer::SetMesh,
+        "GetMeshName", &MeshRenderer::GetMeshName,
         "SetMeshDelayed", &MeshRenderer::SetMeshDelayed,
         "SetTexture", &MeshRenderer::SetTexture);
 }
