@@ -25,16 +25,16 @@ function Alive()
     -- colors.x = direction.x/5
     -- colors.y = direction.y/5
     -- colors.z = direction.z/5
-    direction.x =( direction.x/10)*50
-    direction.y = (direction.y/10)*50
-    direction.z = (direction.z/10)*50
+    direction.x =( direction.x/10)*30
+    direction.y = (direction.y/10)*30
+    direction.z = (direction.z/10)*30
     thisEnt = Helper.GetScriptEntity(script_entity.id)
 end
 
 function Update()
     
     if(spawned == true)then
-        randomdeath = math.random(1,4)
+        randomdeath = math.random(3,6)
     end
     dt = FPSManager.GetDT()
   --  physicsSys = systemManager:mPhysicsSystem()
@@ -48,7 +48,7 @@ function Update()
     deathtime = deathtime + dt
 
     if(deathtime > randomdeath/2 and not spawnedchild) then
-        SpawnChildParticles(10)
+        SpawnChildParticles(30)
         spawnedchild = true
     end
 
