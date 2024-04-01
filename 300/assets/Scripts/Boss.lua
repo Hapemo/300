@@ -122,6 +122,11 @@ local play_sphere_audio
 local play_laser_audio
 
 local homing_audio
+
+-- Health Stuff
+local health_bar 
+local boss_dead = false
+
 function Alive()
     print("ALIVE")
     this = Helper.GetScriptEntity(script_entity.id)
@@ -163,12 +168,22 @@ function Alive()
     sphere_phase_audio = gameStateSys:GetEntity("SpherePhase")
     homing_audio = gameStateSys:GetEntity("HomingEyeballAudio")
 
-
+    
     -- debug_mode = true
 
 end
 
 function Update()
+    health_bar = this:GetHealthbar()
+
+    if health_bar ~= nil then 
+        -- print("BOSS HAS HEALTHBAR")
+        if health_bar.health <= 0 then 
+            -- print("BOSS DED")
+            boss_dead = true
+        end
+    end 
+
     if state~= 3 then
         play_sphere_audio = false
     end
@@ -179,7 +194,7 @@ function Update()
         laserPhaseAudio:SetStop()
     end
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
-    if _G.attacking == false and _G.FreezePlayerControl  == false and debug_mode == false then 
+    if _G.attacking == false and _G.FreezePlayerControl  == false and debug_mode == false and boss_dead == false then 
 
         -- [Recycle Attacks]
         -- Check if the current state checker has at least 4 "true" -> reset them 
@@ -235,7 +250,7 @@ function Update()
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
-    if _G.level3intro == false and debug_mode == false then 
+    if _G.level3intro == false and debug_mode == false and boss_dead == false then
         if state == 1 and _G.state_checker[1] == false then
 
             _G.attacking = true -- must include (to stop state choosing)
