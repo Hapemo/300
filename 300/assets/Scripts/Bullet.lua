@@ -49,6 +49,11 @@ local machineGunDamaged = false
 local boss_entity 
 local bossHP_healthbar_comp
 
+local boss_flinched = false
+local boss_flinched_cooldown = 3.0 
+local boss_flinched_timer = 0
+local boss_damaged = false
+
 function Alive()
     
 end
@@ -94,6 +99,29 @@ function Update()
         end
         break
     end
+
+    -- if boss_flinched == true then 
+    --     if boss_flinched_timer <= boss_flinched_cooldown then 
+    --         boss_flinched_timer = boss_flinched_timer + FPSManager.GetDT()
+    --     end
+    -- end
+
+
+    -- if boss_flinched == true then 
+    --     if(boss_entity:GetAnimator():IsEndOfAnimation()) then
+    --         boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
+    --         boss_flinched = false
+    --     end
+    -- end
+
+    if boss_flinched == true then 
+        boss_flinched_timer = boss_flinched_timer + FPSManager.GetDT()
+        if boss_flinched_timer >= boss_flinched_cooldown then 
+            boss_flinched = true
+        end
+    end
+
+  
 
 end
 
@@ -328,16 +356,16 @@ function OnTriggerEnter(Entity)
             if(bossHP_healthbar_comp ~= nil) then 
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - pistolDamage * _G.powerLevel
                 print("PISTOL, HP LEFT: " , bossHP_healthbar_comp.health)
-
+                boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
             end
         end
-
         
         if(bulletTag == "REVOLVER") then 
             if(bossHP_healthbar_comp ~= nil) then 
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - revolverDamage * _G.powerLevel
                 -- print("REVOLVER BAWSE")
                 print("REVOLVER, HP LEFT: " , bossHP_healthbar_comp.health)
+                boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
             end
         end
 
@@ -345,7 +373,7 @@ function OnTriggerEnter(Entity)
             if(bossHP_healthbar_comp ~= nil) then 
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - shotGunDamage * _G.powerLevel
                 print("SHOTGUN, HP LEFT: " ,bossHP_healthbar_comp.health)
-
+                boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
             end
         end
 
@@ -353,6 +381,7 @@ function OnTriggerEnter(Entity)
             if(bossHP_healthbar_comp ~= nil) then 
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - machineGunDamage * _G.powerLevel
                 print("MACHINE GUN, HP LEFT: " , bossHP_healthbar_comp.health)
+                boss_flinched = true
             end
         end
     end
