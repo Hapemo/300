@@ -3,7 +3,7 @@ local bulletLifeTime = 0
 local bulletDeathTime = 15
 
 -- Phase 3 attack from Boss Level (Lv 3) 
-local bullet_damage = 50 -- Adjust Accordingly
+local bullet_damage = 6 -- Adjust Accordingly
 
 
 local general
@@ -94,22 +94,24 @@ function Update()
         homing_duration = homing_duration - FPSManager.GetDT()
      end
 
-     print("HOMING DURATION: " , homing_duration)
+    --  print("HOMING DURATION: " , homing_duration)
 
      if stay_time <= 0 then
         homing_speed = initial_homing_speed
      end
      
     if homing_duration > 0 and homing_speed ~= 0 then 
-        direction_to_player = Subtract(player_position, homing_transform.mTranslate)  
+        direction_to_player = Subtract(player_position, this:GetTransform().mTranslate)  
         direction_to_player = Helper.Normalize(direction_to_player)
+
+        -- print("DIRECTION TO PLAYER :" , direction_to_player.x, direction_to_player.y, direction_to_player.z)
 
         direction_to_player.x =  direction_to_player.x * homing_speed
         direction_to_player.y =  direction_to_player.y * homing_speed
         direction_to_player.z =  direction_to_player.z * homing_speed
 
         -- Homing looking at you... (to a certain extent)
-        local angle_to_rotate = CalculateAngle(homing_transform.mTranslate, player_position, forward_vector)
+        local angle_to_rotate = CalculateAngle(this:GetTransform().mTranslate, player_position, forward_vector)
         local axis_to_rotate = Vec3.new()
         axis_to_rotate.x = 0 
         axis_to_rotate.y = angle_to_rotate * (180 / math.pi)
