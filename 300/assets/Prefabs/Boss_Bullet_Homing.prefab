@@ -1,5 +1,5 @@
 {
-    "entityid": 1048751,
+    "entityid": 1048580,
     "general": {
         "name": "Boss_Bullet_Homing",
         "tagid": 1,
@@ -19,9 +19,9 @@
             "z": 0.0
         },
         "translate": {
-            "x": 29.12758445739746,
-            "y": 20.690895080566406,
-            "z": 18.477083206176758
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
         }
     },
     "rigidbody": {
@@ -103,7 +103,7 @@
     "scripts": {
         "scriptscontainer": [
             {
-                "scriptFile": "../assets/Scripts/BossBullet.lua",
+                "scriptFile": "../assets/Scripts/HomingBullet.lua",
                 "variables": []
             }
         ]

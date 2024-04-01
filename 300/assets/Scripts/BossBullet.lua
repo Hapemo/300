@@ -22,17 +22,15 @@ function Alive()
 
     dmgAudioEnt = gameStateSys:GetEntity("DamageAudio")
 
-    -- homing_chuckle_audio = this:GetAudio()
 end
 
 function Update()
 
+    -- [Homing Missle] -> Health stuff
     if this:GetHealthbar().health <= 0 then 
         print("BULLET DED")
         systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
      end
-
-  
 
      bulletLifeTime = bulletLifeTime + FPSManager.GetDT()
 
@@ -40,17 +38,9 @@ function Update()
             systemManager.ecs:SetDeleteEntity(bulletObject)
         end
 
+     -- [Homing Missle] -> Health stuff (end)
 
-
-        for i , projectile in ipairs(_G.homing_projectiles) do
-        if this == projectile.entity then 
-            if(bulletLifeTime > bulletDeathTime) then
-                table.remove(_G.homing_projectiles, i) -- Delete entry in the table.
-                systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
-                break
-            end
-        end
-    end
+     
 
 end
 
@@ -82,24 +72,6 @@ function OnTriggerEnter(Entity)
             -- print("HP LEFT: ", player_healthbar_component.health)
             dmgAudioEnt:GetAudio():SetPlay(0.5)
         end
-
-        -- Update Database (Homing Bullets)
-        local deleted_id = 0
-
-        for i , projectile in ipairs(_G.homing_projectiles) do
-            if this == projectile.entity then 
-                table.remove(_G.homing_projectiles, i) -- Delete entry in the table.
-                systemManager.ecs:SetDeleteEntity(this) -- Delete the bullet upon contact
-                break
-            end
-        end
-
-        -- if(hello == nil) then 
-        --     print("OMG DELETED LA")
-        -- end
-        
-        
-        -- print("PLAYER HIT")
     end
 end
 

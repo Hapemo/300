@@ -1,5 +1,5 @@
 {
-    "entityid": 1048600,
+    "entityid": 17825830,
     "general": {
         "name": "Boss_Bullet_Homing_",
         "tagid": 1,
@@ -75,7 +75,9 @@
             0
         ]
     },
-    "animator": {},
+    "animator": {
+        "paused": false
+    },
     "scripts": {
         "scriptscontainer": [
             {

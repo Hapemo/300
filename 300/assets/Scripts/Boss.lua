@@ -231,7 +231,7 @@ function Update()
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
     -- state = 3 -- [OK]
-    -- state = 4 --[OK]
+    state = 4 --[OK]
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
@@ -482,7 +482,7 @@ function Update()
 
             -- Initially -> decides the number of homing to spawn
             if number_of_homing == 0 then 
-                number_of_homing = math.random(5, 8)
+                number_of_homing = math.random(5,8)
                 -- print("NUMBER OF HOMING: " , number_of_homing)
             end
 
@@ -501,14 +501,7 @@ function Update()
                     SpawnHomingSpheres()
                     homing_spawn_counter = homing_spawn_counter + 1 -- Increase the counter
                     homing_spawn_timer = 0   -- Reset the counter
-                    -- print("SPAWNING ORB")
                 end
-            end
-
-        
-
-            if homing_spawned == true then
-                UpdateHomingProjectiles()
             end
         end
 
@@ -623,7 +616,6 @@ end
 -- Bullet Attack 2 - Homing Spheres (From eyes to player)
 function SpawnHomingSpheres()
     -- Let's start by randomnizing the starting spawn point of the projectile
-    bulletSpeed = 5
     homing_audio:GetAudio():SetPlay(0.5)
     -- Spawning Logic (Start)
     -- for i = 0 , number_of_bullets do 
@@ -638,137 +630,16 @@ function SpawnHomingSpheres()
                                         spawn_point_translate.z + random_offset_z)
 
     -- homing_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
-    entity_ref = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing" ,bullet_spawn_position)
+    entity_ref = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing" , bullet_spawn_position)
 
-    local homing_bullet = 
-    {   
-        id = next_homing_id,
-        entity = entity_ref, 
-        position = entity_ref:GetTransform().mTranslate,  -- Note that this is randomnized by the previous few lines
-        direction = Vec3.new(0,0,0), 
-        forward = Vec3.new(0,0,1),
-        speed = 0,
-        stay_time = 2.0,      -- Time to stay still before homing (in seconds)
-        lock_on_time = 15.0,   -- Time to locks onto the player : Used as an internal timer (for each bullet to calculate how long to home and lock on)
-        lock_on_bool = false, -- To control when to home and when not to
-        chuckle_played = false -- Chuckle Audio
-    }
-
-    next_homing_id = next_homing_id + 1 -- Increment the id counter.
-
-    -- local test_transform = homing_bullet:GetTransform().mTranslate
-    -- local test_transform = projectile.entity:GetTransform()
-    -- print("Transform: " , homing_bullet.entity:GetTransform().mTranslate)
-    
-
-    -- local homing_bullet = systemManager.ecs:NewEntityFromPrefab("Boss_Bullet_Homing",bullet_spawn_position)
-
-    -- print("THIS HOMING BULLET POSITION: " , homing_bullet.position.x , " , " , homing_bullet.position.y  , " , " , homing_bullet.position.z)
-    table.insert(_G.homing_projectiles, homing_bullet)
-
-    homing_spawned = true -- to trigger "Update" Loop
-    -- number_of_homing_spawned = number_of_homing_spawned + 1
-
-    -- _G.bulletCounter = _G.bulletCounter + 1
-    
-
-        
-    -- end
-    -- Spawning Logic (End)
-
+    -- homing_spawned = true -- to trigger "Update" Loop
 end
 
+-- [M6 - 4/1] - Might Not Need anymore
 function UpdateHomingProjectiles()
-    -- local active_projectiles = 0 -- Counter to keep track of active projectiles
-    
-    for i , projectile in ipairs(_G.homing_projectiles) do
-        -- print("ID: " , projectile.id)
-        if projectile.entity ~= nil then 
-            -- counter = counter + 1
-            if projectile.speed == 0 then  -- projectile speed is set to 0 at the start
-                -- print("STAYING STILL")
-                -- Stay still for awhile
-                projectile.stay_time = projectile.stay_time - FPSManager.GetDT()  
-                -- print("PROJECTILE STAY TIME: " , projectile.stay_time)
-                if projectile.stay_time <= 0 then 
-                    -- Starts homing towards the player (by providing speed)
-                    -- print("Assigning Initial Speed - Homing")
-                    projectile.speed = initial_homing_speed
-                end
-            else
-                -- Lock onto the player after a delay
-                -- print("Projectile No : " , _G.bulletCounter)
-                -- print("PROJECTILE LOCK TIME: " , projectile.lock_on_time)
-                -- projectile.lock_on_time = projectile.lock_on_time - FPSManager.GetDT()
-                -- if projectile.lock_on_time > 0 then 
-                    -- print("CALCULATING DIRECTION TO GO.")
-                    
-               
-                    -- Subtract Vector 
-                    local directionToPlayer = Subtract(player_position, projectile.entity:GetTransform().mTranslate)
-                    projectile.direction = directionToPlayer
-                    
-                    -- print("PROJECTILE POS: " , projectile.position.x , ", " , projectile.position.y , ", " , projectile.position.z)
-                    -- print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
-                    directionToPlayer = Helper.Normalize(directionToPlayer)
-                    -- print("NORMALIZED DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
-
-                    directionToPlayer.x = directionToPlayer.x * projectile.speed
-                    directionToPlayer.y = directionToPlayer.y * projectile.speed
-                    directionToPlayer.z = directionToPlayer.z * projectile.speed
-
-                    -- Save the direction 
-                    if projectile.chuckle_played == false then
-                        projectile.entity:GetAudio():SetPlay(1.0)
-                        projectile.chuckle_played = true
-                    end
-                    
-                    -- M6 : Homing Rotation
-                    local angle_to_rotate = CalculateAngle(projectile.entity:GetTransform().mTranslate, player_position, projectile.forward)
-                    local axis_to_rotate = Vec3.new()
-                    axis_to_rotate.x = 0 
-                    axis_to_rotate.y = angle_to_rotate * (180 / math.pi)
-                    axis_to_rotate.z = 0
-                    
-                    Helper.SetRealRotateQuaternion(projectile.entity, axis_to_rotate, angle_to_rotate)
-
-                    if projectile.entity ~= nil then 
-               
-                        -- print("HO")
-                    end
-    
-
-                    -- print("ANGLE TO ROTATE: " , angle_to_rotate)
-                    
-                    -- Ensure projectile.entity is not nil before setting velocity
-                    if projectile.entity ~= nil then 
-                        -- print("ENTITY NAME: " , projectile.entity:GetGeneral().name)
-                        -- print("Entity Exists")
-                        -- print("SETTING VELOCITY")
-                        physicsSys:SetVelocity(projectile.entity,  projectile.direction)
-                        -- physicsSys:SetVelocity(projectile.entity, random_vec3)
-                    else
-                        print("Projectile entity is nil!")
-                    -- end
-                    -- print("SETTING VELOCITY")
-                    -- print("DIRECTION TO PLAYER: " , directionToPlayer.x ,  " , " , directionToPlayer.y , " , " , directionToPlayer.z)
-                    -- physicsSys:SetVelocity(projectile.entity, directionToPlayer)
-                end
-            end
-        end
-    end
-
-    if #_G.homing_projectiles == 0 then 
-        print("EMPTY LIAO")
-        _G.state_checker[4] = true
-        homing_spawned = false
-        homing_spawn_timer = 0    -- need to reset 
-        homing_spawn_counter = 0  -- Reset number of homing spawned
-        number_of_homing = 0      -- Reset number of homing required
-        _G.attacking = false           -- important to toggle state choose again
-        PrintAttackingStates()
-    end
+    print("UPDATE HOMING")
 end 
+
 function SummonMinions(summon_per_spawn_instance) 
     -- print("Number of Enemies to Summon: " , summon_per_spawn_instance)
 
