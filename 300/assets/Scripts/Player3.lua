@@ -352,13 +352,13 @@ function Update()
                 healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x - 0.01
                 healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y - 0.01
                 healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z - 0.01
-                print("i value: ", i)
-                print("hp color x: ", healthbar:GetUIrenderer().mColor.x)
+                -- print("i value: ", i)
+                -- print("hp color x: ", healthbar:GetUIrenderer().mColor.x)
             elseif(i < 1.6 and i >= 0.8) then
                 healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x + 0.01
                 healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y + 0.01
                 healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z + 0.01
-                print("hp color x: ", healthbar:GetUIrenderer().mColor.x)
+                --print("hp color x: ", healthbar:GetUIrenderer().mColor.x)
             elseif(i >= 1.6) then
                 i = 0
             end
@@ -368,7 +368,9 @@ function Update()
         end
     end
 
-    if(playerHealthCurrent >= 93) then
+    --print("current health: ", this:GetHealthbar().health)
+
+    if(this:GetHealthbar().health >= 93) then
         healthbar:GetUIrenderer().mColor = original_color
     end
 
