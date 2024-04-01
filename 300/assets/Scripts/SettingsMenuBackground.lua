@@ -86,18 +86,18 @@ function PauseUpdate()
 
     if (gammaIncrease:GetButton().mActivated) then
         clickSFX:SetPlay(1.0)
-        if (graphicssys:Getm_Gamma() < 4) then
+        if (graphicssys:Getm_Gamma() < 3) then
             local roundedNewVol = tonumber(string.format("%.1f", graphicssys:Getm_Gamma() + 0.1))
-            gammaFull:GetUIrenderer():SetSlider((roundedNewVol - 1.0) / 3.0);
+            gammaFull:GetUIrenderer():SetSlider((roundedNewVol - 0.1) / 2.9);
             graphicssys:Setm_Gamma(roundedNewVol);
         end
     end
 
     if (gammaDecrease:GetButton().mActivated) then
         clickSFX:SetPlay(1.0)
-        if (graphicssys:Getm_Gamma() > 1) then
+        if (graphicssys:Getm_Gamma() > 0.1) then
             local roundedNewVol = tonumber(string.format("%.1f", graphicssys:Getm_Gamma() - 0.1))
-            gammaFull:GetUIrenderer():SetSlider((roundedNewVol - 1.0) / 3.0);
+            gammaFull:GetUIrenderer():SetSlider((roundedNewVol - 0.1) / 2.9);
             graphicssys:Setm_Gamma(roundedNewVol);
         end
     end
