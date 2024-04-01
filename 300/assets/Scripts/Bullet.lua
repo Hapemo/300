@@ -71,8 +71,9 @@ function Update()
 
 
     boss_entity = gameStateSys:GetEntityByScene("Boss", "BossStuff")
-    bossHP_healthbar_comp= boss_entity:GetHealthbar()
-
+    if boss_entity:HasHealthbar() then
+        bossHP_healthbar_comp= boss_entity:GetHealthbar()
+    end
 
     -- bullethitAudioEntity = gameStateSys:GetEntity("Bullet Hit")
     -- bullethitAudioComp = bullethitAudioEntity:GetAudio()
