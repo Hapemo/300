@@ -336,7 +336,7 @@ function Update()
     end
 
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
-    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
+    healthbar = gameStateSys:GetEntityByScene("HealthBar", "UI")
 
     -- Player Health System End -- 
     
@@ -372,6 +372,8 @@ function Update()
                 healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x - 0.01
                 healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y - 0.01
                 healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z - 0.01
+                print("i value: ", i)
+                print("hp color x: ", healthbar:GetUIrenderer().mColor.x)
             elseif(i < 1.6 and i >= 0.8) then
                 healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x + 0.01
                 healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y + 0.01

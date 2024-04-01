@@ -306,7 +306,7 @@ function Update()
     if _G.FreezePlayerControl then return end
 
     -- healthbar = gameStateSys:GetEntityByScene("Health Bar","Objectives") // Changed to UI scene
-    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
+    healthbar = gameStateSys:GetEntityByScene("HealthBar", "UI")
 
     -- Player Health System Start -- 
     if isuiinit == false then

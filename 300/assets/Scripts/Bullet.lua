@@ -104,6 +104,7 @@ end
 function OnTriggerEnter(Entity)
     machineGunTimer = 0
     generalComponent = Entity:GetGeneral()
+    enemyDamagedAudio = gameStateSys:GetEntity("BulletImpactAudio")
 
     -- print("ddddddddddddddddddddddddd")
 

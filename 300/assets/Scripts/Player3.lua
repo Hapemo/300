@@ -321,7 +321,7 @@ function Update()
 
     --  healthbar = systemManager.ecs:NewEntityFromPrefab("Health Bar", healthbarSpawnPos)
 
-    healthbar = gameStateSys:GetEntity("HealthBar", "UI")
+    healthbar = gameStateSys:GetEntityByScene("HealthBar", "UI")
 
     --     objectiveBarEmptySpawnPos.x = 0.7;
     --     objectiveBarEmptySpawnPos.y = 0.7;
@@ -349,22 +349,22 @@ function Update()
             i = i + (1 * FPSManager:GetDT())
 
             if(i < 0.8) then
-                print("IM HERE LEH")
                 healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x - 0.01
                 healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y - 0.01
                 healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z - 0.01
+                print("i value: ", i)
+                print("hp color x: ", healthbar:GetUIrenderer().mColor.x)
             elseif(i < 1.6 and i >= 0.8) then
-                print("IM ALSO HERE LEH")
                 healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x + 0.01
                 healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y + 0.01
-                healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z + 0.01   
+                healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z + 0.01
+                print("hp color x: ", healthbar:GetUIrenderer().mColor.x)
             elseif(i >= 1.6) then
                 i = 0
             end
 
             this:GetHealthbar().health = this:GetHealthbar().health + 0.5 * FPSManager.GetDT(); -- regen hp
             -- print("REGENING")
-
         end
     end
 
@@ -374,7 +374,9 @@ function Update()
 
     healthbar:GetUIrenderer():SetSlider(this:GetHealthbar().health/playerHealthMax);
     -- print("current health: ", this:GetHealthbar().health)
-
+    if this:GetHealthbar().health <= 0 then
+        gameStateSys:ChangeGameState("LoseMenu")
+    end
     -- Player Health System End
 
     gunTranslate = gunEntity:GetTransform().mTranslate
@@ -1015,27 +1017,6 @@ function OnTriggerEnter(Entity)
     if (tagid == 4) then -- floor
         print("ON THE FLOOR")
     end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
 end
 
 function OnTriggerExit(Entity)

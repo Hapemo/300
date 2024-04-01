@@ -19,8 +19,8 @@ function Alive()
 
 
     if(bossHP_healthbar_comp ~= nil) then 
-        print("BOSS has healthbar")
-        print("BOSS HP: " , bossHP_healthbar_comp.health)
+        -- print("BOSS has healthbar")
+        -- print("BOSS HP: " , bossHP_healthbar_comp.health)
     end
     initonce = false
 
@@ -38,8 +38,8 @@ function Update()
     -- print("BOSS HP: " , _G.bossHP_healthbar_comp.health)
 
 
-    print("BOSS HP MAX: " , bossHP_healthbar_comp.maxHealth)
-    print("BOSS HP CURRENT: " , bossHP_healthbar_comp.health)
+    -- print("BOSS HP MAX: " , bossHP_healthbar_comp.maxHealth)
+    -- print("BOSS HP CURRENT: " , bossHP_healthbar_comp.health)
 
     if(bossHP_healthbar_comp.health < 0) then 
 
