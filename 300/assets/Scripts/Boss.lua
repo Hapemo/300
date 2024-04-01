@@ -67,6 +67,7 @@ local bullet_attack_checker = {false, false, false}     -- keep track which atta
 _G.attacking = false                                    -- boolean to control when to choose state (used in [BossLaserBeamPhase.lua])
 local number_of_fire = 0
 local stop_firing_at = 10
+local mesh_set_projectile = false
 
 -- [4] Summon Bullet + Homing Bullets (From Boss' Mouth / Front) 
 --     -> Players have to shoot them to break them
@@ -79,7 +80,8 @@ local homing_spawned = false
 local homing_spawn_timer = 0                            -- Timer that increament with DT
 local homing_spawn_period = 1.0                         -- Time to spawn (in between each sphere)
 local homing_spawn_counter = 0                          -- Counter to keep track how many homing bullets have been spawned
--- local homing_start = false
+local homing_timer = 0 
+local homing_state_change = 6.0
 
 local homing_bullet
 local next_homing_id = 0                                -- Used in [SpawnHomingSpheres] -> for ID recognition (used for deletion logic)
@@ -126,6 +128,8 @@ local homing_audio
 -- Health Stuff
 local health_bar 
 local boss_dead = false
+
+
 
 function Alive()
     print("ALIVE")
@@ -245,8 +249,8 @@ function Update()
     -- Debug States
     -- state = 1 --[OK]
     -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-    -- state = 3 -- [OK]
-    state = 4 --[OK]
+    state = 3 -- [OK]
+    -- state = 4 --[OK]
     -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
@@ -480,6 +484,15 @@ function Update()
                     fire_timer = 0 -- reset timer
                     print("NO OF WAVES: " , no_of_waves_1)
                     SpawnBulletsPattern1(no_of_waves_1)
+                    if mesh_set_projectile == false then 
+                        this:GetMeshRenderer():SetMesh("Boss_Projectile", this)
+                        mesh_set_projectile = true
+                    end 
+
+                    if(this:GetAnimator():IsEndOfAnimation()) then
+                        print("END PROJECTILE")
+                        this:GetMeshRenderer():SetFrame(60)
+                    end
                     number_of_fire = number_of_fire + 1
                 else -- Exit State (Condition)
                     _G.state_checker[3] = true
@@ -517,7 +530,23 @@ function Update()
                     homing_spawn_counter = homing_spawn_counter + 1 -- Increase the counter
                     homing_spawn_timer = 0   -- Reset the counter
                 end
+            else 
+                homing_timer = homing_timer + FPSManager.GetDT()
             end
+
+            if homing_timer >= homing_spawn_period then 
+                print("CHANGING OUT OF STATE 4 : Homing")
+                _G.state_checker[4] = true
+                homing_spawn_timer = 0    -- need to reset 
+                homing_spawn_counter = 0  -- Reset number of homing spawned
+                number_of_homing = 0      -- Reset number of homing required
+                homing_timer = 0 
+                _G.attacking = false           -- important to toggle state choose again
+                PrintAttackingStates()
+            end
+
+
+            
         end
 
 

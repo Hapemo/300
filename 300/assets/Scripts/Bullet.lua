@@ -356,7 +356,9 @@ function OnTriggerEnter(Entity)
             if(bossHP_healthbar_comp ~= nil) then 
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - pistolDamage * _G.powerLevel
                 print("PISTOL, HP LEFT: " , bossHP_healthbar_comp.health)
-                boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
+                if _G.attacking == false then 
+                     boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
+                end
             end
         end
         
@@ -365,7 +367,9 @@ function OnTriggerEnter(Entity)
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - revolverDamage * _G.powerLevel
                 -- print("REVOLVER BAWSE")
                 print("REVOLVER, HP LEFT: " , bossHP_healthbar_comp.health)
-                boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
+                if _G.attacking == false then 
+                    boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
+                end
             end
         end
 
@@ -373,7 +377,9 @@ function OnTriggerEnter(Entity)
             if(bossHP_healthbar_comp ~= nil) then 
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - shotGunDamage * _G.powerLevel
                 print("SHOTGUN, HP LEFT: " ,bossHP_healthbar_comp.health)
-                boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
+                if _G.attacking == false then 
+                    boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
+                end
             end
         end
 
