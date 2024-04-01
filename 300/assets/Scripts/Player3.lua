@@ -349,10 +349,12 @@ function Update()
             i = i + (1 * FPSManager:GetDT())
 
             if(i < 0.8) then
+                print("IM HERE LEH")
                 healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x - 0.01
                 healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y - 0.01
                 healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z - 0.01
             elseif(i < 1.6 and i >= 0.8) then
+                print("IM ALSO HERE LEH")
                 healthbar:GetUIrenderer().mColor.x = healthbar:GetUIrenderer().mColor.x + 0.01
                 healthbar:GetUIrenderer().mColor.y = healthbar:GetUIrenderer().mColor.y + 0.01
                 healthbar:GetUIrenderer().mColor.z = healthbar:GetUIrenderer().mColor.z + 0.01   

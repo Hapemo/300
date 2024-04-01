@@ -46,12 +46,15 @@ local machineGunTimer = 0
 local machineGunMax = 4
 local machineGunDamaged = false
 
+local boss_entity 
+local bossHP_healthbar_comp
 
 function Alive()
     
 end
 
 function Update()
+
 
     if machineGunDamaged == true then 
         machineGunTimer = machineGunTimer + FPSManager:GetDT()
@@ -65,6 +68,11 @@ function Update()
 
     viewVec = Camera_Scripting.GetDirection(cameraEntity)
     physicsSys = systemManager:mPhysicsSystem()
+
+
+    boss_entity = gameStateSys:GetEntityByScene("Boss", "BossStuff")
+    bossHP_healthbar_comp= boss_entity:GetHealthbar()
+
 
     -- bullethitAudioEntity = gameStateSys:GetEntity("Bullet Hit")
     -- bullethitAudioComp = bullethitAudioEntity:GetAudio()
@@ -305,6 +313,7 @@ function OnTriggerEnter(Entity)
     --     end
     -- end
 
+
     if(tagid == 14) then 
         -- print("BAWSE")
         
@@ -314,34 +323,34 @@ function OnTriggerEnter(Entity)
         end
 
         if(bulletTag == "PISTOL") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - pistolDamage * _G.powerLevel
-                print("PISTOL, HP LEFT: " , _G.bossHP_healthbar_comp.health)
+            if(bossHP_healthbar_comp ~= nil) then 
+                bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - pistolDamage * _G.powerLevel
+                print("PISTOL, HP LEFT: " , bossHP_healthbar_comp.health)
 
             end
         end
 
         
         if(bulletTag == "REVOLVER") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - revolverDamage * _G.powerLevel
+            if(bossHP_healthbar_comp ~= nil) then 
+                bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - revolverDamage * _G.powerLevel
                 -- print("REVOLVER BAWSE")
-                print("REVOLVER, HP LEFT: " , _G.bossHP_healthbar_comp.health)
+                print("REVOLVER, HP LEFT: " , bossHP_healthbar_comp.health)
             end
         end
 
         if(bulletTag == "SHOTGUN") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - shotGunDamage * _G.powerLevel
-                print("SHOTGUN, HP LEFT: " ,_G.bossHP_healthbar_comp.health)
+            if(bossHP_healthbar_comp ~= nil) then 
+                bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - shotGunDamage * _G.powerLevel
+                print("SHOTGUN, HP LEFT: " ,bossHP_healthbar_comp.health)
 
             end
         end
 
         if(bulletTag == "MACHINE_GUN") then 
-            if(_G.bossHP_healthbar_comp ~= nil) then 
-                _G.bossHP_healthbar_comp.health = _G.bossHP_healthbar_comp.health - machineGunDamage * _G.powerLevel
-                print("MACHINE GUN, HP LEFT: " , _G.bossHP_healthbar_comp.health)
+            if(bossHP_healthbar_comp ~= nil) then 
+                bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - machineGunDamage * _G.powerLevel
+                print("MACHINE GUN, HP LEFT: " , bossHP_healthbar_comp.health)
             end
         end
     end

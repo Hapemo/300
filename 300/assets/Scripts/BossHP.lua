@@ -1,5 +1,5 @@
 local boss_entity 
-_G.bossHP_healthbar_comp = nil
+local bossHP_healthbar_comp
 
 local this -- hp bar
 local initonce
@@ -9,18 +9,18 @@ local deathtimer =0
 
 function Alive()
     gameStateSys = systemManager:mGameStateSystem()
-    boss_entity = gameStateSys:GetEntityByScene("Boss", "BossStuff")
+
 
     this = Helper.GetScriptEntity(script_entity.id)
 
     -- if(this ~= nil) then 
     --     print("NOT NULL")
     -- end
-    _G.bossHP_healthbar_comp= boss_entity:GetHealthbar()
 
-    if(_G.bossHP_healthbar_comp ~= nil) then 
+
+    if(bossHP_healthbar_comp ~= nil) then 
         print("BOSS has healthbar")
-        print("BOSS HP: " , _G.bossHP_healthbar_comp.health)
+        print("BOSS HP: " , bossHP_healthbar_comp.health)
     end
     initonce = false
 
@@ -30,10 +30,18 @@ function Alive()
 end
 
 function Update()
-    this:GetUIrenderer():SetSlider(_G.bossHP_healthbar_comp.health / _G.bossHP_healthbar_comp.maxHealth)
+
+    boss_entity = gameStateSys:GetEntityByScene("Boss", "BossStuff")
+    bossHP_healthbar_comp= boss_entity:GetHealthbar()
+
+    this:GetUIrenderer():SetSlider(bossHP_healthbar_comp.health / bossHP_healthbar_comp.maxHealth)
     -- print("BOSS HP: " , _G.bossHP_healthbar_comp.health)
 
-    if(_G.bossHP_healthbar_comp.health < 0) then 
+
+    print("BOSS HP MAX: " , bossHP_healthbar_comp.maxHealth)
+    print("BOSS HP CURRENT: " , bossHP_healthbar_comp.health)
+
+    if(bossHP_healthbar_comp.health < 0) then 
 
         if initonce == false then
             initonce = true
@@ -69,7 +77,7 @@ function Update()
             deathtimer = deathtimer + FPSManager.GetDT()
         end
 
-        if( deathtimer>2)then
+        if( deathtimer>1)then
 
             if controllerL2Script ~= nil then
                 controllerL2Script:RunFunction("FinishBoss")
