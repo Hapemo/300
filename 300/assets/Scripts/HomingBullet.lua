@@ -3,7 +3,7 @@ local bulletLifeTime = 0
 local bulletDeathTime = 15
 
 -- Phase 3 attack from Boss Level (Lv 3) 
-local bullet_damage = 6 -- Adjust Accordingly
+local bullet_damage = 50 -- Adjust Accordingly
 
 
 local general
@@ -151,15 +151,8 @@ function OnTriggerEnter(Entity)
             -- print("DAMAGE TAKEN: " , bullet_damage)
             -- print("HP LEFT: ", player_healthbar_component.health)
             dmgAudioEnt:GetAudio():SetPlay(0.5)
+            systemManager.ecs:SetDeleteEntity(this)
         end
-
-
-        -- if(hello == nil) then 
-        --     print("OMG DELETED LA")
-        -- end
-        
-        
-        -- print("PLAYER HIT")
     end
 end
 
