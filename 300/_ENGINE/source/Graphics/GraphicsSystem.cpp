@@ -1755,7 +1755,7 @@ void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned
 	else
 		texIndex = -2;
 
-	vec4 healthColor = vec4(healthbar.mHealthColor.x, healthbar.mHealthColor.y, healthbar.mHealthColor.z, healthbarRatio);
+	vec4 healthColor = vec4(healthbar.mBackColor.x, healthbar.mBackColor.y, healthbar.mBackColor.z, healthbarRatio);
 	m_HealthbarMesh.mColors.push_back(healthColor);
 
 	float frameFlag{ -5.f };
@@ -1764,7 +1764,7 @@ void GraphicsSystem::AddHealthbarInstance(Entity e, const vec3& camPos, unsigned
 	if (texHandle > 0)
 		m_HealthbarMesh.mTexEntID.push_back(vec4(texIndex + 0.5f, -2.f, frameFlag, 0.f));	// set y component for checking at shader side, z for frame
 	else
-		m_HealthbarMesh.mTexEntID.push_back(healthbar.mBackColor);
+		m_HealthbarMesh.mTexEntID.push_back(healthbar.mHealthColor);
 	// Update LTW matrix
 	m_HealthbarMesh.mLTW.push_back(world);
 }
