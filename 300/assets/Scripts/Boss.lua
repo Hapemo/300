@@ -56,6 +56,9 @@ local fire_rate = 0.5
 local fire_timer = 0
 local next_fire_time = 1.0
 
+local fire_delay = 2.0
+local fire_delay_timer = 0
+
 -- Bullet Hell #1 - Circular Pulse
 local angles_to_spawn_from = {0, 45 , 90 , 135 , 180}
 local no_of_waves_1 = 5                                 -- used to keep track how many waves of bullets to spawn
@@ -474,32 +477,42 @@ function Update()
 
             fire_timer = fire_timer +  FPSManager.GetDT()
 
+            fire_delay = fire_delay + FPSManager.GetDT()
+
             if(random_wave_generator == false) then 
                 random_wave_generator = true 
                 no_of_waves_1 = math.random(5, 8) -- can generate between 5 to 10 waves of bullets
             end
 
-            if fire_timer > next_fire_time then 
-                if number_of_fire < stop_firing_at then 
-                    fire_timer = 0 -- reset timer
-                    print("NO OF WAVES: " , no_of_waves_1)
-                    SpawnBulletsPattern1(no_of_waves_1)
-                    if mesh_set_projectile == false then 
-                        this:GetMeshRenderer():SetMesh("Boss_Projectile", this)
-                        mesh_set_projectile = true
-                    end 
+            -- Happens once only
+            if mesh_set_projectile == false then 
+                this:GetMeshRenderer():SetMesh("Boss_Projectile", this)
+                mesh_set_projectile = true
+            end 
 
-                    if(this:GetAnimator():IsEndOfAnimation()) then
-                        print("END PROJECTILE")
-                        this:GetMeshRenderer():SetFrame(60)
+            if this:GetAnimator():GetFrame() >= 85 then 
+                this:GetMeshRenderer():SetMesh("Boss_Projectile", this)
+                this:GetAnimator():SetFrame(60)
+            end
+
+            if fire_delay > fire_delay_timer then  -- to account syncing of animation and projectiles coming out
+                if fire_timer > next_fire_time then 
+                    if number_of_fire < stop_firing_at then 
+                        fire_timer = 0 -- reset timer
+                        
+                        SpawnBulletsPattern1(no_of_waves_1)
+    
+                        number_of_fire = number_of_fire + 1
+                    else -- Exit State (Condition)
+                        _G.state_checker[3] = true
+                        _G.attacking = false
+                        mesh_set_projectile = false
+                        PrintAttackingStates()
                     end
-                    number_of_fire = number_of_fire + 1
-                else -- Exit State (Condition)
-                    _G.state_checker[3] = true
-                    _G.attacking = false
-                    PrintAttackingStates()
                 end
             end
+           
+
         end
 
         -- [4] Homing Eyeballs (From Boss' Mouth / Face)
