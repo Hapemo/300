@@ -109,6 +109,16 @@ void MeshRenderer::DeserializeSelf(rapidjson::Value& reader)
 	}
 
 	Deserialize(reader, "mesh", mMeshPath);
+
+	// Find the position of the last forward slash
+	size_t slashPos = mMeshPath.find_last_of('/');
+
+	// Find the position of the period
+	size_t dotPos = mMeshPath.find_last_of('.');
+
+	// Extract the mesh name between the last slash and the period
+	mMeshName = mMeshPath.substr(slashPos + 1, dotPos - slashPos - 1);
+
 	//Deserialize(reader, "texturecont", mTextureCont, 5);
 	for (int i = 0; i < 6; ++i)
 	{
