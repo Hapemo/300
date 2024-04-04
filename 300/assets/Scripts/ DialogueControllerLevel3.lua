@@ -136,6 +136,8 @@ end
 function UpdateDialogues()
     if currState == "intro" then
         if inputMapSys:GetButtonDown("skip") then 
+            print("SKIPPED")
+            _G.lv3_intro_dialogue_done = true
             if Intro2Progress >= 1.0 then
                 EndDialogue()
                 finish = true

@@ -2,6 +2,7 @@ local this
 
 -- Disable everything (MECHANIC WISE) -> development mode. doing audio
 local debug_mode = false
+_G.lv3_intro_dialogue_done = false
 
 -- Phase 1 : Enemyspawn Phase
 local enemyType
@@ -21,8 +22,8 @@ local portals = {}                                      -- Table of Portals
 
 -- Phase 1 : Audio Stuff
 local roar_audio
+local roar_truncated_audio
 local initial_roar = false
-
 
 
 -- Phase 2 : Groundslam Phase
@@ -58,6 +59,9 @@ local next_fire_time = 1.0
 
 local fire_delay = 2.0
 local fire_delay_timer = 0
+local phase3_roar_bool = false
+local phase3_roar_timer = 0 
+local phase3_roar_delay = 0.9
 
 -- Bullet Hell #1 - Circular Pulse
 local angles_to_spawn_from = {0, 45 , 90 , 135 , 180}
@@ -170,6 +174,7 @@ function Alive()
     -- Audio Stuff
     portal_audio = gameStateSys:GetEntity("SummonPortalAudio")
     roar_audio = gameStateSys:GetEntity("RoarAudio")
+    roar_truncated_audio = gameStateSys:GetEntity("RoarTruncatedAudio")
     roar_slam_audio = gameStateSys:GetEntity("RoarSlamAudio")
     boss_slam_audio = gameStateSys:GetEntity("BossSlamAudio")
     sphere_phase_audio = gameStateSys:GetEntity("SpherePhase")
@@ -232,32 +237,18 @@ function Update()
 
         -- currentBossStateTimer = 0
     end
-     -- Stop Animation 
-    -- if(this:GetAnimator():IsEndOfAnimation()) then
-    --     if roar_slammed_state == "IDLE" then
-    --         this:GetMeshRenderer():SetMesh("Boss_Idle" , this)
-    --     end
-    -- end
-
-
-
-   
-
-
-
-    -- if currentBossStateTimer >= maxBossStateTimer then
-     
-    -- end
-
-    -- Debug States
-    -- state = 1 --[OK]
-    -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-    state = 3 -- [OK]
-    -- state = 4 --[OK]
-    -- state = 5 -- [OK]
 
     --  Added [3/11] -> to disable when cutscene is on 
-    if _G.level3intro == false and debug_mode == false and boss_dead == false then
+    if _G.lv3_intro_dialogue_done == true and _G.level3intro == false and debug_mode == false and boss_dead == false then
+
+        print("RUNNING NOT SUPPOSED TO")
+         -- Debug States
+        -- state = 1 --[OK]
+        -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
+        state = 3 -- [OK]
+        -- state = 4 --[OK]
+        -- state = 5 -- [OK]
+
         if state == 1 and _G.state_checker[1] == false then
 
             _G.attacking = true -- must include (to stop state choosing)
@@ -479,9 +470,20 @@ function Update()
 
             fire_delay = fire_delay + FPSManager.GetDT()
 
+            if phase3_roar_bool == false then 
+                phase3_roar_timer = phase3_roar_timer + FPSManager.GetDT()
+            end
+
             if(random_wave_generator == false) then 
                 random_wave_generator = true 
                 no_of_waves_1 = math.random(5, 8) -- can generate between 5 to 10 waves of bullets
+            end
+
+            -- Sync Audio to [Projectile Animation]
+            if  phase3_roar_timer >= phase3_roar_delay then 
+                roar_truncated_audio:GetAudio():SetPlay(1.0)
+                phase3_roar_timer = 0
+                phase3_roar_bool = true
             end
 
             -- Happens once only
@@ -492,18 +494,19 @@ function Update()
 
             if this:GetAnimator():GetFrame() >= 85 then 
                 this:GetMeshRenderer():SetMesh("Boss_Projectile", this)
-                this:GetAnimator():SetFrame(60)
+                this:GetAnimator():SetFrame(36)
             end
 
             if fire_delay > fire_delay_timer then  -- to account syncing of animation and projectiles coming out
                 if fire_timer > next_fire_time then 
                     if number_of_fire < stop_firing_at then 
                         fire_timer = 0 -- reset timer
-                        
+
                         SpawnBulletsPattern1(no_of_waves_1)
     
                         number_of_fire = number_of_fire + 1
                     else -- Exit State (Condition)
+                        phase3_roar_bool = false
                         _G.state_checker[3] = true
                         _G.attacking = false
                         mesh_set_projectile = false
