@@ -25,9 +25,9 @@ enum STATE : unsigned char;
 class AudioSystem
 {
 public:
-	int MAX_AUDIO_FILES_PLAYING = 1016;				                  // Number of Sounds (that are allowed to be played simultaneously)
+	int MAX_AUDIO_FILES_PLAYING = 516;				                  // Number of Sounds (that are allowed to be played simultaneously)
 	int NO_OF_BGM_CHANNELS_TO_INIT = 16;                              // we do not need so many channels for BGM
-	int NO_OF_SFX_CHANNELS_TO_INIT = 1000; 
+	int NO_OF_SFX_CHANNELS_TO_INIT = 500; 
 
 public:
 	AudioSystem() = default;
