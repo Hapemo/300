@@ -99,6 +99,17 @@ local initial_homing_speed = 8                         -- Starting Homing Speed
 
 -- [5] Lazer Attack 
 _G.activateLazerScript = false
+local mesh_set_laser = false
+local phase5_roar_delay = 0.9
+local phase5_roar_timer = 0
+_G.phase5_roar_bool = false
+local play_laser_audio = false
+local play_laser_delay = 1.5
+local play_laser_timer = 0
+
+local lazer_appear_bool = false
+local lazer_appear_timer = 0
+local lazer_appear_delay = 1.5
 
 -- Boss states
 local state = 0
@@ -128,7 +139,8 @@ local boss_slam_audio
 local sphere_phase_audio
 
 local play_sphere_audio
-local play_laser_audio
+
+
 
 local homing_audio
 
@@ -241,13 +253,13 @@ function Update()
     --  Added [3/11] -> to disable when cutscene is on 
     if _G.lv3_intro_dialogue_done == true and _G.level3intro == false and debug_mode == false and boss_dead == false then
 
-        print("RUNNING NOT SUPPOSED TO")
+        -- print("RUNNING NOT SUPPOSED TO")
          -- Debug States
         -- state = 1 --[OK]
         -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-        state = 3 -- [OK]
+        -- state = 3 -- [OK]
         -- state = 4 --[OK]
-        -- state = 5 -- [OK]
+        state = 5 -- [OK]
 
         if state == 1 and _G.state_checker[1] == false then
 
@@ -567,15 +579,41 @@ function Update()
 
 
         if state == 5 and _G.state_checker[5] == false then 
-            if play_laser_audio == false then
-                play_laser_audio = true
-                -- laser_phase = gameStateSys:GetEntity("LaserPhase")
-                -- laserPhaseAudio = laser_phase:GetAudio()
-                -- laserPhaseAudio:SetPlay(0.5)
+            if _G.phase5_roar_bool == false then 
+                phase5_roar_timer = phase5_roar_timer + FPSManager.GetDT()
             end
-            -- print("LAZER ATTACK")
-            _G.attacking = true -- must include (to stop state choosing)
-            _G.activateLazerScript = true
+
+            if play_laser_audio == false then 
+                play_laser_timer = play_laser_timer + FPSManager.GetDT()
+            end
+
+            if lazer_appear_bool == false then 
+                lazer_appear_timer = lazer_appear_timer + FPSManager.GetDT()
+            end
+
+            -- Sync Audio to [Projectile Animation]
+            if  phase5_roar_timer >= phase5_roar_delay then 
+                roar_truncated_audio:GetAudio():SetPlay(1.0)
+                phase5_roar_timer = 0
+                _G.phase5_roar_bool = true
+            end
+        
+            if mesh_set_laser == false then 
+                this:GetMeshRenderer():SetMesh("Boss_Laser", this)
+                mesh_set_laser = true
+            end
+
+            if play_laser_timer >= play_laser_delay then
+                laser_phase:GetAudio():SetPlay(0.5)
+                play_laser_audio = true
+                play_laser_timer = 0
+            end
+            
+            if lazer_appear_timer >= lazer_appear_delay then 
+                _G.attacking = true -- must include (to stop state choosing)
+                _G.activateLazerScript = true
+            end
+      
         end
     end
 end

@@ -51,7 +51,7 @@ function Update()
     if(_G.activateLazerScript == true) then 
 
         if laser_audio_played == false then 
-            laserPhaseAudio:SetPlay(0.5)
+            -- laserPhaseAudio:SetPlay(0.5)
             laser_audio_played = true
         end
         lazer_timer = lazer_timer + FPSManager.GetDT()  
@@ -61,7 +61,8 @@ function Update()
             translation.y = -1.19
             angle = angle + speed * (FPSManager.GetDT() * speed)
             Helper.SetRealRotateQuaternion(ent, axis, angle)
-        else            
+        else 
+            _G.phase5_roar_bool = false           
             laserPhaseAudio:SetStop()
             local position = Vec3.new(0 , - 100, 8.5)
             Helper.SetTranslate(ent, position)
