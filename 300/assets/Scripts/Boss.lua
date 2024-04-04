@@ -9,6 +9,10 @@ _G.just_enter_5 = true
 local just_enter_3 = true 
 local just_enter_2 = true
 
+_G.state_selected = false
+
+local state_internal_chosen = false
+
 
 -- Phase 1 : Enemyspawn Phase
 local enemyType
@@ -107,14 +111,14 @@ local initial_homing_speed = 8                         -- Starting Homing Speed
 _G.activateLazerScript = false
 local mesh_set_laser = false
 local phase5_roar_delay = 0.9
-local phase5_roar_timer = 0
+_G.phase5_roar_timer = 0
 _G.phase5_roar_bool = false
 local play_laser_audio = false
 local play_laser_delay = 1.5
-local play_laser_timer = 0
+_G.play_laser_timer = 0
 
 local lazer_appear_bool = false
-local lazer_appear_timer = 0
+_G.lazer_appear_timer = 0
 local lazer_appear_delay = 1.5
 
 -- Boss states
@@ -226,30 +230,44 @@ function Update()
     -- Tentative random switcher between boss states, replace with HP after other states implemented. 100% HP Left = Phase 1, 66% HP Left = Phase 2, 33% HP Left = Phase 3
     if _G.attacking == false and _G.FreezePlayerControl  == false and debug_mode == false and boss_dead == false then 
 
-        -- [Recycle Attacks]
-        -- Check if the current state checker has at least 4 "true" -> reset them 
-        local state_true_counter = 0 
+        if _G.state_selected == false then 
+            -- [Recycle Attacks]
+            -- Check if the current state checker has at least 4 "true" -> reset them 
+            local state_true_counter = 0 
 
-        for i = 1, #_G.state_checker do
-            if _G.state_checker[i] == true then 
-                state_true_counter = state_true_counter + 1
-            end 
-        end
 
-        if state_true_counter >= 4 then 
             for i = 1, #_G.state_checker do
-                if _G.state_checker[i] == false then 
-                    state = i 
-                    -- print("STATE CHOSEN: " , state)
-                else 
-                    _G.state_checker[i] = false -- reset it for next cycle use
+                if _G.state_checker[i] == true then 
+                    state_true_counter = state_true_counter + 1
+                 
                 end 
             end
-            PrintAttackingStates()
-            
-        else 
-            state = math.random(1, 5)
-            -- print("STATE CHOSEN: " , state)
+            print("STATE TRUE COUNTER: " , state_true_counter)
+
+            if state_true_counter >= 4 then 
+                for i = 1, #_G.state_checker do
+                    if _G.state_checker[i] == false then 
+                        state = i 
+                        print("STATE CHOSEN: " , state)
+                    end 
+                end
+
+                for i = 1, #_G.state_checker do
+                    _G.state_checker[i] = false 
+                end
+
+                PrintAttackingStates()
+                
+            else 
+                state = math.random(1, 5)
+                while _G.state_checker[state] == true do
+                    state = math.random(1, 5)
+                end
+           
+                print("STATE CHOSEN: " , state)
+            end
+
+            _G.state_selected = true
         end
 
 
@@ -278,7 +296,7 @@ function Update()
 
             -- Decide how many enemies to spawn this phase.
             if total_number_of_enemies_to_spawn == 0 then 
-                total_number_of_enemies_to_spawn = math.random(4,7)
+                total_number_of_enemies_to_spawn = math.random(2,4)
                 print("NUMBER OF ENEMIES TO SPAWN: " , total_number_of_enemies_to_spawn)
             end
 
@@ -342,6 +360,9 @@ function Update()
                 PrintAttackingStates()
                 phase_1_timer = 0              -- reset toimer
                 initial_roar = false
+                _G.state_selected = false
+                currentEnemySpawnResetTimer = 0
+                _G.number_of_spawned_in_level_3 = 0
             end
 
         end
@@ -474,10 +495,14 @@ function Update()
                 _G.Boss_Not_Flinchable = false
                 just_enter_2 = true
                 print("DONE SLAM")
+                PrintAttackingStates()
                 _G.state_checker[2] = true
                 _G.attacking = false
                 groundSlamMax = 0
                 smashed = false 
+                _G.state_selected = false
+                slam_audio_timer = 0
+                currentGroundSlamResetTimer = 0
             end
 
         end
@@ -549,6 +574,10 @@ function Update()
                         _G.attacking = false
                         mesh_set_projectile = false
                         PrintAttackingStates()
+                        _G.state_selected = false
+                        fire_timer = 0
+                        fire_delay = 0
+                        number_of_fire = 0
                     end
                 end
             end
@@ -597,6 +626,7 @@ function Update()
                 homing_timer = 0 
                 _G.attacking = false           -- important to toggle state choose again
                 PrintAttackingStates()
+                _G.state_selected = false
             end
         end
 
@@ -608,21 +638,21 @@ function Update()
             end
 
             if _G.phase5_roar_bool == false then 
-                phase5_roar_timer = phase5_roar_timer + FPSManager.GetDT()
+                _G.phase5_roar_timer = _G.phase5_roar_timer + FPSManager.GetDT()
             end
 
             if play_laser_audio == false then 
-                play_laser_timer = play_laser_timer + FPSManager.GetDT()
+                _G.play_laser_timer = _G.play_laser_timer + FPSManager.GetDT()
             end
 
             if lazer_appear_bool == false then 
-                lazer_appear_timer = lazer_appear_timer + FPSManager.GetDT()
+                _G.lazer_appear_timer = _G.lazer_appear_timer + FPSManager.GetDT()
             end
 
             -- Sync Audio to [Projectile Animation]
-            if  phase5_roar_timer >= phase5_roar_delay then 
+            if  _G.phase5_roar_timer >= phase5_roar_delay then 
                 roar_truncated_audio:GetAudio():SetPlay(1.0)
-                phase5_roar_timer = 0
+                _G.phase5_roar_timer = 0
                 _G.phase5_roar_bool = true
             end
 
@@ -637,7 +667,8 @@ function Update()
                 play_laser_timer = 0
             end
             
-            if lazer_appear_timer >= lazer_appear_delay then 
+            if _G.lazer_appear_timer >= lazer_appear_delay then 
+                -- print("LAZER UP PLEASE")
                 _G.attacking = true -- must include (to stop state choosing)
                 _G.activateLazerScript = true
             end

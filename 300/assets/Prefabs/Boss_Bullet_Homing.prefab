@@ -1,5 +1,5 @@
 {
-    "entityid": 1048580,
+    "entityid": 6291638,
     "general": {
         "name": "Boss_Bullet_Homing",
         "tagid": 1,
@@ -140,7 +140,7 @@
             "y": 0.0,
             "z": 0.0
         },
-        "maxhealth": 50.0,
+        "maxhealth": 30.0,
         "width": 0.0,
         "height": 0.0,
         "frametexture": 0,

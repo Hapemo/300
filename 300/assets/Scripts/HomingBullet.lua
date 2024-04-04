@@ -47,7 +47,7 @@ function Alive()
     homing_position = this:GetTransform().mTranslate
 
     -- print("Player Position: " , player_position.x , player_position.y , player_position.z)
-    print("HOMING BULLET: " , homing_position.x , homing_position.y, homing_position.z)
+    -- print("HOMING BULLET: " , homing_position.x , homing_position.y, homing_position.z)
 
     -- print("HOMING BULLET SPAWNED")
 

@@ -49,7 +49,7 @@ end
 function Update()
     translation = trans.mTranslate 
     if(_G.activateLazerScript == true) then 
-
+        -- print("HELLO ACTIVATE")
         if laser_audio_played == false then 
             -- laserPhaseAudio:SetPlay(0.5)
             laser_audio_played = true
@@ -58,7 +58,9 @@ function Update()
         -- print("LAZER TIMER: " , lazer_timer)
    
         if(lazer_timer < lazer_duration) then
-            translation.y = -1.19
+            local position = Vec3.new(0 , -1.19, 8.5)
+            Helper.SetTranslate(ent, position)
+            -- translation.y = -1.19
             angle = angle + speed * (FPSManager.GetDT() * speed)
             Helper.SetRealRotateQuaternion(ent, axis, angle)
         else 
@@ -72,11 +74,14 @@ function Update()
             for i = 1, #_G.state_checker do
                 print("Phase " .. i .. ": " .. tostring(_G.state_checker[i]))
             end
-
+            _G.state_selected = false
             _G.Boss_Not_Flinchable = false
             _G.activateLazerScript = false
             _G.attacking = false
             _G.just_enter_5 = true
+            _G.lazer_appear_timer = 0
+            _G.play_laser_timer = 0
+            _G.phase5_roar_timer = 0
         end
 
     else

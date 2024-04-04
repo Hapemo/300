@@ -163,7 +163,7 @@ local inittedDash = false
 local isTakingDamage = false; -- whether player is in contact with other enemies, thus taking damage
 local playerHealthComponent
 local playerHealthCurrent = 100;
-local playerHealthMax = 100;
+local playerHealthMax = 200;
 local playerHealthRegen_Cooldown = 0;
 local playerHealthRegen_CooldownMax = 4; -- this is the time it takes for the player to not be damaged to start regenerating health
 
