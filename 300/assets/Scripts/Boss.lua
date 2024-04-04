@@ -7,6 +7,7 @@ _G.Boss_Not_Flinchable = false
 _G.just_enter_5 = true
 
 local just_enter_3 = true 
+local just_enter_2 = true
 
 
 -- Phase 1 : Enemyspawn Phase
@@ -22,7 +23,7 @@ _G.number_of_spawned_in_level_3 = 0                     -- Keeps track how many 
 _G.number_left_in_level_3 = 0                           -- Keeps track how many enemies is left
 _G.Level3_Monsters = true                               -- Special Boolean -> interaction with spawning mechanic
 local phase_1_timer = 0 
-local phase_1_max_time = 10                             -- Give Players time to fight the minions
+local phase_1_max_time = 5                             -- Give Players time to fight the minions
 local portals = {}                                      -- Table of Portals
 
 -- Phase 1 : Audio Stuff
@@ -262,11 +263,16 @@ function Update()
          -- Debug States
         -- state = 1 --[OK]
         -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-        state = 3 -- [OK]
+        -- state = 3 -- [OK]
         -- state = 4 --[OK]
         -- state = 5 -- [OK]
 
         if state == 1 and _G.state_checker[1] == false then
+
+            -- if just_enter_1 == true then 
+            --     _G.Boss_Not_Flinchable = true
+            --     just_enter_1 = false
+            -- end
 
             _G.attacking = true -- must include (to stop state choosing)
 
@@ -296,11 +302,11 @@ function Update()
                     
                 --    print("NORMAL SUMMON")
                 -- Animate Roar
-                if initial_roar == false then
-                    this:GetMeshRenderer():SetMesh("Boss_Roar", this)
-                    roar_audio:GetAudio():SetPlay(1.0)
-                    initial_roar = true
-                end
+                -- if initial_roar == false then
+                --     this:GetMeshRenderer():SetMesh("Boss_Roar", this)
+                --     roar_audio:GetAudio():SetPlay(1.0)
+                --     initial_roar = true
+                -- end
 
                 SummonMinions(summon_per_spawn_instance)
                 currentEnemySpawnResetTimer = 0 -- Reset spawn time
@@ -309,11 +315,11 @@ function Update()
                             
                     -- print("SPECIAL SUMMON")
                     -- Animate Roar
-                    if initial_roar == false then
-                        this:GetMeshRenderer():SetMesh("Boss_Roar", this)
-                        roar_audio:GetAudio():SetPlay(1.0)
-                        initial_roar = true
-                    end
+                    -- if initial_roar == false then
+                    --     this:GetMeshRenderer():SetMesh("Boss_Roar", this)
+                    --     roar_audio:GetAudio():SetPlay(1.0)
+                    --     initial_roar = true
+                    -- end
                     if (total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3 > 0 ) then 
                         SummonMinions(total_number_of_enemies_to_spawn - _G.number_of_spawned_in_level_3)
                         currentEnemySpawnResetTimer = 0 -- Reset spawn time
@@ -325,11 +331,12 @@ function Update()
 
             if(_G.number_of_spawned_in_level_3 >= total_number_of_enemies_to_spawn) then  -- Exit State (Condition)
                 phase_1_timer = phase_1_timer + FPSManager.GetDT()
-                print("PHASE TIMER: " , phase_1_timer)
+                -- print("PHASE TIMER: " , phase_1_timer)
             end
 
             if(phase_1_timer >= phase_1_max_time) then 
-                print("SWITCHING OUT PHASE 1")
+                -- just_enter_1 = true
+                -- print("SWITCHING OUT PHASE 1")
                 _G.state_checker[1] = true 
                 _G.attacking = false           -- attack done (exit state)
                 PrintAttackingStates()
@@ -339,7 +346,12 @@ function Update()
 
         end
 
-        if state == 2 and _G.state_checker[2] == false then
+        if state == 2 and _G.state_checker[2] == false then 
+
+            if just_enter_2 == true then 
+                _G.Boss_Not_Flinchable = true
+                just_enter_2 = false
+            end
 
             if roar_slammed_state == "RS_SLAM" then 
                 this:GetMeshRenderer():SetMesh("Boss_Slam" , this)
@@ -427,7 +439,7 @@ function Update()
                     -- TODO: Play arm swinging animation before spawning ground slam object
                     roundSlam = systemManager.ecs:NewEntityFromPrefab("GroundSlamObject", groundSlamPosition)
                     groundSlamCount = groundSlamCount + 1
-                    print("GROUND SLAM COUNT: ", groundSlamCount)
+                    -- print("GROUND SLAM COUNT: ", groundSlamCount)
                     -- currentGroundSlamResetTimer = 0 -- Reset ground slam timer
 
                     roar_slammed_state = "SPAWN_SHOCKWAVE"
@@ -459,6 +471,8 @@ function Update()
                 end
 
             else 
+                _G.Boss_Not_Flinchable = false
+                just_enter_2 = true
                 print("DONE SLAM")
                 _G.state_checker[2] = true
                 _G.attacking = false
@@ -574,8 +588,8 @@ function Update()
                 homing_timer = homing_timer + FPSManager.GetDT()
             end
 
-            if homing_timer >= homing_spawn_period then 
-                print("CHANGING OUT OF STATE 4 : Homing")
+            if homing_timer >= homing_state_change then 
+                -- print("CHANGING OUT OF STATE 4 : Homing")
                 _G.state_checker[4] = true
                 homing_spawn_timer = 0    -- need to reset 
                 homing_spawn_counter = 0  -- Reset number of homing spawned
@@ -703,7 +717,7 @@ function SpawnBulletsPattern1(number_of_bullets)
     for i = 0 , number_of_bullets do 
 
         bulletDirection = Vec3.new(1,0,0)
-        bulletSpeed = 5
+        bulletSpeed = 12
         -- Caluclate direction vector in 3D space
         RotateVectorAroundYAxis(bulletDirection, angle) -- Testing
         -- print("X: " , bulletDirection.x , " Y: " , bulletDirection.y , " Z: ", bulletDirection.z)
@@ -749,7 +763,7 @@ end
 
 -- [M6 - 4/1] - Might Not Need anymore
 function UpdateHomingProjectiles()
-    print("UPDATE HOMING")
+    -- print("UPDATE HOMING")
 end 
 
 function SummonMinions(summon_per_spawn_instance) 
@@ -801,8 +815,8 @@ function SummonMinions(summon_per_spawn_instance)
     -- [3/6] - Set to summon multiple enemies in 1 area 
     for i = 1 , summon_per_spawn_instance  do 
         enemyType = math.random(1, 4)
-        print("ENEMY TYPE: " , enemyType)
-        print("SUMMON # " , _G.number_of_spawned_in_level_3)
+        -- print("ENEMY TYPE: " , enemyType)
+        -- print("SUMMON # " , _G.number_of_spawned_in_level_3)
         _G.number_of_spawned_in_level_3 = _G.number_of_spawned_in_level_3 + 1
         _G.number_left_in_level_3 = _G.number_left_in_level_3 + 1
 

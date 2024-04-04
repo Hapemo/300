@@ -355,7 +355,7 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "PISTOL") then 
             if(bossHP_healthbar_comp ~= nil) then 
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - pistolDamage * _G.powerLevel
-                print("PISTOL, HP LEFT: " , bossHP_healthbar_comp.health)
+                -- print("PISTOL, HP LEFT: " , bossHP_healthbar_comp.health)
                 if _G.Boss_Not_Flinchable == false then 
                      boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
                 end
@@ -366,7 +366,7 @@ function OnTriggerEnter(Entity)
             if(bossHP_healthbar_comp ~= nil) then 
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - revolverDamage * _G.powerLevel
                 -- print("REVOLVER BAWSE")
-                print("REVOLVER, HP LEFT: " , bossHP_healthbar_comp.health)
+                -- print("REVOLVER, HP LEFT: " , bossHP_healthbar_comp.health)
                 if _G.Boss_Not_Flinchable == false then 
                     boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
                 end
@@ -376,7 +376,7 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "SHOTGUN") then 
             if(bossHP_healthbar_comp ~= nil) then 
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - shotGunDamage * _G.powerLevel
-                print("SHOTGUN, HP LEFT: " ,bossHP_healthbar_comp.health)
+                -- print("SHOTGUN, HP LEFT: " ,bossHP_healthbar_comp.health)
                 if _G.Boss_Not_Flinchable == false then 
                     boss_entity:GetMeshRenderer():SetMesh("Boss_Knockback",   boss_entity)
                 end
@@ -386,7 +386,7 @@ function OnTriggerEnter(Entity)
         if(bulletTag == "MACHINE_GUN") then 
             if(bossHP_healthbar_comp ~= nil) then 
                 bossHP_healthbar_comp.health = bossHP_healthbar_comp.health - machineGunDamage * _G.powerLevel
-                print("MACHINE GUN, HP LEFT: " , bossHP_healthbar_comp.health)
+                -- print("MACHINE GUN, HP LEFT: " , bossHP_healthbar_comp.health)
                 boss_flinched = true
             end
         end
