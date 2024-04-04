@@ -3,6 +3,11 @@ local this
 -- Disable everything (MECHANIC WISE) -> development mode. doing audio
 local debug_mode = false
 _G.lv3_intro_dialogue_done = false
+_G.Boss_Not_Flinchable = false
+_G.just_enter_5 = true
+
+local just_enter_3 = true 
+
 
 -- Phase 1 : Enemyspawn Phase
 local enemyType
@@ -257,9 +262,9 @@ function Update()
          -- Debug States
         -- state = 1 --[OK]
         -- state = 2 -- [OK] -- need to check agn after i check the other mechanics
-        -- state = 3 -- [OK]
+        state = 3 -- [OK]
         -- state = 4 --[OK]
-        state = 5 -- [OK]
+        -- state = 5 -- [OK]
 
         if state == 1 and _G.state_checker[1] == false then
 
@@ -472,6 +477,12 @@ function Update()
         -- (a) State 1 : Normal Circles but pulsing in different directions & angles. 
         --     - Make it easier at the start 
         if state == 3 and _G.state_checker[3] == false then
+
+            if just_enter_3 == true then 
+                _G.Boss_Not_Flinchable = true
+                just_enter_3 = false
+            end
+
             if play_sphere_audio == false then
                 play_sphere_audio = true
                 -- sphere_phase_audio:GetAudio():SetPlay(0.5) 
@@ -518,6 +529,7 @@ function Update()
     
                         number_of_fire = number_of_fire + 1
                     else -- Exit State (Condition)
+                        just_enter_3 = true
                         phase3_roar_bool = false
                         _G.state_checker[3] = true
                         _G.attacking = false
@@ -572,13 +584,15 @@ function Update()
                 _G.attacking = false           -- important to toggle state choose again
                 PrintAttackingStates()
             end
-
-
-            
         end
 
 
         if state == 5 and _G.state_checker[5] == false then 
+            if _G.just_enter_5 == true then 
+                _G.Boss_Not_Flinchable = true
+                _G.just_enter_5 = false
+            end
+
             if _G.phase5_roar_bool == false then 
                 phase5_roar_timer = phase5_roar_timer + FPSManager.GetDT()
             end
@@ -597,7 +611,7 @@ function Update()
                 phase5_roar_timer = 0
                 _G.phase5_roar_bool = true
             end
-        
+
             if mesh_set_laser == false then 
                 this:GetMeshRenderer():SetMesh("Boss_Laser", this)
                 mesh_set_laser = true

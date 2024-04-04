@@ -73,8 +73,10 @@ function Update()
                 print("Phase " .. i .. ": " .. tostring(_G.state_checker[i]))
             end
 
+            _G.Boss_Not_Flinchable = false
             _G.activateLazerScript = false
             _G.attacking = false
+            _G.just_enter_5 = true
         end
 
     else
