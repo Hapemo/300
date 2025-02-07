@@ -1,2 +1,3 @@
 This is a 7-months long game production project, comprises of 6 Real-Time Interactive Simulation (RTIS) programmers, 2 Interactive Media and Game Design (IMGD) programmers, 3 UI/UX designers and 1 artist. 
 This project comprises of the source code for a game engine, game editor and the game itself. There are demo videos of the gameplay and more documents such as the art design docuemnt, technical design document and editor guide document. Please contact the owner of this repository for more information if required.
+[showcase_editor](./Editor_Showcase.mov)
